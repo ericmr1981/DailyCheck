@@ -137,7 +137,7 @@ th, td {
   bottom: 0;
   z-index: 100;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 8px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);

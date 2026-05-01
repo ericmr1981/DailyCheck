@@ -1,0 +1,192 @@
+:root {
+  --bg: #eef2f6;
+  --panel: #ffffff;
+  --text: #1f2d3d;
+  --muted: #6b7280;
+  --brand: #0f766e;
+  --brand-ink: #0b4f4a;
+  --warn: #c2410c;
+  --border: #d9e1ea;
+  --shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; width: 100%; min-height: 100dvh; }
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(1000px 500px at 100% -10%, #d9f5ef 0%, transparent 60%),
+    radial-gradient(900px 400px at -10% -10%, #dbeafe 0%, transparent 50%),
+    var(--bg);
+  min-height: 100dvh;
+}
+
+.app-shell {
+  min-height: 100dvh;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+}
+
+.mobile-header {
+  background: linear-gradient(130deg, #0f766e 0%, #0e7490 100%);
+  color: #fff;
+  padding: calc(18px + env(safe-area-inset-top)) 18px 18px;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  box-shadow: var(--shadow);
+}
+.mobile-header h1 { margin: 0; font-size: 22px; letter-spacing: 0.5px; }
+.mobile-subtitle { margin: 0 0 4px; font-size: 12px; opacity: 0.88; }
+
+main {
+  padding: 14px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h2, h3 {
+  margin: 10px 0 12px;
+  color: #12263a;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+.card p { margin: 0; color: var(--muted); font-size: 13px; }
+.card strong { display: block; margin-top: 6px; font-size: 26px; color: var(--brand-ink); }
+
+.grid { display: grid; gap: 10px; }
+.cols-4 { grid-template-columns: 1fr 1fr; }
+.cols-3 { grid-template-columns: 1fr; }
+
+.form-inline,
+form.grid {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.form-inline { display: flex; gap: 10px; flex-wrap: wrap; }
+
+input, select, button {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fff;
+  font-size: 14px;
+}
+
+button {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  font-weight: 600;
+}
+.btn-danger {
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
+.warn { color: var(--warn); font-weight: 700; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+thead, tbody, tr { width: 100%; }
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.inline { display: flex; gap: 8px; align-items: center; }
+.inline select { min-width: 104px; }
+
+.flash-list { list-style: none; padding: 0; margin: 0 0 10px; }
+.flash-list li {
+  background: #ecfeff;
+  border: 1px solid #a5f3fc;
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  color: #0f172a;
+}
+
+.mobile-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border);
+  padding: 10px 10px calc(10px + env(safe-area-inset-bottom));
+}
+.mobile-nav a {
+  text-align: center;
+  text-decoration: none;
+  color: #334155;
+  font-size: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 8px 4px;
+}
+
+.sidebar {
+  background: #0f172a;
+  color: #fff;
+  padding: 22px 12px;
+}
+.sidebar h1 { margin: 0 0 16px; font-size: 20px; }
+.sidebar a {
+  display: block;
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 10px;
+  margin-bottom: 6px;
+  border-radius: 10px;
+}
+.sidebar a:hover { background: #1e293b; color: #fff; }
+
+.mobile-only { display: block; }
+.desktop-only { display: none; }
+
+@media (min-width: 961px) {
+  body {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+  }
+  .app-shell {
+    padding-bottom: 20px;
+  }
+  main {
+    padding: 22px;
+  }
+  .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mobile-only { display: none; }
+  .desktop-only { display: block; }
+}

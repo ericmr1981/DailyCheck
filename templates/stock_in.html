@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>入库</h2>
+<form method="post" class="grid cols-3">
+  <select name="item_id" required>
+    <option value="">选择品项</option>
+    {% for i in items %}
+    <option value="{{ i.id }}">{{ i.sku }} - {{ i.name }}（当前 {{ i.quantity }}{{ i.unit }}）</option>
+    {% endfor %}
+  </select>
+  <input name="quantity" type="number" min="1" placeholder="入库数量" required />
+  <input name="note" placeholder="备注（可选）" />
+  <button type="submit">确认入库</button>
+</form>
+
+<h3>最近入库记录</h3>
+<table>
+  <tr><th>时间</th><th>SKU</th><th>品项</th><th>入库数量</th><th>备注</th><th>操作</th></tr>
+  {% for r in records %}
+  <tr>
+    <td>{{ r.created_at }}</td>
+    <td>{{ r.sku }}</td>
+    <td>{{ r.item_name }}</td>
+    <td>{{ r.delta }}</td>
+    <td>{{ r.note }}</td>
+    <td>
+      <form method="post" action="{{ url_for('delete_stock_in', movement_id=r.id) }}" class="inline" onsubmit="return confirm('确认删除该入库记录？将回滚库存。');">
+        <button type="submit" class="btn-danger">删除</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

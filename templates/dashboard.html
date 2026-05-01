@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>后台总览</h2>
+<div class="grid cols-4">
+  <section class="card"><p>品类数</p><strong>{{ total_categories }}</strong></section>
+  <section class="card"><p>库存品数</p><strong>{{ total_items }}</strong></section>
+  <section class="card"><p>低库存项</p><strong>{{ low_stock }}</strong></section>
+  <section class="card"><p>待审批补货</p><strong>{{ pending_requests }}</strong></section>
+</div>
+
+<h3>最近库存变动</h3>
+<table>
+  <tr><th>时间</th><th>SKU</th><th>品项</th><th>动作</th><th>数量变化</th></tr>
+  {% for m in latest_movements %}
+  <tr>
+    <td>{{ m.created_at }}</td>
+    <td>{{ m.sku }}</td>
+    <td>{{ m.item_name }}</td>
+    <td>{{ m.action }}</td>
+    <td>{{ m.delta }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

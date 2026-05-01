@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>品类管理</h2>
+<p class="card">系统固定品类：<strong>包材、原料、工具</strong>（不可新增、不可删除）</p>
+
+<table>
+  <tr><th>ID</th><th>名称</th><th>描述</th><th>创建时间</th></tr>
+  {% for c in categories %}
+  <tr>
+    <td>{{ c.id }}</td><td>{{ c.name }}</td><td>{{ c.description }}</td><td>{{ c.created_at }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

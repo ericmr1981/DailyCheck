@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>库存盘点</h2>
+<form method="post" action="{{ url_for('stocktake_start') }}" class="form-inline">
+  <button type="submit">开始盘点</button>
+</form>
+
+<h3>最近盘点批次</h3>
+<table>
+  <tr><th>批次ID</th><th>创建时间</th><th>备注</th><th>盘点品项数</th><th>状态</th><th>操作</th></tr>
+  {% for b in batches %}
+  <tr>
+    <td>#{{ b.id }}</td>
+    <td>{{ b.created_at }}</td>
+    <td>{{ b.note }}</td>
+    <td>{{ b.item_count }}</td>
+    <td>{% if b.rolled_back == 1 %}已回滚{% else %}生效中{% endif %}</td>
+    <td>
+      {% if b.rolled_back == 0 %}
+      <form method="post" action="{{ url_for('rollback_stocktake_batch', batch_id=b.id) }}" class="inline" onsubmit="return confirm('确认回滚该盘点批次？');">
+        <button type="submit" class="btn-danger">回滚批次</button>
+      </form>
+      {% else %}
+      -
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

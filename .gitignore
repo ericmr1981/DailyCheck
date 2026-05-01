@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+inventory.db
+playwright-home.png
+static/icons/icon-192.tmp
+.DS_Store

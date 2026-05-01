@@ -2,7 +2,6 @@
 {% block content %}
 <h2>库存品管理</h2>
 <form method="post" class="grid cols-3">
-  <input name="sku" placeholder="SKU" required />
   <input name="name" placeholder="品项名称" required />
   <select name="category_id" required>
     <option value="">选择品类</option>
@@ -17,10 +16,10 @@
 </form>
 
 <table>
-  <tr><th>SKU</th><th>品项</th><th>品类</th><th>库存</th><th>安全库存</th><th>更新时间</th><th>操作</th></tr>
+  <tr><th>品项</th><th>品类</th><th>库存</th><th>安全库存</th><th>更新时间</th><th>操作</th></tr>
   {% for i in items %}
   <tr>
-    <td>{{ i.sku }}</td><td>{{ i.name }}</td><td>{{ i.category_name }}</td>
+    <td>{{ i.name }}</td><td>{{ i.category_name }}</td>
     <td>{{ i.quantity }} {{ i.unit }}</td><td>{{ i.safety_stock }}</td><td>{{ i.updated_at }}</td>
     <td>
       <form method="post" action="{{ url_for('delete_item', item_id=i.id) }}" class="inline" onsubmit="return confirm('确认删除该库存品？');">

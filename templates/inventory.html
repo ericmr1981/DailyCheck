@@ -2,15 +2,15 @@
 {% block content %}
 <h2>库存查阅</h2>
 <form method="get" class="form-inline">
-  <input name="q" value="{{ q }}" placeholder="按 SKU/品项/品类搜索" />
+  <input name="q" value="{{ q }}" placeholder="按品项/品类搜索" />
   <button type="submit">查询</button>
 </form>
 
 <table>
-  <tr><th>SKU</th><th>品项</th><th>品类</th><th>库存</th><th>安全库存</th><th>状态</th><th>更新时间</th></tr>
+  <tr><th>品项</th><th>品类</th><th>库存</th><th>安全库存</th><th>状态</th><th>更新时间</th></tr>
   {% for i in items %}
   <tr>
-    <td>{{ i.sku }}</td><td>{{ i.name }}</td><td>{{ i.category_name }}</td>
+    <td>{{ i.name }}</td><td>{{ i.category_name }}</td>
     <td>{{ i.quantity }} {{ i.unit }}</td><td>{{ i.safety_stock }}</td>
     <td>{% if i.quantity <= i.safety_stock %}<span class="warn">需补货</span>{% else %}正常{% endif %}</td>
     <td>{{ i.updated_at }}</td>

@@ -9,11 +9,10 @@
   </div>
 
   <table>
-    <tr><th>品类</th><th>SKU</th><th>品项</th><th>当前库存</th><th>安全库存</th><th>盘点数量（填写）</th></tr>
+    <tr><th>品类</th><th>品项</th><th>当前库存</th><th>安全库存</th><th>盘点数量（填写）</th></tr>
     {% for i in items %}
     <tr>
       <td>{{ i.category_name }}</td>
-      <td>{{ i.sku }}</td>
       <td>{{ i.name }}</td>
       <td>{{ i.quantity }} {{ i.unit }}</td>
       <td>{{ i.safety_stock }}</td>

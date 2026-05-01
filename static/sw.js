@@ -6,8 +6,8 @@ const APP_SHELL = [
   "/static/offline.html",
   "/stocktake",
   "/inventory",
-  "/stock-in",
-  "/restock"
+  "/restock",
+  "/restock/session"
 ];
 
 self.addEventListener("install", (event) => {

@@ -1,48 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>补货申请</h2>
-<form method="post" class="grid cols-3">
-  <select name="item_id" required>
-    <option value="">选择品项</option>
-    {% for i in items %}
-    <option value="{{ i.id }}">{{ i.sku }} - {{ i.name }}（库存 {{ i.quantity }}{{ i.unit }} / 安全 {{ i.safety_stock }}）</option>
-    {% endfor %}
-  </select>
-  <input name="requested_quantity" type="number" min="1" placeholder="申请补货数量" required />
-  <input name="reason" placeholder="补货原因" />
-  <button type="submit">提交申请</button>
-</form>
-
-<form method="get" class="form-inline">
-  <select name="status">
-    <option value="">全部状态</option>
-    <option value="待审批" {% if status == '待审批' %}selected{% endif %}>待审批</option>
-    <option value="已批准" {% if status == '已批准' %}selected{% endif %}>已批准</option>
-    <option value="已拒绝" {% if status == '已拒绝' %}selected{% endif %}>已拒绝</option>
-    <option value="已完成" {% if status == '已完成' %}selected{% endif %}>已完成</option>
-  </select>
-  <button type="submit">筛选</button>
+<h2>补货记录</h2>
+<form method="post" action="{{ url_for('restock_start') }}" class="form-inline">
+  <button type="submit">开始补货</button>
 </form>
 
 <table>
-  <tr><th>时间</th><th>SKU</th><th>品项</th><th>申请量</th><th>原因</th><th>状态</th><th>操作</th></tr>
+  <tr><th>时间</th><th>品项</th><th>补货数量</th><th>原因</th><th>状态</th><th>操作</th></tr>
   {% for r in requests %}
   <tr>
-    <td>{{ r.created_at }}</td><td>{{ r.sku }}</td><td>{{ r.item_name }}</td>
-    <td>{{ r.requested_quantity }}</td><td>{{ r.reason }}</td><td>{{ r.status }}</td>
+    <td>{{ r.created_at }}</td>
+    <td>{{ r.item_name }}</td>
+    <td>{{ r.requested_quantity }} {{ r.unit }}</td>
+    <td>{{ r.reason }}</td>
+    <td>{{ r.status }}</td>
     <td>
-      <form method="post" action="{{ url_for('update_restock_status', req_id=r.id) }}" class="inline">
-        <select name="status">
-          <option value="待审批">待审批</option>
-          <option value="已批准">已批准</option>
-          <option value="已拒绝">已拒绝</option>
-          <option value="已完成">已完成</option>
-        </select>
-        <button type="submit">更新</button>
+      {% if r.status == '提交' %}
+      <form method="post" action="{{ url_for('update_restock_status', req_id=r.id) }}" class="inline" onsubmit="return confirm('确认将该补货记录执行入库？');">
+        <input type="hidden" name="status" value="入库" />
+        <button type="submit">入库</button>
       </form>
-      <form method="post" action="{{ url_for('delete_restock', req_id=r.id) }}" class="inline" onsubmit="return confirm('确认删除该补货申请？');">
-        <button type="submit" class="btn-danger">删除</button>
-      </form>
+      {% else %}
+      已入库
+      {% endif %}
     </td>
   </tr>
   {% endfor %}

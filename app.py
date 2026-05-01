@@ -35,6 +35,10 @@ def now() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
+def gen_sku() -> str:
+    return f"AUTO-{datetime.now().strftime('%Y%m%d%H%M%S%f')}"
+
+
 def init_db() -> None:
     schema = """
     CREATE TABLE IF NOT EXISTS categories (
@@ -90,7 +94,7 @@ def init_db() -> None:
         item_id INTEGER NOT NULL,
         requested_quantity INTEGER NOT NULL,
         reason TEXT,
-        status TEXT NOT NULL DEFAULT '待审批',
+        status TEXT NOT NULL DEFAULT '提交',
         created_at TEXT NOT NULL,
         FOREIGN KEY (item_id) REFERENCES items(id)
     );
@@ -120,12 +124,12 @@ def dashboard():
         "SELECT COUNT(*) AS c FROM items WHERE quantity <= safety_stock"
     ).fetchone()["c"]
     pending_requests = db.execute(
-        "SELECT COUNT(*) AS c FROM restock_requests WHERE status = '待审批'"
+        "SELECT COUNT(*) AS c FROM restock_requests WHERE status = '提交'"
     ).fetchone()["c"]
 
     latest_movements = db.execute(
         """
-        SELECT m.created_at, m.action, m.delta, i.name AS item_name, i.sku
+        SELECT m.created_at, m.action, m.delta, i.name AS item_name
         FROM stock_movements m
         JOIN items i ON i.id = m.item_id
         ORDER BY m.id DESC
@@ -163,15 +167,14 @@ def delete_category(category_id: int):
 def items():
     db = get_db()
     if request.method == "POST":
-        sku = request.form.get("sku", "").strip()
         name = request.form.get("name", "").strip()
         category_id = request.form.get("category_id", "").strip()
         quantity = int(request.form.get("quantity", "0") or 0)
         safety_stock = int(request.form.get("safety_stock", "0") or 0)
         unit = request.form.get("unit", "件").strip() or "件"
 
-        if not sku or not name or not category_id:
-            flash("SKU、名称、品类为必填")
+        if not name or not category_id:
+            flash("名称、品类为必填")
             return redirect(url_for("items"))
         try:
             db.execute(
@@ -179,12 +182,12 @@ def items():
                 INSERT INTO items (sku, name, category_id, quantity, safety_stock, unit, updated_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
                 """,
-                (sku, name, int(category_id), quantity, safety_stock, unit, now()),
+                (gen_sku(), name, int(category_id), quantity, safety_stock, unit, now()),
             )
             db.commit()
             flash("库存品创建成功")
         except sqlite3.IntegrityError:
-            flash("SKU 已存在")
+            flash("库存品创建失败，请重试")
         return redirect(url_for("items"))
 
     categories_data = db.execute(
@@ -227,74 +230,8 @@ def delete_item(item_id: int):
 
 @app.route("/stock-in", methods=["GET", "POST"])
 def stock_in():
-    db = get_db()
-    if request.method == "POST":
-        item_id = int(request.form.get("item_id", "0") or 0)
-        quantity = int(request.form.get("quantity", "0") or 0)
-        note = request.form.get("note", "").strip()
-        if item_id <= 0 or quantity <= 0:
-            flash("请选择品项并填写正确入库数量")
-            return redirect(url_for("stock_in"))
-
-        db.execute(
-            "UPDATE items SET quantity = quantity + ?, updated_at = ? WHERE id = ?",
-            (quantity, now(), item_id),
-        )
-        db.execute(
-            """
-            INSERT INTO stock_movements (item_id, action, delta, note, created_at)
-            VALUES (?, '入库', ?, ?, ?)
-            """,
-            (item_id, quantity, note, now()),
-        )
-        db.commit()
-        flash("入库成功")
-        return redirect(url_for("stock_in"))
-
-    items_data = db.execute(
-        "SELECT id, sku, name, quantity, unit FROM items ORDER BY name"
-    ).fetchall()
-    records = db.execute(
-        """
-        SELECT m.*, i.sku, i.name AS item_name
-        FROM stock_movements m
-        JOIN items i ON i.id = m.item_id
-        WHERE m.action = '入库'
-        ORDER BY m.id DESC
-        LIMIT 30
-        """
-    ).fetchall()
-    return render_template("stock_in.html", items=items_data, records=records)
-
-
-@app.route("/stock-in/<int:movement_id>/delete", methods=["POST"])
-def delete_stock_in(movement_id: int):
-    db = get_db()
-    record = db.execute(
-        "SELECT * FROM stock_movements WHERE id = ? AND action = '入库'", (movement_id,)
-    ).fetchone()
-    if record is None:
-        flash("未找到入库记录")
-        return redirect(url_for("stock_in"))
-
-    item = db.execute(
-        "SELECT quantity FROM items WHERE id = ?", (record["item_id"],)
-    ).fetchone()
-    if item is None:
-        flash("入库对应库存品不存在")
-        return redirect(url_for("stock_in"))
-    if int(item["quantity"]) < int(record["delta"]):
-        flash("当前库存不足以回滚该入库记录，删除失败")
-        return redirect(url_for("stock_in"))
-
-    db.execute(
-        "UPDATE items SET quantity = quantity - ?, updated_at = ? WHERE id = ?",
-        (record["delta"], now(), record["item_id"]),
-    )
-    db.execute("DELETE FROM stock_movements WHERE id = ?", (movement_id,))
-    db.commit()
-    flash("入库记录已删除并回滚库存")
-    return redirect(url_for("stock_in"))
+    flash("入库页已下线，请在补货记录页完成提交与入库")
+    return redirect(url_for("restock"))
 
 
 @app.route("/stocktake", methods=["GET"])
@@ -323,7 +260,7 @@ def stocktake_session():
     db = get_db()
     items_data = db.execute(
         """
-        SELECT i.id, i.sku, i.name, i.quantity, i.unit, i.safety_stock, c.name AS category_name
+        SELECT i.id, i.name, i.quantity, i.unit, i.safety_stock, c.name AS category_name
         FROM items i
         JOIN categories c ON c.id = i.category_id
         ORDER BY c.name, i.name
@@ -433,10 +370,10 @@ def inventory():
             SELECT i.*, c.name AS category_name
             FROM items i
             JOIN categories c ON c.id = i.category_id
-            WHERE i.sku LIKE ? OR i.name LIKE ? OR c.name LIKE ?
+            WHERE i.name LIKE ? OR c.name LIKE ?
             ORDER BY i.updated_at DESC
             """,
-            (f"%{q}%", f"%{q}%", f"%{q}%"),
+            (f"%{q}%", f"%{q}%"),
         ).fetchall()
     else:
         rows = db.execute(
@@ -450,70 +387,106 @@ def inventory():
     return render_template("inventory.html", items=rows, q=q)
 
 
-@app.route("/restock", methods=["GET", "POST"])
+@app.route("/restock", methods=["GET"])
 def restock():
     db = get_db()
-    if request.method == "POST":
-        item_id = int(request.form.get("item_id", "0") or 0)
-        requested_quantity = int(request.form.get("requested_quantity", "0") or 0)
-        reason = request.form.get("reason", "").strip()
-        if item_id <= 0 or requested_quantity <= 0:
-            flash("请选择品项并填写正确补货数量")
-            return redirect(url_for("restock"))
+    requests_data = db.execute(
+        """
+        SELECT r.*, i.name AS item_name, i.unit
+        FROM restock_requests r
+        JOIN items i ON i.id = r.item_id
+        ORDER BY r.id DESC
+        LIMIT 100
+        """
+    ).fetchall()
+    return render_template("restock.html", requests=requests_data)
 
+
+@app.route("/restock/start", methods=["POST"])
+def restock_start():
+    return redirect(url_for("restock_session"))
+
+
+@app.route("/restock/session", methods=["GET"])
+def restock_session():
+    db = get_db()
+    items_data = db.execute(
+        """
+        SELECT i.id, i.name, i.quantity, i.unit, i.safety_stock, c.name AS category_name
+        FROM items i
+        JOIN categories c ON c.id = i.category_id
+        ORDER BY c.name, i.name
+        """
+    ).fetchall()
+    return render_template("restock_session.html", items=items_data)
+
+
+@app.route("/restock/submit", methods=["POST"])
+def restock_submit():
+    db = get_db()
+    reason = request.form.get("reason", "").strip()
+    items_data = db.execute("SELECT id FROM items").fetchall()
+    rows: list[tuple[int, int]] = []
+    for item in items_data:
+        raw = request.form.get(f"restock_{item['id']}", "").strip()
+        if raw == "":
+            continue
+        qty = int(raw)
+        if qty > 0:
+            rows.append((int(item["id"]), qty))
+    if not rows:
+        flash("请至少填写一个补货数量")
+        return redirect(url_for("restock_session"))
+    for item_id, qty in rows:
         db.execute(
             """
             INSERT INTO restock_requests (item_id, requested_quantity, reason, status, created_at)
-            VALUES (?, ?, ?, '待审批', ?)
+            VALUES (?, ?, ?, '提交', ?)
             """,
-            (item_id, requested_quantity, reason, now()),
+            (item_id, qty, reason, now()),
         )
-        db.commit()
-        flash("补货申请已提交")
-        return redirect(url_for("restock"))
-
-    status = request.args.get("status", "")
-    items_data = db.execute(
-        "SELECT id, sku, name, quantity, safety_stock, unit FROM items ORDER BY name"
-    ).fetchall()
-
-    if status:
-        requests_data = db.execute(
-            """
-            SELECT r.*, i.name AS item_name, i.sku
-            FROM restock_requests r
-            JOIN items i ON i.id = r.item_id
-            WHERE r.status = ?
-            ORDER BY r.id DESC
-            """,
-            (status,),
-        ).fetchall()
-    else:
-        requests_data = db.execute(
-            """
-            SELECT r.*, i.name AS item_name, i.sku
-            FROM restock_requests r
-            JOIN items i ON i.id = r.item_id
-            ORDER BY r.id DESC
-            """
-        ).fetchall()
-
-    return render_template(
-        "restock.html", items=items_data, requests=requests_data, status=status
-    )
+    db.commit()
+    flash("补货记录已提交")
+    return redirect(url_for("restock"))
 
 
 @app.route("/restock/<int:req_id>/status", methods=["POST"])
 def update_restock_status(req_id: int):
     status = request.form.get("status", "").strip()
-    if status not in {"待审批", "已批准", "已拒绝", "已完成"}:
+    if status not in {"提交", "入库"}:
         flash("状态非法")
         return redirect(url_for("restock"))
 
     db = get_db()
+    req = db.execute(
+        "SELECT item_id, requested_quantity, status FROM restock_requests WHERE id = ?",
+        (req_id,),
+    ).fetchone()
+    if req is None:
+        flash("补货记录不存在")
+        return redirect(url_for("restock"))
+
+    old_status = req["status"]
+    if old_status != "入库" and status == "入库":
+        db.execute(
+            "UPDATE items SET quantity = quantity + ?, updated_at = ? WHERE id = ?",
+            (int(req["requested_quantity"]), now(), int(req["item_id"])),
+        )
+        db.execute(
+            """
+            INSERT INTO stock_movements (item_id, action, delta, note, created_at)
+            VALUES (?, '补货入库', ?, ?, ?)
+            """,
+            (
+                int(req["item_id"]),
+                int(req["requested_quantity"]),
+                f"补货记录#{req_id}入库",
+                now(),
+            ),
+        )
     db.execute("UPDATE restock_requests SET status = ? WHERE id = ?", (status, req_id))
     db.commit()
-    flash("补货申请状态已更新")
+    flash("补货记录状态已更新")
     return redirect(url_for("restock"))
 
 
@@ -522,7 +495,7 @@ def delete_restock(req_id: int):
     db = get_db()
     db.execute("DELETE FROM restock_requests WHERE id = ?", (req_id,))
     db.commit()
-    flash("补货申请已删除")
+    flash("补货记录已删除")
     return redirect(url_for("restock"))
 
 

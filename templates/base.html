@@ -18,10 +18,9 @@
     <a href="{{ url_for('dashboard') }}">总览</a>
     <a href="{{ url_for('categories') }}">品类管理</a>
     <a href="{{ url_for('items') }}">库存品管理</a>
-    <a href="{{ url_for('stock_in') }}">入库</a>
     <a href="{{ url_for('stocktake') }}">库存盘点</a>
     <a href="{{ url_for('inventory') }}">库存查阅</a>
-    <a href="{{ url_for('restock') }}">补货申请</a>
+    <a href="{{ url_for('restock') }}">补货记录</a>
   </aside>
 
   <div class="app-shell">
@@ -47,7 +46,6 @@
       <a href="{{ url_for('dashboard') }}">总览</a>
       <a href="{{ url_for('inventory') }}">库存</a>
       <a href="{{ url_for('items') }}">品项</a>
-      <a href="{{ url_for('stock_in') }}">入库</a>
       <a href="{{ url_for('stocktake') }}">盘点</a>
       <a href="{{ url_for('restock') }}">补货</a>
     </nav>

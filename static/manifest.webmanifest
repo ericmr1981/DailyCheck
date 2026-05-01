@@ -1,7 +1,10 @@
 {
   "name": "轻量库存管理",
   "short_name": "库存管理",
+  "id": "/",
   "start_url": "/",
+  "scope": "/",
+  "display_override": ["standalone", "minimal-ui"],
   "display": "standalone",
   "background_color": "#eef2f6",
   "theme_color": "#0f766e",

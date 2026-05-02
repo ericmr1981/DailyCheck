@@ -98,12 +98,30 @@ def init_db() -> None:
         created_at TEXT NOT NULL,
         FOREIGN KEY (item_id) REFERENCES items(id)
     );
+
+    CREATE TABLE IF NOT EXISTS outbound_requests (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        item_id INTEGER NOT NULL,
+        requested_quantity INTEGER NOT NULL,
+        reason TEXT,
+        status TEXT NOT NULL DEFAULT '提交',
+        rolled_back INTEGER NOT NULL DEFAULT 0,
+        created_at TEXT NOT NULL,
+        FOREIGN KEY (item_id) REFERENCES items(id)
+    );
     """
     with closing(sqlite3.connect(DB_PATH)) as conn:
         conn.executescript(schema)
         cols = [r[1] for r in conn.execute("PRAGMA table_info(stocktakes)").fetchall()]
         if "batch_id" not in cols:
             conn.execute("ALTER TABLE stocktakes ADD COLUMN batch_id INTEGER")
+        outbound_cols = [
+            r[1] for r in conn.execute("PRAGMA table_info(outbound_requests)").fetchall()
+        ]
+        if "rolled_back" not in outbound_cols:
+            conn.execute(
+                "ALTER TABLE outbound_requests ADD COLUMN rolled_back INTEGER NOT NULL DEFAULT 0"
+            )
 
         existing = {r[0] for r in conn.execute("SELECT name FROM categories").fetchall()}
         for name in FIXED_CATEGORIES:
@@ -217,8 +235,11 @@ def delete_item(item_id: int):
     restock_count = db.execute(
         "SELECT COUNT(*) AS c FROM restock_requests WHERE item_id = ?", (item_id,)
     ).fetchone()["c"]
+    outbound_count = db.execute(
+        "SELECT COUNT(*) AS c FROM outbound_requests WHERE item_id = ?", (item_id,)
+    ).fetchone()["c"]
 
-    if movement_count + stocktake_count + restock_count > 0:
+    if movement_count + stocktake_count + restock_count + outbound_count > 0:
         flash("该库存品已有业务记录，暂不允许删除")
         return redirect(url_for("items"))
 
@@ -438,15 +459,27 @@ def restock_submit():
         flash("请至少填写一个补货数量")
         return redirect(url_for("restock_session"))
     for item_id, qty in rows:
-        db.execute(
+        cur = db.execute(
             """
             INSERT INTO restock_requests (item_id, requested_quantity, reason, status, created_at)
-            VALUES (?, ?, ?, '提交', ?)
+            VALUES (?, ?, ?, '入库', ?)
             """,
             (item_id, qty, reason, now()),
         )
+        req_id = int(cur.lastrowid)
+        db.execute(
+            "UPDATE items SET quantity = quantity + ?, updated_at = ? WHERE id = ?",
+            (qty, now(), item_id),
+        )
+        db.execute(
+            """
+            INSERT INTO stock_movements (item_id, action, delta, note, created_at)
+            VALUES (?, '补货入库', ?, ?, ?)
+            """,
+            (item_id, qty, f"补货记录#{req_id}入库", now()),
+        )
     db.commit()
-    flash("补货记录已提交")
+    flash("入库已执行")
     return redirect(url_for("restock"))
 
 
@@ -493,10 +526,174 @@ def update_restock_status(req_id: int):
 @app.route("/restock/<int:req_id>/delete", methods=["POST"])
 def delete_restock(req_id: int):
     db = get_db()
+    req = db.execute(
+        "SELECT item_id, requested_quantity, status FROM restock_requests WHERE id = ?",
+        (req_id,),
+    ).fetchone()
+    if req is None:
+        flash("补货记录不存在")
+        return redirect(url_for("restock"))
+
+    if req["status"] == "入库":
+        item = db.execute(
+            "SELECT quantity FROM items WHERE id = ?",
+            (int(req["item_id"]),),
+        ).fetchone()
+        if item is None:
+            flash("库存品不存在，无法删除该记录")
+            return redirect(url_for("restock"))
+        if int(item["quantity"]) < int(req["requested_quantity"]):
+            flash("当前库存不足，无法通过删除回滚该入库记录")
+            return redirect(url_for("restock"))
+
+        db.execute(
+            "UPDATE items SET quantity = quantity - ?, updated_at = ? WHERE id = ?",
+            (int(req["requested_quantity"]), now(), int(req["item_id"])),
+        )
+        db.execute(
+            """
+            INSERT INTO stock_movements (item_id, action, delta, note, created_at)
+            VALUES (?, '补货删除回滚', ?, ?, ?)
+            """,
+            (
+                int(req["item_id"]),
+                -int(req["requested_quantity"]),
+                f"删除补货记录#{req_id}回滚",
+                now(),
+            ),
+        )
+
     db.execute("DELETE FROM restock_requests WHERE id = ?", (req_id,))
     db.commit()
     flash("补货记录已删除")
     return redirect(url_for("restock"))
+
+
+@app.route("/outbound", methods=["GET"])
+def outbound():
+    db = get_db()
+    requests_data = db.execute(
+        """
+        SELECT o.*, i.name AS item_name, i.unit
+        FROM outbound_requests o
+        JOIN items i ON i.id = o.item_id
+        ORDER BY o.id DESC
+        LIMIT 100
+        """
+    ).fetchall()
+    return render_template("outbound.html", requests=requests_data)
+
+
+@app.route("/outbound/start", methods=["POST"])
+def outbound_start():
+    return redirect(url_for("outbound_session"))
+
+
+@app.route("/outbound/session", methods=["GET"])
+def outbound_session():
+    db = get_db()
+    items_data = db.execute(
+        """
+        SELECT i.id, i.name, i.quantity, i.unit, i.safety_stock, c.name AS category_name
+        FROM items i
+        JOIN categories c ON c.id = i.category_id
+        ORDER BY c.name, i.name
+        """
+    ).fetchall()
+    return render_template("outbound_session.html", items=items_data)
+
+
+@app.route("/outbound/submit", methods=["POST"])
+def outbound_submit():
+    db = get_db()
+    reason = request.form.get("reason", "").strip()
+    items_data = db.execute("SELECT id, quantity FROM items").fetchall()
+    rows: list[tuple[int, int]] = []
+    for item in items_data:
+        raw = request.form.get(f"outbound_{item['id']}", "").strip()
+        if raw == "":
+            continue
+        qty = int(raw)
+        if qty <= 0:
+            continue
+        if qty > int(item["quantity"]):
+            flash("存在出库数量大于当前库存的品项，请检查后重试")
+            return redirect(url_for("outbound_session"))
+        rows.append((int(item["id"]), qty))
+    if not rows:
+        flash("请至少填写一个出库数量")
+        return redirect(url_for("outbound_session"))
+    for item_id, qty in rows:
+        cur = db.execute(
+            """
+            INSERT INTO outbound_requests (item_id, requested_quantity, reason, status, rolled_back, created_at)
+            VALUES (?, ?, ?, '出库', 0, ?)
+            """,
+            (item_id, qty, reason, now()),
+        )
+        req_id = int(cur.lastrowid)
+        db.execute(
+            "UPDATE items SET quantity = quantity - ?, updated_at = ? WHERE id = ?",
+            (qty, now(), item_id),
+        )
+        db.execute(
+            """
+            INSERT INTO stock_movements (item_id, action, delta, note, created_at)
+            VALUES (?, '出库', ?, ?, ?)
+            """,
+            (item_id, -qty, f"出库记录#{req_id}出库", now()),
+        )
+    db.commit()
+    flash("出库已执行")
+    return redirect(url_for("outbound"))
+
+
+@app.route("/outbound/<int:req_id>/rollback", methods=["POST"])
+def rollback_outbound(req_id: int):
+    db = get_db()
+    req = db.execute(
+        """
+        SELECT item_id, requested_quantity, rolled_back
+        FROM outbound_requests
+        WHERE id = ? AND status = '出库'
+        """,
+        (req_id,),
+    ).fetchone()
+    if req is None:
+        flash("出库记录不存在")
+        return redirect(url_for("outbound"))
+    if int(req["rolled_back"]) == 1:
+        flash("该记录已回退，无需重复操作")
+        return redirect(url_for("outbound"))
+    db.execute(
+        "UPDATE items SET quantity = quantity + ?, updated_at = ? WHERE id = ?",
+        (int(req["requested_quantity"]), now(), int(req["item_id"])),
+    )
+    db.execute(
+        """
+        INSERT INTO stock_movements (item_id, action, delta, note, created_at)
+        VALUES (?, '出库回退', ?, ?, ?)
+        """,
+        (
+            int(req["item_id"]),
+            int(req["requested_quantity"]),
+            f"回退出库记录#{req_id}",
+            now(),
+        ),
+    )
+    db.execute("UPDATE outbound_requests SET rolled_back = 1 WHERE id = ?", (req_id,))
+    db.commit()
+    flash("出库记录已回退")
+    return redirect(url_for("outbound"))
+
+
+@app.route("/outbound/<int:req_id>/delete", methods=["POST"])
+def delete_outbound(req_id: int):
+    db = get_db()
+    db.execute("DELETE FROM outbound_requests WHERE id = ?", (req_id,))
+    db.commit()
+    flash("出库记录已删除")
+    return redirect(url_for("outbound"))
 
 
 @app.route("/sw.js")

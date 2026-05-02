@@ -1,4 +1,4 @@
-const CACHE_NAME = "dailycheck-v2";
+const CACHE_NAME = "dailycheck-v3";
 const APP_SHELL = [
   "/",
   "/static/style.css",
@@ -7,7 +7,9 @@ const APP_SHELL = [
   "/stocktake",
   "/inventory",
   "/restock",
-  "/restock/session"
+  "/restock/session",
+  "/outbound",
+  "/outbound/session"
 ];
 
 self.addEventListener("install", (event) => {

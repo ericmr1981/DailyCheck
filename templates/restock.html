@@ -2,7 +2,7 @@
 {% block content %}
 <h2>补货记录</h2>
 <form method="post" action="{{ url_for('restock_start') }}" class="form-inline">
-  <button type="submit">开始补货</button>
+  <button type="submit">新建入库</button>
 </form>
 
 <table>
@@ -15,14 +15,9 @@
     <td>{{ r.reason }}</td>
     <td>{{ r.status }}</td>
     <td>
-      {% if r.status == '提交' %}
-      <form method="post" action="{{ url_for('update_restock_status', req_id=r.id) }}" class="inline" onsubmit="return confirm('确认将该补货记录执行入库？');">
-        <input type="hidden" name="status" value="入库" />
-        <button type="submit">入库</button>
+      <form method="post" action="{{ url_for('delete_restock', req_id=r.id) }}" class="inline" onsubmit="return confirm('确认删除该记录？删除后将回滚库存。');">
+        <button type="submit">删除</button>
       </form>
-      {% else %}
-      已入库
-      {% endif %}
     </td>
   </tr>
   {% endfor %}

@@ -95,6 +95,9 @@ button {
 }
 
 .warn { color: var(--warn); font-weight: 700; }
+.danger { color: #b91c1c; font-weight: 700; }
+.warn-row { background: #fef9c3; }
+.danger-row { background: #fecaca; }
 
 table {
   width: 100%;

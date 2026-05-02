@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>库存查阅</h2>
+<h2>库存查阅 <a href="{{ url_for('items') }}" style="font-size:13px;font-weight:400;color:var(--brand);margin-left:12px;">品项管理 →</a></h2>
 <form method="get" class="form-inline">
   <input name="q" value="{{ q }}" placeholder="按品项/品类搜索" />
   <button type="submit">查询</button>

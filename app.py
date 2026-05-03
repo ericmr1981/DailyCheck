@@ -4,13 +4,14 @@ import sqlite3
 from contextlib import closing
 from datetime import datetime
 from pathlib import Path
+import os
 from typing import Any
 
 from flask import Flask, flash, g, redirect, render_template, request, send_from_directory, url_for
 
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "inventory.db"
-FIXED_CATEGORIES = ("包材", "原料", "工具")
+FIXED_CATEGORIES = ("包材", "原料", "工具", "成品")
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "dev-key-change-me"
@@ -169,7 +170,7 @@ def dashboard():
 def categories():
     db = get_db()
     rows = db.execute(
-        "SELECT * FROM categories WHERE name IN (?, ?, ?) ORDER BY id ASC",
+        f"SELECT * FROM categories WHERE name IN ({','.join('?' for _ in FIXED_CATEGORIES)}) ORDER BY id ASC",
         FIXED_CATEGORIES,
     ).fetchall()
     return render_template("categories.html", categories=rows)
@@ -209,7 +210,7 @@ def items():
         return redirect(url_for("items"))
 
     categories_data = db.execute(
-        "SELECT id, name FROM categories WHERE name IN (?, ?, ?) ORDER BY name",
+        f"SELECT id, name FROM categories WHERE name IN ({','.join('?' for _ in FIXED_CATEGORIES)}) ORDER BY name",
         FIXED_CATEGORIES,
     ).fetchall()
     rows = db.execute(
@@ -221,6 +222,44 @@ def items():
         """
     ).fetchall()
     return render_template("items.html", items=rows, categories=categories_data)
+
+
+@app.route("/items/<int:item_id>/edit", methods=["GET", "POST"])
+def edit_item(item_id: int):
+    db = get_db()
+    item = db.execute("SELECT * FROM items WHERE id = ?", (item_id,)).fetchone()
+    if not item:
+        flash("库存品不存在")
+        return redirect(url_for("items"))
+
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        category_id = request.form.get("category_id", "").strip()
+        quantity = int(request.form.get("quantity", "0") or 0)
+        safety_stock = int(request.form.get("safety_stock", "0") or 0)
+        unit = request.form.get("unit", "件").strip() or "件"
+
+        if not name or not category_id:
+            flash("名称、品类为必填")
+            return redirect(url_for("edit_item", item_id=item_id))
+
+        db.execute(
+            """
+            UPDATE items
+            SET name = ?, category_id = ?, quantity = ?, safety_stock = ?, unit = ?, updated_at = ?
+            WHERE id = ?
+            """,
+            (name, int(category_id), quantity, safety_stock, unit, now(), item_id),
+        )
+        db.commit()
+        flash("库存品已更新")
+        return redirect(url_for("items"))
+
+    categories_data = db.execute(
+        f"SELECT id, name FROM categories WHERE name IN ({','.join('?' for _ in FIXED_CATEGORIES)}) ORDER BY name",
+        FIXED_CATEGORIES,
+    ).fetchall()
+    return render_template("edit_item.html", item=item, categories=categories_data)
 
 
 @app.route("/items/<int:item_id>/delete", methods=["POST"])
@@ -708,4 +747,4 @@ def webmanifest():
 
 if __name__ == "__main__":
     init_db()
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5001")), debug=True)

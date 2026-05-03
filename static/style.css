@@ -93,6 +93,64 @@ button {
   background: #b91c1c;
   border-color: #b91c1c;
 }
+.btn-secondary {
+  display: inline-block;
+  background: transparent;
+  color: var(--brand);
+  border: 1px solid var(--brand);
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  padding: 11px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+a.btn-sm,
+button.btn-sm {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid;
+  line-height: 1.4;
+  cursor: pointer;
+}
+a.btn-sm.btn-edit {
+  background: transparent;
+  color: var(--brand);
+  border-color: var(--brand);
+}
+a.btn-sm.btn-edit:hover {
+  background: var(--brand);
+  color: #fff;
+}
+button.btn-sm.btn-delete {
+  background: transparent;
+  color: #b91c1c;
+  border-color: #b91c1c;
+  width: auto;
+}
+button.btn-sm.btn-delete:hover {
+  background: #b91c1c;
+  color: #fff;
+}
+.btn-cancel {
+  display: inline-block;
+  background: #f1f5f9;
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  padding: 11px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+}
 
 .warn { color: var(--warn); font-weight: 700; }
 

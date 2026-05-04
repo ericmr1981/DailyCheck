@@ -146,6 +146,16 @@ def dashboard():
         "SELECT COUNT(*) AS c FROM restock_requests WHERE status = '提交'"
     ).fetchone()["c"]
 
+    today = datetime.now().strftime("%Y-%m-%d")
+    outbound_today = db.execute(
+        "SELECT COUNT(*) AS c FROM outbound_requests WHERE created_at LIKE ? || '%'",
+        (today,),
+    ).fetchone()["c"]
+    inbound_today = db.execute(
+        "SELECT COUNT(*) AS c FROM stock_movements WHERE action = '补货入库' AND created_at LIKE ? || '%'",
+        (today,),
+    ).fetchone()["c"]
+
     latest_movements = db.execute(
         """
         SELECT m.created_at, m.action, m.delta, i.name AS item_name
@@ -162,6 +172,8 @@ def dashboard():
         total_categories=total_categories,
         low_stock=low_stock,
         pending_requests=pending_requests,
+        outbound_today=outbound_today,
+        inbound_today=inbound_today,
         latest_movements=latest_movements,
     )
 
@@ -733,6 +745,44 @@ def delete_outbound(req_id: int):
     db.commit()
     flash("出库记录已删除")
     return redirect(url_for("outbound"))
+
+
+@app.route("/report/outbound")
+def report_outbound():
+    db = get_db()
+    today = datetime.now().strftime("%Y-%m-%d")
+    records = db.execute(
+        """
+        SELECT o.item_id, i.name AS item_name, i.unit, SUM(o.requested_quantity) AS total_qty, COUNT(*) AS times,
+               MAX(o.created_at) AS last_time
+        FROM outbound_requests o
+        JOIN items i ON i.id = o.item_id
+        WHERE o.created_at LIKE ? || '%'
+        GROUP BY o.item_id
+        ORDER BY last_time DESC
+        """,
+        (today,),
+    ).fetchall()
+    return render_template("report_outbound.html", records=records, date=today)
+
+
+@app.route("/report/inbound")
+def report_inbound():
+    db = get_db()
+    today = datetime.now().strftime("%Y-%m-%d")
+    records = db.execute(
+        """
+        SELECT m.item_id, i.name AS item_name, i.unit, SUM(m.delta) AS total_qty, COUNT(*) AS times,
+               MAX(m.created_at) AS last_time
+        FROM stock_movements m
+        JOIN items i ON i.id = m.item_id
+        WHERE m.action = '补货入库' AND m.created_at LIKE ? || '%'
+        GROUP BY m.item_id
+        ORDER BY last_time DESC
+        """,
+        (today,),
+    ).fetchall()
+    return render_template("report_inbound.html", records=records, date=today)
 
 
 @app.route("/sw.js")

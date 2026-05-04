@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<table>
+  <tr><th>操作时间</th><th>品项</th><th>出库总数量</th><th>出库次数</th></tr>
+  {% for r in records %}
+  <tr>
+    <td>{{ r.last_time }}</td>
+    <td>{{ r.item_name }}</td>
+    <td>{{ r.total_qty }} {{ r.unit }}</td>
+    <td>{{ r.times }} 次</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="3" style="text-align:center;color:var(--muted)">今日暂无出库记录</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

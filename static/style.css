@@ -154,6 +154,9 @@ button.btn-sm.btn-delete:hover {
 }
 
 .warn { color: var(--warn); font-weight: 700; }
+.danger { color: #b91c1c; font-weight: 700; }
+.warn-row { background: #fef9c3; }
+.danger-row { background: #fef9c3; }
 
 table {
   width: 100%;

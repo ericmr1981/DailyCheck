@@ -182,6 +182,108 @@ def dashboard():
     )
 
 
+@app.route("/summary")
+def summary():
+    db = get_db()
+
+    total_inbound = db.execute(
+        "SELECT COALESCE(SUM(delta), 0) AS c FROM stock_movements WHERE action = '补货入库'"
+    ).fetchone()["c"]
+
+    total_stock = db.execute(
+        "SELECT COALESCE(SUM(quantity), 0) AS c FROM items"
+    ).fetchone()["c"]
+
+    consumption_rate = round(
+        (total_inbound - total_stock) / total_inbound * 100, 1
+    ) if total_inbound > 0 else 0
+
+    total_inbound_value = db.execute(
+        """
+        SELECT COALESCE(SUM(i.unit_cost * sub.inbound_qty), 0) AS c
+        FROM (
+            SELECT m.item_id, SUM(m.delta) AS inbound_qty
+            FROM stock_movements m
+            WHERE m.action = '补货入库'
+            GROUP BY m.item_id
+        ) sub
+        JOIN items i ON i.id = sub.item_id
+        """
+    ).fetchone()["c"]
+
+    total_stock_value = db.execute(
+        "SELECT COALESCE(SUM(quantity * unit_cost), 0) AS c FROM items"
+    ).fetchone()["c"]
+
+    category_stats = db.execute(
+        """
+        SELECT c.name AS category_name,
+               COALESCE(SUM(i.quantity), 0) AS stock_qty,
+               COALESCE(SUM(i.quantity * i.unit_cost), 0) AS stock_value
+        FROM categories c
+        LEFT JOIN items i ON i.category_id = c.id
+        GROUP BY c.id, c.name
+        ORDER BY c.id
+        """
+    ).fetchall()
+
+    cat_inbound = {
+        r["category_name"]: r["total_inbound"]
+        for r in db.execute(
+            """
+            SELECT c.name AS category_name,
+                   COALESCE(SUM(m.delta), 0) AS total_inbound
+            FROM categories c
+            LEFT JOIN items i ON i.category_id = c.id
+            LEFT JOIN stock_movements m ON m.item_id = i.id AND m.action = '补货入库'
+            GROUP BY c.id, c.name
+            ORDER BY c.id
+            """
+        ).fetchall()
+    }
+
+    enriched_stats = []
+    for row in category_stats:
+        ib = cat_inbound.get(row["category_name"], 0)
+        consumed = ib - row["stock_qty"]
+        rate = round(consumed / ib * 100, 1) if ib > 0 else 0
+        enriched_stats.append({
+            "category_name": row["category_name"],
+            "total_inbound": ib,
+            "stock_qty": row["stock_qty"],
+            "consumed": consumed,
+            "consumption_rate": rate,
+            "stock_value": row["stock_value"],
+        })
+
+    top_consumed = db.execute(
+        """
+        SELECT i.name AS item_name, c.name AS category_name,
+               ABS(SUM(m.delta)) AS consumed_qty,
+               i.unit,
+               ROUND(ABS(SUM(m.delta)) * i.unit_cost, 2) AS consumed_value
+        FROM stock_movements m
+        JOIN items i ON i.id = m.item_id
+        JOIN categories c ON c.id = i.category_id
+        WHERE m.action = '出库'
+        GROUP BY m.item_id
+        ORDER BY consumed_qty DESC
+        LIMIT 10
+        """
+    ).fetchall()
+
+    return render_template(
+        "summary.html",
+        total_inbound=total_inbound,
+        total_stock=total_stock,
+        consumption_rate=consumption_rate,
+        total_inbound_value=round(total_inbound_value, 2),
+        total_stock_value=round(total_stock_value, 2),
+        category_stats=enriched_stats,
+        top_consumed=top_consumed,
+    )
+
+
 @app.route("/categories", methods=["GET"])
 def categories():
     db = get_db()

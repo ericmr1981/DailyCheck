@@ -124,6 +124,10 @@ def init_db() -> None:
                 "ALTER TABLE outbound_requests ADD COLUMN rolled_back INTEGER NOT NULL DEFAULT 0"
             )
 
+        items_cols = [r[1] for r in conn.execute("PRAGMA table_info(items)").fetchall()]
+        if "unit_cost" not in items_cols:
+            conn.execute("ALTER TABLE items ADD COLUMN unit_cost REAL NOT NULL DEFAULT 0")
+
         existing = {r[0] for r in conn.execute("SELECT name FROM categories").fetchall()}
         for name in FIXED_CATEGORIES:
             if name not in existing:

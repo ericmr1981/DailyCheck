@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>汇总</h2>
+
+<div class="grid cols-5">
+  <section class="card">
+    <p>总进货量</p>
+    <strong>{{ total_inbound }} <small>件</small></strong>
+  </section>
+  <section class="card">
+    <p>当前库存</p>
+    <strong>{{ total_stock }} <small>件</small></strong>
+  </section>
+  <section class="card">
+    <p>消耗率</p>
+    <strong>{{ consumption_rate }}<small>%</small></strong>
+  </section>
+  <section class="card">
+    <p>进货总金额</p>
+    <strong><small>¥</small>{{ "{:,.2f}".format(total_inbound_value) }}</strong>
+  </section>
+  <section class="card">
+    <p>库存总价值</p>
+    <strong><small>¥</small>{{ "{:,.2f}".format(total_stock_value) }}</strong>
+  </section>
+</div>
+
+<h3>按品类统计</h3>
+<div class="table-scroll">
+<table>
+  <tr>
+    <th>品类</th>
+    <th>总进货</th>
+    <th>当前库存</th>
+    <th>已消耗</th>
+    <th>消耗率</th>
+    <th>品类价值</th>
+  </tr>
+  {% for cat in category_stats %}
+  <tr>
+    <td>{{ cat.category_name }}</td>
+    <td>{{ cat.total_inbound }} 件</td>
+    <td>{{ cat.stock_qty }} 件</td>
+    <td>{{ cat.consumed }} 件</td>
+    <td>{{ cat.consumption_rate }}%</td>
+    <td>¥{{ "{:,.2f}".format(cat.stock_value) }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+
+<h3>消耗排行 Top 10</h3>
+<div class="table-scroll">
+<table>
+  <tr>
+    <th>排名</th>
+    <th>品项</th>
+    <th>品类</th>
+    <th>消耗量</th>
+    <th>消耗金额</th>
+  </tr>
+  {% for item in top_consumed %}
+  <tr>
+    <td>{{ loop.index }}</td>
+    <td>{{ item.item_name }}</td>
+    <td>{{ item.category_name }}</td>
+    <td>{{ item.consumed_qty }} {{ item.unit }}</td>
+    <td>¥{{ "{:,.2f}".format(item.consumed_value) }}</td>
+  </tr>
+  {% else %}
+  <tr><td colspan="5" style="text-align:center;color:var(--muted)">暂无消耗记录</td></tr>
+  {% endfor %}
+</table>
+</div>
+{% endblock %}

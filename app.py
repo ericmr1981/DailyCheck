@@ -254,6 +254,7 @@ def edit_item(item_id: int):
         category_id = request.form.get("category_id", "").strip()
         quantity = int(request.form.get("quantity", "0") or 0)
         safety_stock = int(request.form.get("safety_stock", "0") or 0)
+        unit_cost = float(request.form.get("unit_cost", "0") or 0)
         unit = request.form.get("unit", "件").strip() or "件"
 
         if not name or not category_id:
@@ -263,10 +264,10 @@ def edit_item(item_id: int):
         db.execute(
             """
             UPDATE items
-            SET name = ?, category_id = ?, quantity = ?, safety_stock = ?, unit = ?, updated_at = ?
+            SET name = ?, category_id = ?, quantity = ?, safety_stock = ?, unit_cost = ?, unit = ?, updated_at = ?
             WHERE id = ?
             """,
-            (name, int(category_id), quantity, safety_stock, unit, now(), item_id),
+            (name, int(category_id), quantity, safety_stock, unit_cost, unit, now(), item_id),
         )
         db.commit()
         flash("库存品已更新")

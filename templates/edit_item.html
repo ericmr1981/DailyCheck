@@ -11,6 +11,7 @@
   </select>
   <input name="quantity" type="number" min="0" placeholder="库存数量" value="{{ item.quantity }}" />
   <input name="safety_stock" type="number" min="0" placeholder="安全库存" value="{{ item.safety_stock }}" />
+  <input name="unit_cost" type="number" min="0" step="0.01" placeholder="进货单价（¥）" value="{{ item.unit_cost or 0 }}" />
   <input name="unit" placeholder="单位（默认件）" value="{{ item.unit }}" />
   <a href="{{ url_for('items') }}" class="btn-cancel">取消</a>
   <button type="submit">保存修改</button>

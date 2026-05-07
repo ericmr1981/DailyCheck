@@ -17,6 +17,7 @@
     <h1>库存管理</h1>
     <a href="{{ url_for('dashboard') }}">总览</a>
     <a href="{{ url_for('categories') }}">品类管理</a>
+    <a href="{{ url_for('summary') }}">汇总</a>
     <a href="{{ url_for('items') }}">库存品管理</a>
     <a href="{{ url_for('stocktake') }}">库存盘点</a>
     <a href="{{ url_for('inventory') }}">库存查阅</a>
@@ -26,7 +27,7 @@
 
   <div class="app-shell">
     <header class="mobile-header mobile-only">
-      <p class="mobile-subtitle">仓储运营</p>
+      <p class="mobile-subtitle">项目运营</p>
       <h1>轻量库存管理</h1>
     </header>
 
@@ -46,6 +47,7 @@
     <nav class="mobile-nav mobile-only">
       <a href="{{ url_for('dashboard') }}">总览</a>
       <a href="{{ url_for('inventory') }}">库存</a>
+      <a href="{{ url_for('summary') }}">汇总</a>
       <a href="{{ url_for('items') }}">品项</a>
       <a href="{{ url_for('stocktake') }}">盘点</a>
       <a href="{{ url_for('restock') }}">补货</a>

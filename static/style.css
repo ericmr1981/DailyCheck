@@ -62,7 +62,17 @@ h2, h3 {
 
 .grid { display: grid; gap: 10px; }
 .cols-4 { grid-template-columns: 1fr 1fr; }
+.cols-5 { grid-template-columns: 1fr 1fr; }
 .cols-3 { grid-template-columns: 1fr; }
+
+.card small { font-size: 14px; font-weight: 400; }
+
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 14px;
+}
+.table-scroll table { display: table; min-width: 100%; }
 
 .form-inline,
 form.grid {
@@ -248,7 +258,13 @@ th, td {
     padding: 22px;
   }
   .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .mobile-only { display: none; }
   .desktop-only { display: block; }
+}
+
+@media (max-width: 960px) {
+  .cols-5 { grid-template-columns: 1fr 1fr; }
+  .cols-5 .card:last-child:nth-child(5) { grid-column: 1 / -1; }
 }

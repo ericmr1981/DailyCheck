@@ -206,6 +206,7 @@ def items():
         category_id = request.form.get("category_id", "").strip()
         quantity = int(request.form.get("quantity", "0") or 0)
         safety_stock = int(request.form.get("safety_stock", "0") or 0)
+        unit_cost = float(request.form.get("unit_cost", "0") or 0)
         unit = request.form.get("unit", "件").strip() or "件"
 
         if not name or not category_id:
@@ -214,10 +215,10 @@ def items():
         try:
             db.execute(
                 """
-                INSERT INTO items (sku, name, category_id, quantity, safety_stock, unit, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO items (sku, name, category_id, quantity, safety_stock, unit_cost, unit, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (gen_sku(), name, int(category_id), quantity, safety_stock, unit, now()),
+                (gen_sku(), name, int(category_id), quantity, safety_stock, unit_cost, unit, now()),
             )
             db.commit()
             flash("库存品创建成功")

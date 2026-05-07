@@ -2,26 +2,46 @@
 {% block content %}
 <h2>库存品管理</h2>
 <form method="post" class="grid cols-3">
-  <input name="name" placeholder="品项名称" required />
-  <select name="category_id" required>
-    <option value="">选择品类</option>
-    {% for c in categories %}
-    <option value="{{ c.id }}">{{ c.name }}</option>
-    {% endfor %}
-  </select>
-  <input name="quantity" type="number" min="0" placeholder="初始库存" />
-  <input name="safety_stock" type="number" min="0" placeholder="安全库存" />
-  <input name="unit_cost" type="number" min="0" step="0.01" placeholder="进货单价（¥）" />
-  <input name="unit" placeholder="单位（默认件）" />
+  <label>
+    <span>品项名称</span>
+    <input name="name" required />
+  </label>
+  <label>
+    <span>品类</span>
+    <select name="category_id" required>
+      <option value="">选择品类</option>
+      {% for c in categories %}
+      <option value="{{ c.id }}">{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>
+    <span>初始库存</span>
+    <input name="quantity" type="number" min="0" />
+  </label>
+  <label>
+    <span>安全库存</span>
+    <input name="safety_stock" type="number" min="0" />
+  </label>
+  <label>
+    <span>进货单价（¥）</span>
+    <input name="unit_cost" type="number" min="0" step="0.01" />
+  </label>
+  <label>
+    <span>单位</span>
+    <input name="unit" placeholder="件" />
+  </label>
   <button type="submit">新增库存品</button>
 </form>
 
 <table>
-  <tr><th>品项</th><th>品类</th><th>库存</th><th>安全库存</th><th>更新时间</th><th>操作</th></tr>
+  <tr><th>品项</th><th>品类</th><th>库存</th><th>安全库存</th><th>单价（¥）</th><th>更新时间</th><th>操作</th></tr>
   {% for i in items %}
   <tr>
     <td>{{ i.name }}</td><td>{{ i.category_name }}</td>
-    <td>{{ i.quantity }} {{ i.unit }}</td><td>{{ i.safety_stock }}</td><td>{{ i.updated_at }}</td>
+    <td>{{ i.quantity }} {{ i.unit }}</td><td>{{ i.safety_stock }}</td>
+    <td>{{ "%.2f"|format(i.unit_cost) if i.unit_cost else "-" }}</td>
+    <td>{{ i.updated_at }}</td>
     <td class="inline">
       <a href="{{ url_for('edit_item', item_id=i.id) }}" class="btn-sm btn-edit">编辑</a>
       <form method="post" action="{{ url_for('delete_item', item_id=i.id) }}" class="inline" onsubmit="return confirm('确认删除该库存品？');">

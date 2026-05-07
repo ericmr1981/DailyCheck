@@ -74,6 +74,18 @@ h2, h3 {
 }
 .table-scroll table { display: table; min-width: 100%; }
 
+label span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+label input,
+label select {
+  width: 100%;
+}
+
 .form-inline,
 form.grid {
   background: var(--panel);

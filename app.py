@@ -968,20 +968,17 @@ def report_inbound():
         ).fetchall()
 
         daily: dict[str, dict[str, int]] = {}
-        all_items: dict[str, str] = {}
-        item_names_order: list[str] = []
-        seen: set[str] = set()
         for r in raw:
-            item = r["item_name"]
-            if item not in seen:
-                seen.add(item)
-                item_names_order.append(item)
-            all_items[item] = r["unit"]
             d = r["created_at"][:10]
-            key = (item, d)
+            key = (r["item_name"], d)
             if key not in daily:
                 daily[key] = 0
             daily[key] += r["qty"]
+
+        # All items (not just those with inbound movements)
+        all_items_rows = db.execute("SELECT name, unit FROM items ORDER BY id").fetchall()
+        item_names_order = [r["name"] for r in all_items_rows]
+        all_items = {r["name"]: r["unit"] for r in all_items_rows}
 
         # Calculate initial stock per item: gap = current qty - sum of ALL movements
         init_stock = {

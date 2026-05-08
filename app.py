@@ -190,14 +190,9 @@ def summary():
     total_inbound_value = db.execute(
         """
         SELECT
-            COALESCE(SUM(
-                (i.quantity - COALESCE(sm_all.sm_sum, 0)) * i.unit_cost
-            ), 0)
+            COALESCE(SUM(i.initial_quantity * i.unit_cost), 0)
             + COALESCE(SUM(i.unit_cost * sub.inbound_qty), 0) AS c
         FROM items i
-        LEFT JOIN (
-            SELECT item_id, SUM(delta) AS sm_sum FROM stock_movements GROUP BY item_id
-        ) sm_all ON sm_all.item_id = i.id
         LEFT JOIN (
             SELECT m.item_id, SUM(m.delta) AS inbound_qty
             FROM stock_movements m WHERE m.action = '补货入库' GROUP BY m.item_id
@@ -214,16 +209,11 @@ def summary():
         """
         SELECT
             c.name AS category_name,
-            COALESCE(SUM(
-                (i.quantity - COALESCE(sm_all.sm_sum, 0)) * i.unit_cost
-            ), 0) AS init_value,
+            COALESCE(SUM(i.initial_quantity * i.unit_cost), 0) AS init_value,
             COALESCE(SUM(i.unit_cost * sub.inbound_qty), 0) AS restock_value,
             COALESCE(SUM(ABS(m.delta) * i.unit_cost), 0) AS consumed_value
         FROM categories c
         LEFT JOIN items i ON i.category_id = c.id
-        LEFT JOIN (
-            SELECT item_id, SUM(delta) AS sm_sum FROM stock_movements GROUP BY item_id
-        ) sm_all ON sm_all.item_id = i.id
         LEFT JOIN (
             SELECT m.item_id, SUM(m.delta) AS inbound_qty
             FROM stock_movements m WHERE m.action = '补货入库' GROUP BY m.item_id
@@ -985,16 +975,11 @@ def report_inbound():
         item_names_order = [r["name"] for r in all_items_rows]
         all_items = {r["name"]: r["unit"] for r in all_items_rows}
 
-        # Calculate initial stock per item: gap = current qty - sum of ALL movements
+        # Initial stock: stored in initial_quantity column
         init_stock = {
-            r["name"]: r["gap"]
+            r["name"]: r["initial_quantity"]
             for r in db.execute(
-                """
-                SELECT i.name, i.quantity - COALESCE(SUM(sm.delta), 0) AS gap
-                FROM items i
-                LEFT JOIN stock_movements sm ON sm.item_id = i.id
-                GROUP BY i.id
-                """
+                "SELECT name, initial_quantity FROM items"
             ).fetchall()
         }
 

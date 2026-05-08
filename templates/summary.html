@@ -2,7 +2,11 @@
 {% block content %}
 <h2>汇总</h2>
 
-<div class="grid cols-3">
+<div class="grid cols-4">
+  <section class="card">
+    <p>营业额</p>
+    <strong><small>¥</small>{{ "{:,.2f}".format(total_revenue) }}</strong>
+  </section>
   <section class="card">
     <p>进货总金额</p>
     <strong><small>¥</small>{{ "{:,.2f}".format(total_inbound_value) }}</strong>

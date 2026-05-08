@@ -214,6 +214,11 @@ def summary():
         "SELECT COALESCE(SUM(quantity * unit_cost), 0) AS c FROM items"
     ).fetchone()["c"]
 
+    # 营业额：读取 daily_revenue 表
+    total_revenue = db.execute(
+        "SELECT COALESCE(SUM(amount), 0) AS c FROM daily_revenue"
+    ).fetchone()["c"]
+
     # 按品类统计：初始库存价值 + 补货入库价值 - 出库消耗价值
     # 先按品聚合（避免出库多条时 init/restock 值被倍乘）
     cat_data = db.execute(
@@ -277,6 +282,7 @@ def summary():
         total_inbound_value=round(total_inbound_value, 2),
         total_consumed_value=round(total_consumed_value, 2),
         total_stock_value=round(total_stock_value, 2),
+        total_revenue=round(total_revenue, 2),
         category_stats=enriched_stats,
         top_consumed=top_consumed,
     )
@@ -1067,7 +1073,41 @@ def webmanifest():
 
 if __name__ == "__main__":
     init_db()
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5001")), debug=True)
+    
+
+@app.route("/api/revenue", methods=["POST"])
+def api_upload_revenue():
+    import os
+    token = os.getenv("REVENUE_TOKEN", "")
+    expected = request.form.get("token", "")
+    if token and expected != token:
+        return "Unauthorized", 401
+
+    date_str = request.form.get("date", "").strip()
+    amount_str = request.form.get("amount", "0").strip()
+
+    if not date_str:
+        return "Missing date", 400
+
+    try:
+        amount = float(amount_str)
+    except ValueError:
+        return "Invalid amount", 400
+
+    db = get_db()
+    cur = db.execute(
+        """
+        INSERT INTO daily_revenue (date, amount, created_at)
+        VALUES (?, ?, ?)
+        ON CONFLICT(date) DO UPDATE SET amount = excluded.amount, created_at = excluded.created_at
+        """,
+        (date_str, amount, now()),
+    )
+    db.commit()
+    return f"OK {date_str}={amount}"
+
+
+app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5001")), debug=True)
 
 
 @app.route("/stocktake/batch/<int:batch_id>/approve", methods=["POST"])

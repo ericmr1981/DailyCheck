@@ -922,39 +922,66 @@ def delete_outbound(req_id: int):
 @app.route("/report/outbound")
 def report_outbound():
     db = get_db()
+    scope = request.args.get("scope", "today")
     today = datetime.now().strftime("%Y-%m-%d")
-    records = db.execute(
-        """
-        SELECT o.item_id, i.name AS item_name, i.unit, SUM(o.requested_quantity) AS total_qty, COUNT(*) AS times,
-               MAX(o.created_at) AS last_time
-        FROM outbound_requests o
-        JOIN items i ON i.id = o.item_id
-        WHERE o.created_at LIKE ? || '%'
-        GROUP BY o.item_id
-        ORDER BY last_time DESC
-        """,
-        (today,),
-    ).fetchall()
-    return render_template("report_outbound.html", records=records, date=today)
+    if scope == "all":
+        records = db.execute(
+            """
+            SELECT o.item_id, i.name AS item_name, i.unit, SUM(o.requested_quantity) AS total_qty, COUNT(*) AS times,
+                   MAX(o.created_at) AS last_time
+            FROM outbound_requests o
+            JOIN items i ON i.id = o.item_id
+            GROUP BY o.item_id
+            ORDER BY last_time DESC
+            """
+        ).fetchall()
+    else:
+        records = db.execute(
+            """
+            SELECT o.item_id, i.name AS item_name, i.unit, SUM(o.requested_quantity) AS total_qty, COUNT(*) AS times,
+                   MAX(o.created_at) AS last_time
+            FROM outbound_requests o
+            JOIN items i ON i.id = o.item_id
+            WHERE o.created_at LIKE ? || '%'
+            GROUP BY o.item_id
+            ORDER BY last_time DESC
+            """,
+            (today,),
+        ).fetchall()
+    return render_template("report_outbound.html", records=records, date=today, scope=scope)
 
 
 @app.route("/report/inbound")
 def report_inbound():
     db = get_db()
+    scope = request.args.get("scope", "today")
     today = datetime.now().strftime("%Y-%m-%d")
-    records = db.execute(
-        """
-        SELECT m.item_id, i.name AS item_name, i.unit, SUM(m.delta) AS total_qty, COUNT(*) AS times,
+    if scope == "all":
+        records = db.execute(
+            """
+            SELECT m.item_id, i.name AS item_name, i.unit, SUM(m.delta) AS total_qty, COUNT(*) AS times,
+                   MAX(m.created_at) AS last_time
+            FROM stock_movements m
+            JOIN items i ON i.id = m.item_id
+            WHERE m.action = '补货入库'
+            GROUP BY m.item_id
+            ORDER BY last_time DESC
+            """
+        ).fetchall()
+    else:
+        records = db.execute(
+            """
+            SELECT m.item_id, i.name AS item_name, i.unit, SUM(m.delta) AS total_qty, COUNT(*) AS times,
                MAX(m.created_at) AS last_time
-        FROM stock_movements m
-        JOIN items i ON i.id = m.item_id
-        WHERE m.action = '补货入库' AND m.created_at LIKE ? || '%'
-        GROUP BY m.item_id
-        ORDER BY last_time DESC
-        """,
-        (today,),
-    ).fetchall()
-    return render_template("report_inbound.html", records=records, date=today)
+            FROM stock_movements m
+            JOIN items i ON i.id = m.item_id
+            WHERE m.action = '补货入库' AND m.created_at LIKE ? || '%'
+            GROUP BY m.item_id
+            ORDER BY last_time DESC
+            """,
+            (today,),
+        ).fetchall()
+    return render_template("report_inbound.html", records=records, date=today, scope=scope)
 
 
 @app.route("/sw.js")

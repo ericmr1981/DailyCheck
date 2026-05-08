@@ -983,17 +983,15 @@ def report_inbound():
                 daily[key] = 0
             daily[key] += r["qty"]
 
-        # Calculate initial stock per item
+        # Calculate initial stock per item: gap = current qty - sum of ALL movements
         init_stock = {
-            r["name"]: r["initial_qty"]
+            r["name"]: r["gap"]
             for r in db.execute(
                 """
-                SELECT i.name,
-                       i.quantity
-                       - COALESCE((SELECT SUM(m2.delta) FROM stock_movements m2 WHERE m2.item_id = i.id AND m2.action = '补货入库'), 0)
-                       + COALESCE((SELECT SUM(o.requested_quantity) FROM outbound_requests o WHERE o.item_id = i.id), 0)
-                       AS initial_qty
+                SELECT i.name, i.quantity - COALESCE(SUM(sm.delta), 0) AS gap
                 FROM items i
+                LEFT JOIN stock_movements sm ON sm.item_id = i.id
+                GROUP BY i.id
                 """
             ).fetchall()
         }

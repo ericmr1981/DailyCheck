@@ -214,15 +214,15 @@ def summary():
         """
     ).fetchall()
 
-    cat_inbound_value = {
-        r["category_name"]: r["inbound_value"]
+    cat_outbound_value = {
+        r["category_name"]: r["outbound_value"]
         for r in db.execute(
             """
             SELECT c.name AS category_name,
-                   COALESCE(SUM(m.delta * i.unit_cost), 0) AS inbound_value
+                   COALESCE(SUM(o.requested_quantity * i.unit_cost), 0) AS outbound_value
             FROM categories c
             LEFT JOIN items i ON i.category_id = c.id
-            LEFT JOIN stock_movements m ON m.item_id = i.id AND m.action = '补货入库'
+            LEFT JOIN outbound_requests o ON o.item_id = i.id
             GROUP BY c.id, c.name
             ORDER BY c.id
             """
@@ -231,9 +231,9 @@ def summary():
 
     enriched_stats = []
     for row in category_stats:
-        inbound_value = round(cat_inbound_value.get(row["category_name"], 0), 2)
         stock_value = round(row["stock_value"], 2)
-        consumed_value = round(inbound_value - stock_value, 2)
+        consumed_value = round(cat_outbound_value.get(row["category_name"], 0), 2)
+        inbound_value = round(stock_value + consumed_value, 2)
         enriched_stats.append({
             "category_name": row["category_name"],
             "inbound_value": inbound_value,

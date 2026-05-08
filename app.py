@@ -959,13 +959,12 @@ def report_inbound():
     if scope == "all":
         records = db.execute(
             """
-            SELECT m.item_id, i.name AS item_name, i.unit, SUM(m.delta) AS total_qty, COUNT(*) AS times,
-                   MAX(m.created_at) AS last_time
+            SELECT i.name AS item_name, i.unit, m.delta AS total_qty,
+                   m.created_at AS last_time
             FROM stock_movements m
             JOIN items i ON i.id = m.item_id
             WHERE m.action = '补货入库'
-            GROUP BY m.item_id
-            ORDER BY last_time DESC
+            ORDER BY m.created_at DESC
             """
         ).fetchall()
     else:

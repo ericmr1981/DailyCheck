@@ -205,20 +205,31 @@ def summary():
     ).fetchone()["c"]
 
     # 按品类统计：初始库存价值 + 补货入库价值 - 出库消耗价值
+    # 先按品聚合（避免出库多条时 init/restock 值被倍乘）
     cat_data = db.execute(
         """
         SELECT
             c.name AS category_name,
-            COALESCE(SUM(i.initial_quantity * i.unit_cost), 0) AS init_value,
-            COALESCE(SUM(i.unit_cost * sub.inbound_qty), 0) AS restock_value,
-            COALESCE(SUM(ABS(m.delta) * i.unit_cost), 0) AS consumed_value
+            SUM(item_vals.init_value) AS init_value,
+            SUM(item_vals.restock_value) AS restock_value,
+            SUM(item_vals.consumed_value) AS consumed_value
         FROM categories c
-        LEFT JOIN items i ON i.category_id = c.id
         LEFT JOIN (
-            SELECT m.item_id, SUM(m.delta) AS inbound_qty
-            FROM stock_movements m WHERE m.action = '补货入库' GROUP BY m.item_id
-        ) sub ON sub.item_id = i.id
-        LEFT JOIN stock_movements m ON m.item_id = i.id AND m.action = '出库'
+            SELECT
+                i.category_id,
+                i.initial_quantity * i.unit_cost AS init_value,
+                COALESCE(sub.inbound_qty, 0) * i.unit_cost AS restock_value,
+                COALESCE(out.consumed_qty, 0) * i.unit_cost AS consumed_value
+            FROM items i
+            LEFT JOIN (
+                SELECT item_id, SUM(delta) AS inbound_qty
+                FROM stock_movements WHERE action = '补货入库' GROUP BY item_id
+            ) sub ON sub.item_id = i.id
+            LEFT JOIN (
+                SELECT item_id, SUM(ABS(delta)) AS consumed_qty
+                FROM stock_movements WHERE action = '出库' GROUP BY item_id
+            ) out ON out.item_id = i.id
+        ) item_vals ON item_vals.category_id = c.id
         GROUP BY c.id, c.name
         ORDER BY c.id
         """

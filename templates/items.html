@@ -25,7 +25,7 @@
   </label>
   <label>
     <span>进货单价（¥）</span>
-    <input name="unit_cost" type="number" min="0" step="0.01" />
+    <input name="unit_cost" type="number" min="0" step="0.001" />
   </label>
   <label>
     <span>单位</span>
@@ -40,7 +40,7 @@
   <tr>
     <td>{{ i.name }}</td><td>{{ i.category_name }}</td>
     <td>{{ i.quantity }} {{ i.unit }}</td><td>{{ i.safety_stock }}</td>
-    <td>{{ "%.2f"|format(i.unit_cost) if i.unit_cost else "-" }}</td>
+    <td>{{ "%.3f"|format(i.unit_cost) if i.unit_cost else "-" }}</td>
     <td>{{ i.updated_at }}</td>
     <td class="inline">
       <a href="{{ url_for('edit_item', item_id=i.id) }}" class="btn-sm btn-edit">编辑</a>

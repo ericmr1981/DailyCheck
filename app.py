@@ -186,18 +186,6 @@ def dashboard():
 def summary():
     db = get_db()
 
-    total_inbound = db.execute(
-        "SELECT COALESCE(SUM(delta), 0) AS c FROM stock_movements WHERE action = '补货入库'"
-    ).fetchone()["c"]
-
-    total_stock = db.execute(
-        "SELECT COALESCE(SUM(quantity), 0) AS c FROM items"
-    ).fetchone()["c"]
-
-    consumption_rate = round(
-        (total_inbound - total_stock) / total_inbound * 100, 1
-    ) if total_inbound > 0 else 0
-
     total_inbound_value = db.execute(
         """
         SELECT COALESCE(SUM(i.unit_cost * sub.inbound_qty), 0) AS c
@@ -218,7 +206,6 @@ def summary():
     category_stats = db.execute(
         """
         SELECT c.name AS category_name,
-               COALESCE(SUM(i.quantity), 0) AS stock_qty,
                COALESCE(SUM(i.quantity * i.unit_cost), 0) AS stock_value
         FROM categories c
         LEFT JOIN items i ON i.category_id = c.id
@@ -227,12 +214,12 @@ def summary():
         """
     ).fetchall()
 
-    cat_inbound = {
-        r["category_name"]: r["total_inbound"]
+    cat_inbound_value = {
+        r["category_name"]: r["inbound_value"]
         for r in db.execute(
             """
             SELECT c.name AS category_name,
-                   COALESCE(SUM(m.delta), 0) AS total_inbound
+                   COALESCE(SUM(m.delta * i.unit_cost), 0) AS inbound_value
             FROM categories c
             LEFT JOIN items i ON i.category_id = c.id
             LEFT JOIN stock_movements m ON m.item_id = i.id AND m.action = '补货入库'
@@ -244,16 +231,14 @@ def summary():
 
     enriched_stats = []
     for row in category_stats:
-        ib = cat_inbound.get(row["category_name"], 0)
-        consumed = ib - row["stock_qty"]
-        rate = round(consumed / ib * 100, 1) if ib > 0 else 0
+        inbound_value = round(cat_inbound_value.get(row["category_name"], 0), 2)
+        stock_value = round(row["stock_value"], 2)
+        consumed_value = round(inbound_value - stock_value, 2)
         enriched_stats.append({
             "category_name": row["category_name"],
-            "total_inbound": ib,
-            "stock_qty": row["stock_qty"],
-            "consumed": consumed,
-            "consumption_rate": rate,
-            "stock_value": row["stock_value"],
+            "inbound_value": inbound_value,
+            "consumed_value": consumed_value,
+            "stock_value": stock_value,
         })
 
     top_consumed = db.execute(
@@ -268,15 +253,11 @@ def summary():
         WHERE m.action = '出库'
         GROUP BY m.item_id
         ORDER BY consumed_qty DESC
-        LIMIT 10
         """
     ).fetchall()
 
     return render_template(
         "summary.html",
-        total_inbound=total_inbound,
-        total_stock=total_stock,
-        consumption_rate=consumption_rate,
         total_inbound_value=round(total_inbound_value, 2),
         total_stock_value=round(total_stock_value, 2),
         category_stats=enriched_stats,

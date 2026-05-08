@@ -402,6 +402,15 @@ def stock_in():
     return redirect(url_for("restock"))
 
 
+@app.after_request
+def add_cache_headers(resp):
+    if request.path.startswith("/stocktake") or request.path == "/":
+        resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, max-age=0"
+        resp.headers["Pragma"] = "no-cache"
+        resp.headers["Expires"] = "0"
+    return resp
+
+
 @app.route("/stocktake", methods=["GET"])
 def stocktake():
     db = get_db()

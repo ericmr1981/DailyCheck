@@ -983,10 +983,26 @@ def report_inbound():
                 daily[key] = 0
             daily[key] += r["qty"]
 
+        # Calculate initial stock per item
+        init_stock = {
+            r["name"]: r["initial_qty"]
+            for r in db.execute(
+                """
+                SELECT i.name,
+                       i.quantity
+                       - COALESCE((SELECT SUM(m2.delta) FROM stock_movements m2 WHERE m2.item_id = i.id AND m2.action = '补货入库'), 0)
+                       + COALESCE((SELECT SUM(o.requested_quantity) FROM outbound_requests o WHERE o.item_id = i.id), 0)
+                       AS initial_qty
+                FROM items i
+                """
+            ).fetchall()
+        }
+
         all_dates = sorted({r["created_at"][:10] for r in raw})
         records = []
         for item in item_names_order:
             row: dict[str, str | int] = {"item_name": item, "unit": all_items[item]}
+            row["初始库存"] = init_stock.get(item, 0)
             for d in all_dates:
                 row[d] = daily.get((item, d), 0)
             records.append(row)

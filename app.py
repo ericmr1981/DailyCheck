@@ -186,16 +186,22 @@ def dashboard():
 def summary():
     db = get_db()
 
+    # 进货金额 = 初始库存价值 + 补货入库金额
     total_inbound_value = db.execute(
         """
-        SELECT COALESCE(SUM(i.unit_cost * sub.inbound_qty), 0) AS c
-        FROM (
+        SELECT
+            COALESCE(SUM(
+                (i.quantity - COALESCE(sm_all.sm_sum, 0)) * i.unit_cost
+            ), 0)
+            + COALESCE(SUM(i.unit_cost * sub.inbound_qty), 0) AS c
+        FROM items i
+        LEFT JOIN (
+            SELECT item_id, SUM(delta) AS sm_sum FROM stock_movements GROUP BY item_id
+        ) sm_all ON sm_all.item_id = i.id
+        LEFT JOIN (
             SELECT m.item_id, SUM(m.delta) AS inbound_qty
-            FROM stock_movements m
-            WHERE m.action = '补货入库'
-            GROUP BY m.item_id
-        ) sub
-        JOIN items i ON i.id = sub.item_id
+            FROM stock_movements m WHERE m.action = '补货入库' GROUP BY m.item_id
+        ) sub ON sub.item_id = i.id
         """
     ).fetchone()["c"]
 
@@ -203,37 +209,36 @@ def summary():
         "SELECT COALESCE(SUM(quantity * unit_cost), 0) AS c FROM items"
     ).fetchone()["c"]
 
-    category_stats = db.execute(
+    # 按品类统计：初始库存价值 + 补货入库价值 - 出库消耗价值
+    cat_data = db.execute(
         """
-        SELECT c.name AS category_name,
-               COALESCE(SUM(i.quantity * i.unit_cost), 0) AS stock_value
+        SELECT
+            c.name AS category_name,
+            COALESCE(SUM(
+                (i.quantity - COALESCE(sm_all.sm_sum, 0)) * i.unit_cost
+            ), 0) AS init_value,
+            COALESCE(SUM(i.unit_cost * sub.inbound_qty), 0) AS restock_value,
+            COALESCE(SUM(ABS(m.delta) * i.unit_cost), 0) AS consumed_value
         FROM categories c
         LEFT JOIN items i ON i.category_id = c.id
+        LEFT JOIN (
+            SELECT item_id, SUM(delta) AS sm_sum FROM stock_movements GROUP BY item_id
+        ) sm_all ON sm_all.item_id = i.id
+        LEFT JOIN (
+            SELECT m.item_id, SUM(m.delta) AS inbound_qty
+            FROM stock_movements m WHERE m.action = '补货入库' GROUP BY m.item_id
+        ) sub ON sub.item_id = i.id
+        LEFT JOIN stock_movements m ON m.item_id = i.id AND m.action = '出库'
         GROUP BY c.id, c.name
         ORDER BY c.id
         """
     ).fetchall()
 
-    cat_outbound_value = {
-        r["category_name"]: r["outbound_value"]
-        for r in db.execute(
-            """
-            SELECT c.name AS category_name,
-                   COALESCE(SUM(o.requested_quantity * i.unit_cost), 0) AS outbound_value
-            FROM categories c
-            LEFT JOIN items i ON i.category_id = c.id
-            LEFT JOIN outbound_requests o ON o.item_id = i.id
-            GROUP BY c.id, c.name
-            ORDER BY c.id
-            """
-        ).fetchall()
-    }
-
     enriched_stats = []
-    for row in category_stats:
-        stock_value = round(row["stock_value"], 2)
-        consumed_value = round(cat_outbound_value.get(row["category_name"], 0), 2)
-        inbound_value = round(stock_value + consumed_value, 2)
+    for row in cat_data:
+        stock_value = round(row["init_value"] + row["restock_value"] - row["consumed_value"], 2)
+        consumed_value = round(row["consumed_value"], 2)
+        inbound_value = round(row["init_value"] + row["restock_value"], 2)
         enriched_stats.append({
             "category_name": row["category_name"],
             "inbound_value": inbound_value,

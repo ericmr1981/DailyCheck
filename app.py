@@ -87,6 +87,7 @@ def init_db() -> None:
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         created_at TEXT NOT NULL,
         note TEXT,
+        status TEXT NOT NULL DEFAULT 'pending',
         rolled_back INTEGER NOT NULL DEFAULT 0
     );
 
@@ -458,16 +459,12 @@ def stocktake_submit():
         return redirect(url_for("stocktake_session"))
 
     cur = db.execute(
-        "INSERT INTO stocktake_batches (created_at, note, rolled_back) VALUES (?, ?, 0)",
+        "INSERT INTO stocktake_batches (created_at, note, status, rolled_back) VALUES (?, ?, 'pending', 0)",
         (now(), note),
     )
     batch_id = cur.lastrowid
 
     for item_id, previous_quantity, actual_quantity, diff in changed_rows:
-        db.execute(
-            "UPDATE items SET quantity = ?, updated_at = ? WHERE id = ?",
-            (actual_quantity, now(), item_id),
-        )
         db.execute(
             """
             INSERT INTO stocktakes (item_id, previous_quantity, actual_quantity, diff, batch_id, created_at, note)
@@ -475,16 +472,8 @@ def stocktake_submit():
             """,
             (item_id, previous_quantity, actual_quantity, diff, batch_id, now(), note),
         )
-        if diff != 0:
-            db.execute(
-                """
-                INSERT INTO stock_movements (item_id, action, delta, note, created_at)
-                VALUES (?, '盘点调整', ?, ?, ?)
-                """,
-                (item_id, diff, note or f"批次盘点#{batch_id}", now()),
-            )
     db.commit()
-    flash(f"盘点批次 #{batch_id} 已生成，可在列表中回滚")
+    flash(f"盘点批次 #{batch_id} 已提交，等待审核")
     return redirect(url_for("stocktake"))
 
 
@@ -492,7 +481,7 @@ def stocktake_submit():
 def rollback_stocktake_batch(batch_id: int):
     db = get_db()
     batch = db.execute(
-        "SELECT id, rolled_back FROM stocktake_batches WHERE id = ?", (batch_id,)
+        "SELECT id, status, rolled_back FROM stocktake_batches WHERE id = ?", (batch_id,)
     ).fetchone()
     if batch is None:
         flash("盘点批次不存在")
@@ -504,6 +493,7 @@ def rollback_stocktake_batch(batch_id: int):
     records = db.execute(
         "SELECT item_id, diff FROM stocktakes WHERE batch_id = ?", (batch_id,)
     ).fetchall()
+
     for record in records:
         diff = int(record["diff"])
         if diff == 0:
@@ -514,14 +504,11 @@ def rollback_stocktake_batch(batch_id: int):
             (diff, now(), item_id),
         )
         db.execute(
-            """
-            INSERT INTO stock_movements (item_id, action, delta, note, created_at)
-            VALUES (?, '盘点回滚', ?, ?, ?)
-            """,
+            "INSERT INTO stock_movements (item_id, action, delta, note, created_at) VALUES (?, '盘点回滚', ?, ?, ?)",
             (item_id, -diff, f"回滚盘点批次#{batch_id}", now()),
         )
 
-    db.execute("UPDATE stocktake_batches SET rolled_back = 1 WHERE id = ?", (batch_id,))
+    db.execute("UPDATE stocktake_batches SET rolled_back = 1, status = 'rolled_back' WHERE id = ?", (batch_id,))
     db.commit()
     flash(f"盘点批次 #{batch_id} 已回滚")
     return redirect(url_for("stocktake"))
@@ -1062,3 +1049,70 @@ def webmanifest():
 if __name__ == "__main__":
     init_db()
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5001")), debug=True)
+
+
+@app.route("/stocktake/batch/<int:batch_id>/approve", methods=["POST"])
+def approve_stocktake_batch(batch_id: int):
+    db = get_db()
+    batch = db.execute(
+        "SELECT id, status, rolled_back FROM stocktake_batches WHERE id = ?", (batch_id,)
+    ).fetchone()
+    if batch is None:
+        flash("盘点批次不存在")
+        return redirect(url_for("stocktake"))
+    if batch["status"] == "approved":
+        flash("该批次已审核通过，无需重复操作")
+        return redirect(url_for("stocktake"))
+    if int(batch["rolled_back"]) == 1:
+        flash("该批次已回滚，无法审核")
+        return redirect(url_for("stocktake"))
+
+    records = db.execute(
+        "SELECT item_id, diff FROM stocktakes WHERE batch_id = ?", (batch_id,)
+    ).fetchall()
+
+    loss_items = []
+    gain_items = []
+    for record in records:
+        diff = int(record["diff"])
+        if diff == 0:
+            continue
+        item_id = int(record["item_id"])
+        if diff < 0:
+            loss_items.append((item_id, diff))
+        else:
+            gain_items.append((item_id, diff))
+
+    for item_id, diff in loss_items + gain_items:
+        db.execute(
+            "UPDATE items SET quantity = quantity + ?, updated_at = ? WHERE id = ?",
+            (diff, now(), item_id),
+        )
+
+    for item_id, diff in loss_items:
+        db.execute(
+            "INSERT INTO stock_movements (item_id, action, delta, note, created_at) VALUES (?, '出库', ?, ?, ?)",
+            (item_id, diff, f"盘点审核#{batch_id}盘亏", now()),
+        )
+
+    for item_id, diff in gain_items:
+        db.execute(
+            "INSERT INTO stock_movements (item_id, action, delta, note, created_at) VALUES (?, '库存调整', ?, ?, ?)",
+            (item_id, diff, f"盘点审核#{batch_id}盘盈", now()),
+        )
+
+    db.execute(
+        "UPDATE stocktake_batches SET status = 'approved' WHERE id = ?", (batch_id,)
+    )
+    db.commit()
+
+    msg = f"盘点批次 #{batch_id} 已审核"
+    if loss_items:
+        msg += f"，{len(loss_items)}项盘亏已计入出库"
+    if gain_items:
+        msg += f"，{len(gain_items)}项盘盈已调整为库存"
+    flash(msg)
+    return redirect(url_for("stocktake"))
+
+
+

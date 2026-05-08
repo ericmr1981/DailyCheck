@@ -17,9 +17,12 @@
     <td>{% if b.rolled_back == 1 %}已回滚{% else %}生效中{% endif %}</td>
     <td>
       {% if b.rolled_back == 0 %}
-      <form method="post" action="{{ url_for('rollback_stocktake_batch', batch_id=b.id) }}" class="inline" onsubmit="return confirm('确认回滚该盘点批次？');">
-        <button type="submit" class="btn-danger">回滚批次</button>
-      </form>
+      <div class="inline">
+        <a href="{{ url_for('edit_stocktake_batch', batch_id=b.id) }}" class="btn-sm btn-edit">修改</a>
+        <form method="post" action="{{ url_for('rollback_stocktake_batch', batch_id=b.id) }}" class="inline" onsubmit="return confirm('确认回滚该盘点批次？');">
+          <button type="submit" class="btn-sm btn-delete">回滚批次</button>
+        </form>
+      </div>
       {% else %}
       -
       {% endif %}

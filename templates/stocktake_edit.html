@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>修改盘点批次 #{{ batch.id }}</h2>
+<p class="meta">备注：{{ batch.note or "无" }}</p>
+<form method="post">
+  <table>
+    <tr>
+      <th>品类</th>
+      <th>品项</th>
+      <th>单位</th>
+      <th>原盘点数</th>
+      <th>当前库存</th>
+      <th>修正为</th>
+    </tr>
+    {% for r in records %}
+    <tr>
+      <td>{{ r.category_name }}</td>
+      <td>{{ r.item_name }}</td>
+      <td>{{ r.unit }}</td>
+      <td>{{ r.actual_quantity }}</td>
+      <td>{{ r.current_quantity }}</td>
+      <td><input type="number" min="0" name="actual_{{ r.item_id }}" value="{{ r.actual_quantity }}" /></td>
+    </tr>
+    {% endfor %}
+  </table>
+  <div class="form-inline" style="margin-top:12px">
+    <a href="{{ url_for('stocktake') }}" class="btn-cancel">取消</a>
+    <button type="submit">保存修改</button>
+  </div>
+</form>
+{% endblock %}

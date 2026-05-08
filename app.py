@@ -521,6 +521,89 @@ def rollback_stocktake_batch(batch_id: int):
     return redirect(url_for("stocktake"))
 
 
+@app.route("/stocktake/batch/<int:batch_id>/edit", methods=["GET"])
+def edit_stocktake_batch(batch_id: int):
+    db = get_db()
+    batch = db.execute(
+        "SELECT id, note, rolled_back FROM stocktake_batches WHERE id = ?", (batch_id,)
+    ).fetchone()
+    if batch is None:
+        flash("盘点批次不存在")
+        return redirect(url_for("stocktake"))
+
+    records = db.execute(
+        """
+        SELECT s.id, s.item_id, s.previous_quantity, s.actual_quantity, s.diff,
+               i.name AS item_name, i.quantity AS current_quantity, i.unit,
+               c.name AS category_name
+        FROM stocktakes s
+        JOIN items i ON i.id = s.item_id
+        JOIN categories c ON c.id = i.category_id
+        WHERE s.batch_id = ?
+        ORDER BY c.name, i.name
+        """,
+        (batch_id,),
+    ).fetchall()
+    return render_template("stocktake_edit.html", batch=batch, records=records)
+
+
+@app.route("/stocktake/batch/<int:batch_id>/edit", methods=["POST"])
+def submit_stocktake_edit(batch_id: int):
+    db = get_db()
+    batch = db.execute(
+        "SELECT id, rolled_back FROM stocktake_batches WHERE id = ?", (batch_id,)
+    ).fetchone()
+    if batch is None:
+        flash("盘点批次不存在")
+        return redirect(url_for("stocktake"))
+    if int(batch["rolled_back"]) == 1:
+        flash("已回滚的批次不能修改")
+        return redirect(url_for("stocktake"))
+
+    records = db.execute("SELECT id, item_id FROM stocktakes WHERE batch_id = ?", (batch_id,)).fetchall()
+    changed = 0
+    for rec in records:
+        field = f"actual_{rec['item_id']}"
+        raw = request.form.get(field, "").strip()
+        if raw == "":
+            continue
+        try:
+            new_actual = int(raw)
+        except ValueError:
+            continue
+        current_qty = db.execute(
+            "SELECT quantity FROM items WHERE id = ?", (int(rec["item_id"]),)
+        ).fetchone()["quantity"]
+        new_diff = new_actual - current_qty
+
+        if new_diff == 0:
+            continue
+
+        db.execute(
+            "UPDATE items SET quantity = ?, updated_at = ? WHERE id = ?",
+            (new_actual, now(), int(rec["item_id"])),
+        )
+        db.execute(
+            "UPDATE stocktakes SET actual_quantity = ?, diff = ? WHERE id = ?",
+            (new_actual, new_diff, int(rec["id"])),
+        )
+        db.execute(
+            """
+            INSERT INTO stock_movements (item_id, action, delta, note, created_at)
+            VALUES (?, '盘点修正', ?, ?, ?)
+            """,
+            (int(rec["item_id"]), new_diff, f"修正盘点批次#{batch_id}", now()),
+        )
+        changed += 1
+
+    if changed == 0:
+        flash("未检测到变更")
+    else:
+        db.commit()
+        flash(f"盘点批次 #{batch_id} 已更新 {changed} 项")
+    return redirect(url_for("stocktake"))
+
+
 @app.route("/inventory")
 def inventory():
     db = get_db()

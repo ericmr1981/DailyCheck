@@ -931,25 +931,58 @@ def report_outbound():
     scope = request.args.get("scope", "today")
     today = datetime.now().strftime("%Y-%m-%d")
     if scope == "all":
-        records = db.execute(
+        # All 出库 movements grouped by date
+        raw = db.execute(
             """
-            SELECT o.item_id, i.name AS item_name, i.unit, SUM(o.requested_quantity) AS total_qty, COUNT(*) AS times,
-                   MAX(o.created_at) AS last_time
-            FROM outbound_requests o
-            JOIN items i ON i.id = o.item_id
-            GROUP BY o.item_id
-            ORDER BY last_time DESC
+            SELECT i.name AS item_name, i.unit, ABS(m.delta) AS qty, m.created_at
+            FROM stock_movements m
+            JOIN items i ON i.id = m.item_id
+            WHERE m.action = '出库'
+            ORDER BY m.created_at ASC
             """
         ).fetchall()
+
+        daily: dict[str, dict[str, int]] = {}
+        for r in raw:
+            d = r["created_at"][:10]
+            key = (r["item_name"], d)
+            if key not in daily:
+                daily[key] = 0
+            daily[key] += r["qty"]
+
+        # All items (not just those with outbound movements)
+        all_items_rows = db.execute("SELECT name, unit FROM items ORDER BY id").fetchall()
+        item_names_order = [r["name"] for r in all_items_rows]
+        all_items = {r["name"]: r["unit"] for r in all_items_rows}
+
+        # Initial stock from stored column
+        init_stock = {
+            r["name"]: r["initial_quantity"]
+            for r in db.execute("SELECT name, initial_quantity FROM items").fetchall()
+        }
+
+        all_dates = sorted({r["created_at"][:10] for r in raw})
+        records = []
+        for item in item_names_order:
+            row: dict[str, str | int] = {"item_name": item, "unit": all_items[item]}
+            row["初始库存"] = init_stock.get(item, 0)
+            for d in all_dates:
+                row[d] = daily.get((item, d), 0)
+            records.append(row)
+
+        return render_template(
+            "report_outbound.html", records=records, date=today, scope=scope,
+            dates=all_dates,
+        )
     else:
         records = db.execute(
             """
-            SELECT o.item_id, i.name AS item_name, i.unit, SUM(o.requested_quantity) AS total_qty, COUNT(*) AS times,
-                   MAX(o.created_at) AS last_time
-            FROM outbound_requests o
-            JOIN items i ON i.id = o.item_id
-            WHERE o.created_at LIKE ? || '%'
-            GROUP BY o.item_id
+            SELECT m.item_id, i.name AS item_name, i.unit, ABS(SUM(m.delta)) AS total_qty, COUNT(*) AS times,
+                   MAX(m.created_at) AS last_time
+            FROM stock_movements m
+            JOIN items i ON i.id = m.item_id
+            WHERE m.action = '出库' AND m.created_at LIKE ? || '%'
+            GROUP BY m.item_id
             ORDER BY last_time DESC
             """,
             (today,),

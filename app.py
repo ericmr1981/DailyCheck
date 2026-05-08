@@ -955,17 +955,10 @@ def report_outbound():
         item_names_order = [r["name"] for r in all_items_rows]
         all_items = {r["name"]: r["unit"] for r in all_items_rows}
 
-        # Initial stock from stored column
-        init_stock = {
-            r["name"]: r["initial_quantity"]
-            for r in db.execute("SELECT name, initial_quantity FROM items").fetchall()
-        }
-
         all_dates = sorted({r["created_at"][:10] for r in raw})
         records = []
         for item in item_names_order:
             row: dict[str, str | int] = {"item_name": item, "unit": all_items[item]}
-            row["初始库存"] = init_stock.get(item, 0)
             for d in all_dates:
                 row[d] = daily.get((item, d), 0)
             records.append(row)

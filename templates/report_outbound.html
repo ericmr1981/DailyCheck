@@ -23,7 +23,6 @@
 <table>
   <tr>
     <th>品项</th>
-    <th>初始库存</th>
     {% for d in dates %}
     <th>{{ d }}</th>
     {% endfor %}
@@ -31,13 +30,12 @@
   {% for r in records %}
   <tr>
     <td>{{ r.item_name }}</td>
-    <td>{{ r["初始库存"] }} {{ r.unit }}</td>
     {% for d in dates %}
     <td>{% if r[d] != 0 %}{{ r[d] }} {{ r.unit }}{% else %}-{% endif %}</td>
     {% endfor %}
   </tr>
   {% else %}
-  <tr><td colspan="{{ dates|length + 2 }}" style="text-align:center;color:var(--muted)">暂无出库记录</td></tr>
+  <tr><td colspan="{{ dates|length + 1 }}" style="text-align:center;color:var(--muted)">暂无出库记录</td></tr>
   {% endfor %}
 </table>
 </div>

@@ -19,17 +19,25 @@
   {% endfor %}
 </table>
 {% else %}
+<div class="table-scroll">
 <table>
-  <tr><th>时间</th><th>品项</th><th>入库数量</th></tr>
+  <tr>
+    <th>品项</th>
+    {% for d in dates %}
+    <th>{{ d }}</th>
+    {% endfor %}
+  </tr>
   {% for r in records %}
   <tr>
-    <td>{{ r.last_time }}</td>
     <td>{{ r.item_name }}</td>
-    <td>+{{ r.total_qty }} {{ r.unit }}</td>
+    {% for d in dates %}
+    <td>{% if r[d] != 0 %}+{{ r[d] }} {{ r.unit }}{% else %}-{% endif %}</td>
+    {% endfor %}
   </tr>
   {% else %}
-  <tr><td colspan="3" style="text-align:center;color:var(--muted)">暂无入库记录</td></tr>
+  <tr><td colspan="{{ dates|length + 1 }}" style="text-align:center;color:var(--muted)">暂无入库记录</td></tr>
   {% endfor %}
 </table>
+</div>
 {% endif %}
 {% endblock %}

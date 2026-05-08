@@ -957,16 +957,44 @@ def report_inbound():
     scope = request.args.get("scope", "today")
     today = datetime.now().strftime("%Y-%m-%d")
     if scope == "all":
-        records = db.execute(
+        raw = db.execute(
             """
-            SELECT i.name AS item_name, i.unit, m.delta AS total_qty,
-                   m.created_at AS last_time
+            SELECT i.name AS item_name, i.unit, m.delta AS qty, m.created_at
             FROM stock_movements m
             JOIN items i ON i.id = m.item_id
             WHERE m.action = '补货入库'
-            ORDER BY m.created_at DESC
+            ORDER BY m.created_at ASC
             """
         ).fetchall()
+
+        daily: dict[str, dict[str, int]] = {}
+        all_items: dict[str, str] = {}
+        item_names_order: list[str] = []
+        seen: set[str] = set()
+        for r in raw:
+            item = r["item_name"]
+            if item not in seen:
+                seen.add(item)
+                item_names_order.append(item)
+            all_items[item] = r["unit"]
+            d = r["created_at"][:10]
+            key = (item, d)
+            if key not in daily:
+                daily[key] = 0
+            daily[key] += r["qty"]
+
+        all_dates = sorted({r["created_at"][:10] for r in raw})
+        records = []
+        for item in item_names_order:
+            row: dict[str, str | int] = {"item_name": item, "unit": all_items[item]}
+            for d in all_dates:
+                row[d] = daily.get((item, d), 0)
+            records.append(row)
+
+        return render_template(
+            "report_inbound.html", records=records, date=today, scope=scope,
+            dates=all_dates,
+        )
     else:
         records = db.execute(
             """

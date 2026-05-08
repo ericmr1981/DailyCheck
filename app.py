@@ -201,6 +201,15 @@ def summary():
         """
     ).fetchone()["c"]
 
+    total_consumed_value = db.execute(
+        """
+        SELECT COALESCE(SUM(ABS(m.delta) * i.unit_cost), 0) AS c
+        FROM stock_movements m
+        JOIN items i ON i.id = m.item_id
+        WHERE m.action = '出库'
+        """
+    ).fetchone()["c"]
+
     total_stock_value = db.execute(
         "SELECT COALESCE(SUM(quantity * unit_cost), 0) AS c FROM items"
     ).fetchone()["c"]
@@ -266,6 +275,7 @@ def summary():
     return render_template(
         "summary.html",
         total_inbound_value=round(total_inbound_value, 2),
+        total_consumed_value=round(total_consumed_value, 2),
         total_stock_value=round(total_stock_value, 2),
         category_stats=enriched_stats,
         top_consumed=top_consumed,

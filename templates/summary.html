@@ -2,10 +2,14 @@
 {% block content %}
 <h2>汇总</h2>
 
-<div class="grid cols-2">
+<div class="grid cols-3">
   <section class="card">
     <p>进货总金额</p>
     <strong><small>¥</small>{{ "{:,.2f}".format(total_inbound_value) }}</strong>
+  </section>
+  <section class="card">
+    <p>总消耗金额</p>
+    <strong><small>¥</small>{{ "{:,.2f}".format(total_consumed_value) }}</strong>
   </section>
   <section class="card">
     <p>库存总价值</p>

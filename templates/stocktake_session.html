@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>盘点录入</h2>
-<p>请根据当前库存状态填写实盘数量。留空表示本次不盘该品项。</p>
+<p>所有品项均必须填写实盘数量，不能留空。</p>
 <form method="post" action="{{ url_for('stocktake_submit') }}">
   <div class="form-inline">
     <input name="note" placeholder="本次盘点备注（可选）" />
@@ -9,14 +9,14 @@
   </div>
 
   <table>
-    <tr><th>品类</th><th>品项</th><th>当前库存</th><th>安全库存</th><th>盘点数量（填写）</th></tr>
+    <tr><th>品类</th><th>品项</th><th>当前库存</th><th>安全库存</th><th>盘点数量（必填）</th></tr>
     {% for i in items %}
     <tr>
       <td>{{ i.category_name }}</td>
       <td>{{ i.name }}</td>
       <td>{{ i.quantity }} {{ i.unit }}</td>
       <td>{{ i.safety_stock }}</td>
-      <td><input type="number" min="0" name="actual_{{ i.id }}" placeholder="留空=不盘点" /></td>
+      <td><input type="number" min="0" name="actual_{{ i.id }}" placeholder="必填" required /></td>
     </tr>
     {% endfor %}
   </table>

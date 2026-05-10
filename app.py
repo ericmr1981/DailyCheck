@@ -468,16 +468,28 @@ def stocktake_submit():
     note = request.form.get("note", "").strip()
     items_data = db.execute("SELECT id, quantity FROM items").fetchall()
 
+    missing_items = []
     changed_rows: list[tuple[int, int, int, int]] = []
     for item in items_data:
         field = f"actual_{item['id']}"
         raw = request.form.get(field, "").strip()
         if raw == "":
+            missing_items.append(item["id"])
             continue
         actual_quantity = int(raw)
         previous_quantity = int(item["quantity"])
         diff = actual_quantity - previous_quantity
         changed_rows.append((int(item["id"]), previous_quantity, actual_quantity, diff))
+
+    if missing_items:
+        db_items = db.execute(
+            "SELECT name FROM items WHERE id IN ({})".format(
+                ",".join("?" * len(missing_items))),
+            missing_items
+        ).fetchall()
+        names = "、".join([f"'{r['name']}'" for r in db_items])
+        flash(f"以下品项未填写盘点数量：{names}（所有品项均为必填）")
+        return redirect(url_for("stocktake_session"))
 
     if not changed_rows:
         flash("请至少填写一个盘点数量")

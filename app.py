@@ -1085,7 +1085,8 @@ def webmanifest():
 
 if __name__ == "__main__":
     init_db()
-    
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5001")), debug=False)
+
 
 @app.route("/api/revenue", methods=["POST"])
 def api_upload_revenue():
@@ -1117,9 +1118,6 @@ def api_upload_revenue():
     )
     db.commit()
     return f"OK {date_str}={amount}"
-
-
-app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5001")), debug=True)
 
 
 @app.route("/stocktake/batch/<int:batch_id>/approve", methods=["POST"])

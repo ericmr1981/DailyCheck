@@ -219,22 +219,24 @@ def summary():
         "SELECT COALESCE(SUM(amount), 0) AS c FROM daily_revenue"
     ).fetchone()["c"]
 
-    # 按品类统计：初始库存价值 + 补货入库价值 - 出库消耗价值
-    # 先按品聚合（避免出库多条时 init/restock 值被倍乘）
+    # 按品类统计：库存结余用实际当前值（items.quantity × unit_cost）
+    # 进货/消耗保持历史流量累计
     cat_data = db.execute(
         """
         SELECT
             c.name AS category_name,
             SUM(item_vals.init_value) AS init_value,
             SUM(item_vals.restock_value) AS restock_value,
-            SUM(item_vals.consumed_value) AS consumed_value
+            SUM(item_vals.consumed_value) AS consumed_value,
+            SUM(item_vals.current_stock_value) AS stock_value
         FROM categories c
         LEFT JOIN (
             SELECT
                 i.category_id,
                 i.initial_quantity * i.unit_cost AS init_value,
                 COALESCE(sub.inbound_qty, 0) * i.unit_cost AS restock_value,
-                COALESCE(out.consumed_qty, 0) * i.unit_cost AS consumed_value
+                COALESCE(out.consumed_qty, 0) * i.unit_cost AS consumed_value,
+                i.quantity * i.unit_cost AS current_stock_value
             FROM items i
             LEFT JOIN (
                 SELECT item_id, SUM(delta) AS inbound_qty
@@ -252,7 +254,7 @@ def summary():
 
     enriched_stats = []
     for row in cat_data:
-        stock_value = round(row["init_value"] + row["restock_value"] - row["consumed_value"], 2)
+        stock_value = round(row["stock_value"], 2)
         consumed_value = round(row["consumed_value"], 2)
         inbound_value = round(row["init_value"] + row["restock_value"], 2)
         enriched_stats.append({
@@ -468,28 +470,16 @@ def stocktake_submit():
     note = request.form.get("note", "").strip()
     items_data = db.execute("SELECT id, quantity FROM items").fetchall()
 
-    missing_items = []
     changed_rows: list[tuple[int, int, int, int]] = []
     for item in items_data:
         field = f"actual_{item['id']}"
         raw = request.form.get(field, "").strip()
         if raw == "":
-            missing_items.append(item["id"])
             continue
         actual_quantity = int(raw)
         previous_quantity = int(item["quantity"])
         diff = actual_quantity - previous_quantity
         changed_rows.append((int(item["id"]), previous_quantity, actual_quantity, diff))
-
-    if missing_items:
-        db_items = db.execute(
-            "SELECT name FROM items WHERE id IN ({})".format(
-                ",".join("?" * len(missing_items))),
-            missing_items
-        ).fetchall()
-        names = "、".join([f"'{r['name']}'" for r in db_items])
-        flash(f"以下品项未填写盘点数量：{names}（所有品项均为必填）")
-        return redirect(url_for("stocktake_session"))
 
     if not changed_rows:
         flash("请至少填写一个盘点数量")
@@ -1085,7 +1075,7 @@ def webmanifest():
 
 if __name__ == "__main__":
     init_db()
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5001")), debug=False)
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5001")), debug=os.getenv("FLASK_DEBUG", "") == "1")
 
 
 @app.route("/api/revenue", methods=["POST"])
@@ -1118,6 +1108,10 @@ def api_upload_revenue():
     )
     db.commit()
     return f"OK {date_str}={amount}"
+
+
+if os.environ.get("GUNICORN_MASTER") != "1" and os.environ.get("RUNAPP") == "1":
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5001")), debug=os.getenv("FLASK_DEBUG", "") == "1")
 
 
 @app.route("/stocktake/batch/<int:batch_id>/approve", methods=["POST"])

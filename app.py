@@ -225,10 +225,10 @@ def summary():
         """
         SELECT
             c.name AS category_name,
-            SUM(item_vals.init_value) AS init_value,
-            SUM(item_vals.restock_value) AS restock_value,
-            SUM(item_vals.consumed_value) AS consumed_value,
-            SUM(item_vals.current_stock_value) AS stock_value
+            COALESCE(SUM(item_vals.init_value), 0) AS init_value,
+            COALESCE(SUM(item_vals.restock_value), 0) AS restock_value,
+            COALESCE(SUM(item_vals.consumed_value), 0) AS consumed_value,
+            COALESCE(SUM(item_vals.current_stock_value), 0) AS stock_value
         FROM categories c
         LEFT JOIN (
             SELECT

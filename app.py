@@ -111,6 +111,16 @@ def init_db() -> None:
         created_at TEXT NOT NULL,
         FOREIGN KEY (item_id) REFERENCES items(id)
     );
+
+    CREATE TABLE IF NOT EXISTS adjustment_requests (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        item_id INTEGER NOT NULL,
+        adjusted_quantity INTEGER NOT NULL,
+        reason TEXT,
+        rolled_back INTEGER NOT NULL DEFAULT 0,
+        created_at TEXT NOT NULL,
+        FOREIGN KEY (item_id) REFERENCES items(id)
+    );
     """
     with closing(sqlite3.connect(DB_PATH)) as conn:
         conn.executescript(schema)
@@ -937,6 +947,123 @@ def delete_outbound(req_id: int):
     db.commit()
     flash("出库记录已删除")
     return redirect(url_for("outbound"))
+
+
+@app.route("/adjustment", methods=["GET"])
+def adjustment():
+    db = get_db()
+    requests_data = db.execute(
+        """
+        SELECT a.*, i.name AS item_name, i.unit
+        FROM adjustment_requests a
+        JOIN items i ON i.id = a.item_id
+        ORDER BY a.id DESC
+        LIMIT 100
+        """
+    ).fetchall()
+    return render_template("adjustment.html", requests=requests_data)
+
+
+@app.route("/adjustment/session", methods=["GET"])
+def adjustment_session():
+    db = get_db()
+    items_data = db.execute(
+        """
+        SELECT i.id, i.name, i.quantity, i.unit, i.safety_stock, c.name AS category_name
+        FROM items i
+        JOIN categories c ON c.id = i.category_id
+        ORDER BY c.name, i.name
+        """
+    ).fetchall()
+    return render_template("adjustment_session.html", items=items_data)
+
+
+@app.route("/adjustment/submit", methods=["POST"])
+def adjustment_submit():
+    db = get_db()
+    reason = request.form.get("reason", "").strip()
+    items_data = db.execute("SELECT id, quantity FROM items").fetchall()
+
+    rows: list[tuple[int, int]] = []
+    for item in items_data:
+        raw = request.form.get(f"adjustment_{item['id']}", "").strip()
+        if raw == "":
+            continue
+        qty = int(raw)
+        if qty <= 0:
+            continue
+        if qty > int(item["quantity"]):
+            flash("存在调整数量大于当前库存的品项，请检查后重试")
+            return redirect(url_for("adjustment_session"))
+        rows.append((int(item["id"]), qty))
+
+    if not rows:
+        flash("请至少填写一个调整数量")
+        return redirect(url_for("adjustment_session"))
+
+    for item_id, qty in rows:
+        cur = db.execute(
+            """
+            INSERT INTO adjustment_requests (item_id, adjusted_quantity, reason, rolled_back, created_at)
+            VALUES (?, ?, ?, 0, ?)
+            """,
+            (item_id, qty, reason, now()),
+        )
+        req_id = int(cur.lastrowid)
+        db.execute(
+            "UPDATE items SET quantity = quantity - ?, updated_at = ? WHERE id = ?",
+            (qty, now(), item_id),
+        )
+        db.execute(
+            """
+            INSERT INTO stock_movements (item_id, action, delta, note, created_at)
+            VALUES (?, '调整出库', ?, ?, ?)
+            """,
+            (item_id, -qty, f"调整单#{req_id}", now()),
+        )
+    db.commit()
+    flash("调整单已执行")
+    return redirect(url_for("adjustment"))
+
+
+@app.route("/adjustment/<int:req_id>/rollback", methods=["POST"])
+def rollback_adjustment(req_id: int):
+    db = get_db()
+    req = db.execute(
+        "SELECT item_id, adjusted_quantity, rolled_back FROM adjustment_requests WHERE id = ?",
+        (req_id,),
+    ).fetchone()
+    if req is None:
+        flash("调整记录不存在")
+        return redirect(url_for("adjustment"))
+    if int(req["rolled_back"]) == 1:
+        flash("该记录已回退，无需重复操作")
+        return redirect(url_for("adjustment"))
+
+    db.execute(
+        "UPDATE items SET quantity = quantity + ?, updated_at = ? WHERE id = ?",
+        (int(req["adjusted_quantity"]), now(), int(req["item_id"])),
+    )
+    db.execute(
+        """
+        INSERT INTO stock_movements (item_id, action, delta, note, created_at)
+        VALUES (?, '调整出库回滚', ?, ?, ?)
+        """,
+        (int(req["item_id"]), int(req["adjusted_quantity"]), f"回滚调整单#{req_id}", now()),
+    )
+    db.execute("UPDATE adjustment_requests SET rolled_back = 1 WHERE id = ?", (req_id,))
+    db.commit()
+    flash("调整记录已回退")
+    return redirect(url_for("adjustment"))
+
+
+@app.route("/adjustment/<int:req_id>/delete", methods=["POST"])
+def delete_adjustment(req_id: int):
+    db = get_db()
+    db.execute("DELETE FROM adjustment_requests WHERE id = ?", (req_id,))
+    db.commit()
+    flash("调整记录已删除")
+    return redirect(url_for("adjustment"))
 
 
 @app.route("/report/outbound")

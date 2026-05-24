@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>调整单录入</h2>
+<p>请根据当前库存状态填写调整出库数量。留空表示本次不调整该品项。<strong>调整不计入消耗统计。</strong></p>
+<form method="post" action="{{ url_for('adjustment_submit') }}">
+  <div class="form-inline">
+    <input name="reason" placeholder="本次调整原因（可选）" />
+    <button type="submit">提交调整</button>
+  </div>
+
+  <table>
+    <tr><th>品类</th><th>品项</th><th>当前库存</th><th>安全库存</th><th>调整出库数量</th></tr>
+    {% for i in items %}
+    <tr>
+      <td>{{ i.category_name }}</td>
+      <td>{{ i.name }}</td>
+      <td>{{ i.quantity }} {{ i.unit }}</td>
+      <td>{{ i.safety_stock }}</td>
+      <td><input type="number" min="0" name="adjustment_{{ i.id }}" placeholder="留空=不调整" /></td>
+    </tr>
+    {% endfor %}
+  </table>
+</form>
+{% endblock %}

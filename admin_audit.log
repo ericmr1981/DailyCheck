@@ -1,0 +1,6 @@
+{"ts": "2026-06-19 15:00:48", "actor": "admin", "detail": "create user #4 jlin13 admin=False"}
+{"ts": "2026-06-19 15:05:00", "actor": "admin", "detail": "create user #5 tester admin=False bindings=wh_001:staff"}
+{"ts": "2026-06-19 15:05:00", "actor": "admin", "detail": "unbind user #4 wh=1"}
+{"ts": "2026-06-19 15:05:16", "actor": "admin", "detail": "change-role user #5 wh=1 -> manager"}
+{"ts": "2026-06-19 15:05:16", "actor": "admin", "detail": "unbind user #5 wh=1"}
+{"ts": "2026-06-19 15:05:16", "actor": "admin", "detail": "bind user #5 wh=1 role=admin"}

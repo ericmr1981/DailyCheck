@@ -1,0 +1,43 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "总览" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e5] [cursor=pointer]:
+      - /url: /summary
+    - link "品类管理" [ref=e6] [cursor=pointer]:
+      - /url: /categories
+    - link "库存品管理" [ref=e7] [cursor=pointer]:
+      - /url: /items
+    - link "库存盘点" [ref=e8] [cursor=pointer]:
+      - /url: /stocktake
+    - link "库存查阅" [ref=e9] [cursor=pointer]:
+      - /url: /inventory
+    - link "补货记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "出库记录" [ref=e11] [cursor=pointer]:
+      - /url: /outbound
+  - main [ref=e13]:
+    - heading "库存盘点" [level=2] [ref=e14]
+    - button "开始盘点" [ref=e16]
+    - heading "最近盘点批次" [level=3] [ref=e17]
+    - table [ref=e18]:
+      - rowgroup [ref=e19]:
+        - row "批次ID 创建时间 备注 盘点品项数 状态 操作" [ref=e20]:
+          - columnheader "批次ID" [ref=e21]
+          - columnheader "创建时间" [ref=e22]
+          - columnheader "备注" [ref=e23]
+          - columnheader "盘点品项数" [ref=e24]
+          - columnheader "状态" [ref=e25]
+          - columnheader "操作" [ref=e26]
+        - row "#1 2026-05-01 22:23:06 1 生效中 修改 回滚批次" [ref=e27]:
+          - cell "#1" [ref=e28]
+          - cell "2026-05-01 22:23:06" [ref=e29]
+          - cell [ref=e30]
+          - cell "1" [ref=e31]
+          - cell "生效中" [ref=e32]
+          - cell "修改 回滚批次" [ref=e33]:
+            - generic [ref=e34]:
+              - link "修改" [ref=e35] [cursor=pointer]:
+                - /url: /stocktake/batch/1/edit
+              - button "回滚批次" [ref=e37] [cursor=pointer]

@@ -1,0 +1,465 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "账号管理" [ref=e4] [cursor=pointer]:
+      - /url: /users
+    - link "品类与品项" [ref=e5] [cursor=pointer]:
+      - /url: /items
+    - link "总览" [ref=e6] [cursor=pointer]:
+      - /url: /dashboard
+    - link "汇总" [ref=e7] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e8] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e9] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e11] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e12] [cursor=pointer]:
+      - /url: /outbound
+    - link "生产录入" [ref=e13] [cursor=pointer]:
+      - /url: /production
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]: 中央仓 (wh_001)
+      - link "切换" [ref=e17] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e18]: admin [平台管理员]
+      - link "注销" [ref=e19] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e20]:
+      - list [ref=e21]:
+        - listitem [ref=e22]: 库存品创建成功
+      - heading "品类与品项" [level=2] [ref=e23]
+      - generic [ref=e24]:
+        - heading "固定品类" [level=3] [ref=e25]
+        - paragraph [ref=e26]: 品类为系统固定项，不可新增或删除。
+        - list [ref=e27]:
+          - listitem [ref=e28]: 乳制品
+          - listitem [ref=e29]: 冰激凌成品
+          - listitem [ref=e30]: 包材
+          - listitem [ref=e31]: 生产工具
+          - listitem [ref=e32]: 生产消耗品
+          - listitem [ref=e33]: 调味酱
+          - listitem [ref=e34]: 调味酱 分
+          - listitem [ref=e35]: 辅料
+          - listitem [ref=e36]: 风味奶浆
+      - heading "新增库存品" [level=3] [ref=e37]
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - generic [ref=e40]: 品项名称
+          - textbox "品项名称" [ref=e41]
+        - generic [ref=e42]:
+          - generic [ref=e43]: 品类
+          - combobox "品类" [ref=e44]:
+            - option "选择品类" [selected]
+            - option "乳制品"
+            - option "冰激凌成品"
+            - option "包材"
+            - option "生产工具"
+            - option "生产消耗品"
+            - option "调味酱"
+            - option "调味酱 分"
+            - option "辅料"
+            - option "风味奶浆"
+        - generic [ref=e45]:
+          - generic [ref=e46]: 初始库存
+          - spinbutton "初始库存" [ref=e47]
+        - generic [ref=e48]:
+          - generic [ref=e49]: 安全库存
+          - spinbutton "安全库存" [ref=e50]
+        - generic [ref=e51]:
+          - generic [ref=e52]: 进货单价（¥）
+          - spinbutton "进货单价（¥）" [ref=e53]
+        - generic [ref=e54]:
+          - generic [ref=e55]: 单位
+          - textbox "单位" [ref=e56]:
+            - /placeholder: 件
+        - button "新增库存品" [ref=e57]
+      - heading "品项列表" [level=3] [ref=e58]
+      - table [ref=e59]:
+        - rowgroup [ref=e60]:
+          - row "品项 品类 库存 安全库存 单价（¥） 更新时间 操作" [ref=e61]:
+            - columnheader "品项" [ref=e62]
+            - columnheader "品类" [ref=e63]
+            - columnheader "库存" [ref=e64]
+            - columnheader "安全库存" [ref=e65]
+            - columnheader "单价（¥）" [ref=e66]
+            - columnheader "更新时间" [ref=e67]
+            - columnheader "操作" [ref=e68]
+          - row "ZZ测试牛乳 乳制品 50 袋 0 - 2026-06-22 18:16:54 编辑 删除" [ref=e69]:
+            - cell "ZZ测试牛乳" [ref=e70]
+            - cell "乳制品" [ref=e71]
+            - cell "50 袋" [ref=e72]
+            - cell "0" [ref=e73]
+            - cell "-" [ref=e74]
+            - cell "2026-06-22 18:16:54" [ref=e75]
+            - cell "编辑 删除" [ref=e76]:
+              - link "编辑" [ref=e77] [cursor=pointer]:
+                - /url: /items/34/edit
+              - button "删除" [ref=e79] [cursor=pointer]
+          - row "牛奶树北海道牛乳 原料 0 袋 0 92.000 2026-05-24 19:43:39 编辑 删除" [ref=e80]:
+            - cell "牛奶树北海道牛乳" [ref=e81]
+            - cell "原料" [ref=e82]
+            - cell "0 袋" [ref=e83]
+            - cell "0" [ref=e84]
+            - cell "92.000" [ref=e85]
+            - cell "2026-05-24 19:43:39" [ref=e86]
+            - cell "编辑 删除" [ref=e87]:
+              - link "编辑" [ref=e88] [cursor=pointer]:
+                - /url: /items/33/edit
+              - button "删除" [ref=e90] [cursor=pointer]
+          - row "碎银子 原料 0 克 1 0.065 2026-05-09 13:40:49 编辑 删除" [ref=e91]:
+            - cell "碎银子" [ref=e92]
+            - cell "原料" [ref=e93]
+            - cell "0 克" [ref=e94]
+            - cell "1" [ref=e95]
+            - cell "0.065" [ref=e96]
+            - cell "2026-05-09 13:40:49" [ref=e97]
+            - cell "编辑 删除" [ref=e98]:
+              - link "编辑" [ref=e99] [cursor=pointer]:
+                - /url: /items/32/edit
+              - button "删除" [ref=e101] [cursor=pointer]
+          - row "迷你冰糕 原料 91 个 100 2.600 2026-05-24 20:49:32 编辑 删除" [ref=e102]:
+            - cell "迷你冰糕" [ref=e103]
+            - cell "原料" [ref=e104]
+            - cell "91 个" [ref=e105]
+            - cell "100" [ref=e106]
+            - cell "2.600" [ref=e107]
+            - cell "2026-05-24 20:49:32" [ref=e108]
+            - cell "编辑 删除" [ref=e109]:
+              - link "编辑" [ref=e110] [cursor=pointer]:
+                - /url: /items/31/edit
+              - button "删除" [ref=e112] [cursor=pointer]
+          - row "红豆罐头 原料 2 罐 1 - 2026-05-12 11:06:51 编辑 删除" [ref=e113]:
+            - cell "红豆罐头" [ref=e114]
+            - cell "原料" [ref=e115]
+            - cell "2 罐" [ref=e116]
+            - cell "1" [ref=e117]
+            - cell "-" [ref=e118]
+            - cell "2026-05-12 11:06:51" [ref=e119]
+            - cell "编辑 删除" [ref=e120]:
+              - link "编辑" [ref=e121] [cursor=pointer]:
+                - /url: /items/30/edit
+              - button "删除" [ref=e123] [cursor=pointer]
+          - row "冰激凌铲 工具 6 个 0 - 2026-05-12 11:06:51 编辑 删除" [ref=e124]:
+            - cell "冰激凌铲" [ref=e125]
+            - cell "工具" [ref=e126]
+            - cell "6 个" [ref=e127]
+            - cell "0" [ref=e128]
+            - cell "-" [ref=e129]
+            - cell "2026-05-12 11:06:51" [ref=e130]
+            - cell "编辑 删除" [ref=e131]:
+              - link "编辑" [ref=e132] [cursor=pointer]:
+                - /url: /items/29/edit
+              - button "删除" [ref=e134] [cursor=pointer]
+          - row "哈密瓜冰激淋 原料 5000 克 2000 0.060 2026-05-24 20:49:32 编辑 删除" [ref=e135]:
+            - cell "哈密瓜冰激淋" [ref=e136]
+            - cell "原料" [ref=e137]
+            - cell "5000 克" [ref=e138]
+            - cell "2000" [ref=e139]
+            - cell "0.060" [ref=e140]
+            - cell "2026-05-24 20:49:32" [ref=e141]
+            - cell "编辑 删除" [ref=e142]:
+              - link "编辑" [ref=e143] [cursor=pointer]:
+                - /url: /items/28/edit
+              - button "删除" [ref=e145] [cursor=pointer]
+          - row "插排 包材 4 盒 1 16.500 2026-05-24 20:49:25 编辑 删除" [ref=e146]:
+            - cell "插排" [ref=e147]
+            - cell "包材" [ref=e148]
+            - cell "4 盒" [ref=e149]
+            - cell "1" [ref=e150]
+            - cell "16.500" [ref=e151]
+            - cell "2026-05-24 20:49:25" [ref=e152]
+            - cell "编辑 删除" [ref=e153]:
+              - link "编辑" [ref=e154] [cursor=pointer]:
+                - /url: /items/27/edit
+              - button "删除" [ref=e156] [cursor=pointer]
+          - row "试吃勺 包材 1 包 2 2.500 2026-05-12 11:06:51 编辑 删除" [ref=e157]:
+            - cell "试吃勺" [ref=e158]
+            - cell "包材" [ref=e159]
+            - cell "1 包" [ref=e160]
+            - cell "2" [ref=e161]
+            - cell "2.500" [ref=e162]
+            - cell "2026-05-12 11:06:51" [ref=e163]
+            - cell "编辑 删除" [ref=e164]:
+              - link "编辑" [ref=e165] [cursor=pointer]:
+                - /url: /items/26/edit
+              - button "删除" [ref=e167] [cursor=pointer]
+          - row "大白兔 原料 0 克 2000 0.070 2026-05-10 11:49:05 编辑 删除" [ref=e168]:
+            - cell "大白兔" [ref=e169]
+            - cell "原料" [ref=e170]
+            - cell "0 克" [ref=e171]
+            - cell "2000" [ref=e172]
+            - cell "0.070" [ref=e173]
+            - cell "2026-05-10 11:49:05" [ref=e174]
+            - cell "编辑 删除" [ref=e175]:
+              - link "编辑" [ref=e176] [cursor=pointer]:
+                - /url: /items/25/edit
+              - button "删除" [ref=e178] [cursor=pointer]
+          - row "无花果碎 原料 1 袋 1 49.000 2026-05-12 11:06:51 编辑 删除" [ref=e179]:
+            - cell "无花果碎" [ref=e180]
+            - cell "原料" [ref=e181]
+            - cell "1 袋" [ref=e182]
+            - cell "1" [ref=e183]
+            - cell "49.000" [ref=e184]
+            - cell "2026-05-12 11:06:51" [ref=e185]
+            - cell "编辑 删除" [ref=e186]:
+              - link "编辑" [ref=e187] [cursor=pointer]:
+                - /url: /items/24/edit
+              - button "删除" [ref=e189] [cursor=pointer]
+          - row "牛轧糖 原料 5000 克 2000 0.080 2026-05-24 20:49:32 编辑 删除" [ref=e190]:
+            - cell "牛轧糖" [ref=e191]
+            - cell "原料" [ref=e192]
+            - cell "5000 克" [ref=e193]
+            - cell "2000" [ref=e194]
+            - cell "0.080" [ref=e195]
+            - cell "2026-05-24 20:49:32" [ref=e196]
+            - cell "编辑 删除" [ref=e197]:
+              - link "编辑" [ref=e198] [cursor=pointer]:
+                - /url: /items/23/edit
+              - button "删除" [ref=e200] [cursor=pointer]
+          - row "北海道牛乳 原料 5000 克 2000 0.060 2026-05-24 20:49:32 编辑 删除" [ref=e201]:
+            - cell "北海道牛乳" [ref=e202]
+            - cell "原料" [ref=e203]
+            - cell "5000 克" [ref=e204]
+            - cell "2000" [ref=e205]
+            - cell "0.060" [ref=e206]
+            - cell "2026-05-24 20:49:32" [ref=e207]
+            - cell "编辑 删除" [ref=e208]:
+              - link "编辑" [ref=e209] [cursor=pointer]:
+                - /url: /items/22/edit
+              - button "删除" [ref=e211] [cursor=pointer]
+          - row "芒果雪芭 原料 2500 克 2000 0.052 2026-05-24 20:49:32 编辑 删除" [ref=e212]:
+            - cell "芒果雪芭" [ref=e213]
+            - cell "原料" [ref=e214]
+            - cell "2500 克" [ref=e215]
+            - cell "2000" [ref=e216]
+            - cell "0.052" [ref=e217]
+            - cell "2026-05-24 20:49:32" [ref=e218]
+            - cell "编辑 删除" [ref=e219]:
+              - link "编辑" [ref=e220] [cursor=pointer]:
+                - /url: /items/21/edit
+              - button "删除" [ref=e222] [cursor=pointer]
+          - row "木姜子甜橙 原料 5000 克 2000 0.116 2026-05-24 20:49:32 编辑 删除" [ref=e223]:
+            - cell "木姜子甜橙" [ref=e224]
+            - cell "原料" [ref=e225]
+            - cell "5000 克" [ref=e226]
+            - cell "2000" [ref=e227]
+            - cell "0.116" [ref=e228]
+            - cell "2026-05-24 20:49:32" [ref=e229]
+            - cell "编辑 删除" [ref=e230]:
+              - link "编辑" [ref=e231] [cursor=pointer]:
+                - /url: /items/20/edit
+              - button "删除" [ref=e233] [cursor=pointer]
+          - row "草莓大福 原料 0 克 2000 0.096 2026-05-24 19:43:39 编辑 删除" [ref=e234]:
+            - cell "草莓大福" [ref=e235]
+            - cell "原料" [ref=e236]
+            - cell "0 克" [ref=e237]
+            - cell "2000" [ref=e238]
+            - cell "0.096" [ref=e239]
+            - cell "2026-05-24 19:43:39" [ref=e240]
+            - cell "编辑 删除" [ref=e241]:
+              - link "编辑" [ref=e242] [cursor=pointer]:
+                - /url: /items/19/edit
+              - button "删除" [ref=e244] [cursor=pointer]
+          - row "榛子巧克力 原料 2500 克 2500 0.122 2026-05-24 20:49:32 编辑 删除" [ref=e245]:
+            - cell "榛子巧克力" [ref=e246]
+            - cell "原料" [ref=e247]
+            - cell "2500 克" [ref=e248]
+            - cell "2500" [ref=e249]
+            - cell "0.122" [ref=e250]
+            - cell "2026-05-24 20:49:32" [ref=e251]
+            - cell "编辑 删除" [ref=e252]:
+              - link "编辑" [ref=e253] [cursor=pointer]:
+                - /url: /items/18/edit
+              - button "删除" [ref=e255] [cursor=pointer]
+          - row "北海道牛乳粉 原料 3 袋 2 140.000 2026-05-24 20:49:32 编辑 删除" [ref=e256]:
+            - cell "北海道牛乳粉" [ref=e257]
+            - cell "原料" [ref=e258]
+            - cell "3 袋" [ref=e259]
+            - cell "2" [ref=e260]
+            - cell "140.000" [ref=e261]
+            - cell "2026-05-24 20:49:32" [ref=e262]
+            - cell "编辑 删除" [ref=e263]:
+              - link "编辑" [ref=e264] [cursor=pointer]:
+                - /url: /items/17/edit
+              - button "删除" [ref=e266] [cursor=pointer]
+          - row "巧克力粉 原料 5 袋 2 112.000 2026-05-24 20:49:32 编辑 删除" [ref=e267]:
+            - cell "巧克力粉" [ref=e268]
+            - cell "原料" [ref=e269]
+            - cell "5 袋" [ref=e270]
+            - cell "2" [ref=e271]
+            - cell "112.000" [ref=e272]
+            - cell "2026-05-24 20:49:32" [ref=e273]
+            - cell "编辑 删除" [ref=e274]:
+              - link "编辑" [ref=e275] [cursor=pointer]:
+                - /url: /items/16/edit
+              - button "删除" [ref=e277] [cursor=pointer]
+          - row "原味蛋糕胚 原料 10000 克 1000 0.025 2026-05-24 20:49:32 编辑 删除" [ref=e278]:
+            - cell "原味蛋糕胚" [ref=e279]
+            - cell "原料" [ref=e280]
+            - cell "10000 克" [ref=e281]
+            - cell "1000" [ref=e282]
+            - cell "0.025" [ref=e283]
+            - cell "2026-05-24 20:49:32" [ref=e284]
+            - cell "编辑 删除" [ref=e285]:
+              - link "编辑" [ref=e286] [cursor=pointer]:
+                - /url: /items/15/edit
+              - button "删除" [ref=e288] [cursor=pointer]
+          - row "巧克力蛋糕胚 原料 8000 克 1000 0.025 2026-05-24 20:49:32 编辑 删除" [ref=e289]:
+            - cell "巧克力蛋糕胚" [ref=e290]
+            - cell "原料" [ref=e291]
+            - cell "8000 克" [ref=e292]
+            - cell "1000" [ref=e293]
+            - cell "0.025" [ref=e294]
+            - cell "2026-05-24 20:49:32" [ref=e295]
+            - cell "编辑 删除" [ref=e296]:
+              - link "编辑" [ref=e297] [cursor=pointer]:
+                - /url: /items/14/edit
+              - button "删除" [ref=e299] [cursor=pointer]
+          - row "巧克力装饰酱 原料 1 瓶 1 33.000 2026-05-12 11:06:51 编辑 删除" [ref=e300]:
+            - cell "巧克力装饰酱" [ref=e301]
+            - cell "原料" [ref=e302]
+            - cell "1 瓶" [ref=e303]
+            - cell "1" [ref=e304]
+            - cell "33.000" [ref=e305]
+            - cell "2026-05-12 11:06:51" [ref=e306]
+            - cell "编辑 删除" [ref=e307]:
+              - link "编辑" [ref=e308] [cursor=pointer]:
+                - /url: /items/13/edit
+              - button "删除" [ref=e310] [cursor=pointer]
+          - row "长勺 包材 9 包 2 23.000 2026-05-24 20:49:32 编辑 删除" [ref=e311]:
+            - cell "长勺" [ref=e312]
+            - cell "包材" [ref=e313]
+            - cell "9 包" [ref=e314]
+            - cell "2" [ref=e315]
+            - cell "23.000" [ref=e316]
+            - cell "2026-05-24 20:49:32" [ref=e317]
+            - cell "编辑 删除" [ref=e318]:
+              - link "编辑" [ref=e319] [cursor=pointer]:
+                - /url: /items/12/edit
+              - button "删除" [ref=e321] [cursor=pointer]
+          - row "可颂 原料 30 个 15 2.700 2026-05-24 20:49:32 编辑 删除" [ref=e322]:
+            - cell "可颂" [ref=e323]
+            - cell "原料" [ref=e324]
+            - cell "30 个" [ref=e325]
+            - cell "15" [ref=e326]
+            - cell "2.700" [ref=e327]
+            - cell "2026-05-24 20:49:32" [ref=e328]
+            - cell "编辑 删除" [ref=e329]:
+              - link "编辑" [ref=e330] [cursor=pointer]:
+                - /url: /items/11/edit
+              - button "删除" [ref=e332] [cursor=pointer]
+          - row "草莓丁 原料 1000 克 200 0.040 2026-05-24 20:49:32 编辑 删除" [ref=e333]:
+            - cell "草莓丁" [ref=e334]
+            - cell "原料" [ref=e335]
+            - cell "1000 克" [ref=e336]
+            - cell "200" [ref=e337]
+            - cell "0.040" [ref=e338]
+            - cell "2026-05-24 20:49:32" [ref=e339]
+            - cell "编辑 删除" [ref=e340]:
+              - link "编辑" [ref=e341] [cursor=pointer]:
+                - /url: /items/10/edit
+              - button "删除" [ref=e343] [cursor=pointer]
+          - row "面包粒 原料 7000 克 200 0.050 2026-05-24 20:49:32 编辑 删除" [ref=e344]:
+            - cell "面包粒" [ref=e345]
+            - cell "原料" [ref=e346]
+            - cell "7000 克" [ref=e347]
+            - cell "200" [ref=e348]
+            - cell "0.050" [ref=e349]
+            - cell "2026-05-24 20:49:32" [ref=e350]
+            - cell "编辑 删除" [ref=e351]:
+              - link "编辑" [ref=e352] [cursor=pointer]:
+                - /url: /items/9/edit
+              - button "删除" [ref=e354] [cursor=pointer]
+          - row "牛奶 原料 13 盒 5 6.250 2026-05-24 20:49:32 编辑 删除" [ref=e355]:
+            - cell "牛奶" [ref=e356]
+            - cell "原料" [ref=e357]
+            - cell "13 盒" [ref=e358]
+            - cell "5" [ref=e359]
+            - cell "6.250" [ref=e360]
+            - cell "2026-05-24 20:49:32" [ref=e361]
+            - cell "编辑 删除" [ref=e362]:
+              - link "编辑" [ref=e363] [cursor=pointer]:
+                - /url: /items/8/edit
+              - button "删除" [ref=e365] [cursor=pointer]
+          - row "透明白杯 包材 486 个 100 0.530 2026-05-24 20:49:32 编辑 删除" [ref=e366]:
+            - cell "透明白杯" [ref=e367]
+            - cell "包材" [ref=e368]
+            - cell "486 个" [ref=e369]
+            - cell "100" [ref=e370]
+            - cell "0.530" [ref=e371]
+            - cell "2026-05-24 20:49:32" [ref=e372]
+            - cell "编辑 删除" [ref=e373]:
+              - link "编辑" [ref=e374] [cursor=pointer]:
+                - /url: /items/7/edit
+              - button "删除" [ref=e376] [cursor=pointer]
+          - row "银色纸杯 包材 400 个 100 0.530 2026-05-24 20:49:32 编辑 删除" [ref=e377]:
+            - cell "银色纸杯" [ref=e378]
+            - cell "包材" [ref=e379]
+            - cell "400 个" [ref=e380]
+            - cell "100" [ref=e381]
+            - cell "0.530" [ref=e382]
+            - cell "2026-05-24 20:49:32" [ref=e383]
+            - cell "编辑 删除" [ref=e384]:
+              - link "编辑" [ref=e385] [cursor=pointer]:
+                - /url: /items/6/edit
+              - button "删除" [ref=e387] [cursor=pointer]
+          - row "5oz冰杯 包材 15 条 5 16.400 2026-05-24 20:49:32 编辑 删除" [ref=e388]:
+            - cell "5oz冰杯" [ref=e389]
+            - cell "包材" [ref=e390]
+            - cell "15 条" [ref=e391]
+            - cell "5" [ref=e392]
+            - cell "16.400" [ref=e393]
+            - cell "2026-05-24 20:49:32" [ref=e394]
+            - cell "编辑 删除" [ref=e395]:
+              - link "编辑" [ref=e396] [cursor=pointer]:
+                - /url: /items/5/edit
+              - button "删除" [ref=e398] [cursor=pointer]
+          - row "3oz冰杯 包材 18 条 5 15.900 2026-05-24 20:49:32 编辑 删除" [ref=e399]:
+            - cell "3oz冰杯" [ref=e400]
+            - cell "包材" [ref=e401]
+            - cell "18 条" [ref=e402]
+            - cell "5" [ref=e403]
+            - cell "15.900" [ref=e404]
+            - cell "2026-05-24 20:49:32" [ref=e405]
+            - cell "编辑 删除" [ref=e406]:
+              - link "编辑" [ref=e407] [cursor=pointer]:
+                - /url: /items/4/edit
+              - button "删除" [ref=e409] [cursor=pointer]
+          - row "短勺 包材 15 包 10 23.000 2026-05-24 20:49:32 编辑 删除" [ref=e410]:
+            - cell "短勺" [ref=e411]
+            - cell "包材" [ref=e412]
+            - cell "15 包" [ref=e413]
+            - cell "10" [ref=e414]
+            - cell "23.000" [ref=e415]
+            - cell "2026-05-24 20:49:32" [ref=e416]
+            - cell "编辑 删除" [ref=e417]:
+              - link "编辑" [ref=e418] [cursor=pointer]:
+                - /url: /items/3/edit
+              - button "删除" [ref=e420] [cursor=pointer]
+          - row "餐巾纸 包材 60 包 10 5.000 2026-05-24 20:49:32 编辑 删除" [ref=e421]:
+            - cell "餐巾纸" [ref=e422]
+            - cell "包材" [ref=e423]
+            - cell "60 包" [ref=e424]
+            - cell "10" [ref=e425]
+            - cell "5.000" [ref=e426]
+            - cell "2026-05-24 20:49:32" [ref=e427]
+            - cell "编辑 删除" [ref=e428]:
+              - link "编辑" [ref=e429] [cursor=pointer]:
+                - /url: /items/2/edit
+              - button "删除" [ref=e431] [cursor=pointer]
+          - row "冰激淋甜筒 原料 9 条 2 30.000 2026-05-24 20:49:32 编辑 删除" [ref=e432]:
+            - cell "冰激淋甜筒" [ref=e433]
+            - cell "原料" [ref=e434]
+            - cell "9 条" [ref=e435]
+            - cell "2" [ref=e436]
+            - cell "30.000" [ref=e437]
+            - cell "2026-05-24 20:49:32" [ref=e438]
+            - cell "编辑 删除" [ref=e439]:
+              - link "编辑" [ref=e440] [cursor=pointer]:
+                - /url: /items/1/edit
+              - button "删除" [ref=e442] [cursor=pointer]

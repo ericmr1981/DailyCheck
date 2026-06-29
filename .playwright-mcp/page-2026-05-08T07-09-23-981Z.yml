@@ -1,0 +1,34 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "总览" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e5] [cursor=pointer]:
+      - /url: /summary
+    - link "品类管理" [ref=e6] [cursor=pointer]:
+      - /url: /categories
+    - link "库存品管理" [ref=e7] [cursor=pointer]:
+      - /url: /items
+    - link "库存盘点" [ref=e8] [cursor=pointer]:
+      - /url: /stocktake
+    - link "库存查阅" [ref=e9] [cursor=pointer]:
+      - /url: /inventory
+    - link "补货记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "出库记录" [ref=e11] [cursor=pointer]:
+      - /url: /outbound
+  - main [ref=e13]:
+    - heading "入库报告" [level=2] [ref=e14]
+    - generic [ref=e15]:
+      - link "当日" [ref=e16] [cursor=pointer]:
+        - /url: /report/inbound?scope=today
+      - link "总计" [ref=e17] [cursor=pointer]:
+        - /url: /report/inbound?scope=all
+    - table [ref=e19]:
+      - rowgroup [ref=e20]:
+        - row "品项 2026-05-02" [ref=e21]:
+          - columnheader "品项" [ref=e22]
+          - columnheader "2026-05-02" [ref=e23]
+        - row "巧克力 +5666 克" [ref=e24]:
+          - cell "巧克力" [ref=e25]
+          - cell "+5666 克" [ref=e26]

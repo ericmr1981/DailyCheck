@@ -1,0 +1,44 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "总览" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e5] [cursor=pointer]:
+      - /url: /summary
+    - link "品类管理" [ref=e6] [cursor=pointer]:
+      - /url: /categories
+    - link "库存品管理" [ref=e7] [cursor=pointer]:
+      - /url: /items
+    - link "库存盘点" [ref=e8] [cursor=pointer]:
+      - /url: /stocktake
+    - link "库存查阅" [ref=e9] [cursor=pointer]:
+      - /url: /inventory
+    - link "补货记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "出库记录" [ref=e11] [cursor=pointer]:
+      - /url: /outbound
+  - main [ref=e13]:
+    - 'heading "修改盘点批次 #1" [level=2] [ref=e14]'
+    - paragraph [ref=e15]: 备注：无
+    - generic [ref=e16]:
+      - table [ref=e17]:
+        - rowgroup [ref=e18]:
+          - row "品类 品项 单位 原盘点数 当前库存 修正为" [ref=e19]:
+            - columnheader "品类" [ref=e20]
+            - columnheader "品项" [ref=e21]
+            - columnheader "单位" [ref=e22]
+            - columnheader "原盘点数" [ref=e23]
+            - columnheader "当前库存" [ref=e24]
+            - columnheader "修正为" [ref=e25]
+          - row "冰激淋 巧克力 克 200 5844 200" [ref=e26]:
+            - cell "冰激淋" [ref=e27]
+            - cell "巧克力" [ref=e28]
+            - cell "克" [ref=e29]
+            - cell "200" [ref=e30]
+            - cell "5844" [ref=e31]
+            - cell "200" [ref=e32]:
+              - spinbutton [ref=e33]: "200"
+      - generic [ref=e34]:
+        - link "取消" [ref=e35] [cursor=pointer]:
+          - /url: /stocktake
+        - button "保存修改" [ref=e36]

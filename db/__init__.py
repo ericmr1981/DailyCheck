@@ -87,6 +87,82 @@ CREATE TABLE IF NOT EXISTS warehouse_users (
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (warehouse_id) REFERENCES warehouses(id)
 );
+
+CREATE TABLE IF NOT EXISTS forecast_runs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    started_at TEXT NOT NULL,
+    finished_at TEXT,
+    status TEXT NOT NULL,
+    items_processed INTEGER NOT NULL DEFAULT 0,
+    error_message TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_forecast_runs_status ON forecast_runs(status, started_at);
+
+CREATE TABLE IF NOT EXISTS procurement_config (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    cover_days INTEGER NOT NULL DEFAULT 14,
+    min_absolute REAL NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS procurement_cache (
+    item_id INTEGER NOT NULL,
+    warehouse_code TEXT NOT NULL,
+    computed_at TEXT NOT NULL,
+    daily_avg REAL NOT NULL,
+    current_qty REAL NOT NULL,
+    in_transit_qty REAL NOT NULL,
+    safety_stock REAL NOT NULL,
+    suggested_qty INTEGER NOT NULL,
+    invalid INTEGER NOT NULL DEFAULT 1,
+    PRIMARY KEY (item_id, warehouse_code)
+);
+
+CREATE INDEX IF NOT EXISTS idx_procurement_cache_invalid ON procurement_cache(invalid);
+
+CREATE TABLE IF NOT EXISTS notifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    event_type TEXT NOT NULL,
+    summary TEXT NOT NULL,
+    target_url TEXT,
+    created_at TEXT NOT NULL,
+    read_at TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_notif_user_created ON notifications(user_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_notif_user_unread ON notifications(user_id, read_at);
+
+CREATE TABLE IF NOT EXISTS notification_prefs (
+    user_id INTEGER NOT NULL,
+    event_type TEXT NOT NULL,
+    channel TEXT NOT NULL,
+    muted INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (user_id, event_type, channel),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Subproject 5: recipe publish event log + per-warehouse status (PRD §2.5).
+CREATE TABLE IF NOT EXISTS recipe_publish_events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    bom_version_id INTEGER NOT NULL,
+    started_by INTEGER,
+    started_at TEXT NOT NULL,
+    completed_at TEXT,
+    summary TEXT,
+    warehouse_codes_json TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS recipe_publish_event_warehouses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    publish_event_id INTEGER NOT NULL,
+    warehouse_code TEXT NOT NULL,
+    status TEXT NOT NULL,
+    error_message TEXT,
+    FOREIGN KEY (publish_event_id) REFERENCES recipe_publish_events(id)
+);
 """
 
 # Mirrors the schema that app.py shipped pre-refactor. Audit_log is new.
@@ -199,7 +275,8 @@ CREATE TABLE IF NOT EXISTS products (
     name TEXT NOT NULL UNIQUE,
     unit TEXT NOT NULL DEFAULT '件',
     note TEXT,
-    created_at TEXT NOT NULL
+    created_at TEXT NOT NULL,
+    current_version_id INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS product_bom (
@@ -235,6 +312,26 @@ CREATE TABLE IF NOT EXISTS production_run_items (
 
 CREATE INDEX IF NOT EXISTS idx_prun_created ON production_runs(created_at);
 CREATE INDEX IF NOT EXISTS idx_pruni_run ON production_run_items(run_id);
+
+-- Subproject 5: recipe version snapshot + per-store effective version (PRD §2.5).
+CREATE TABLE IF NOT EXISTS product_bom_versions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    version INTEGER NOT NULL,
+    bom_json TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    UNIQUE(product_id, version),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE IF NOT EXISTS product_bom_store_versions (
+    product_id INTEGER NOT NULL,
+    warehouse_code TEXT NOT NULL,
+    bom_version_id INTEGER NOT NULL,
+    effective_at TEXT NOT NULL,
+    PRIMARY KEY (product_id, warehouse_code),
+    FOREIGN KEY (bom_version_id) REFERENCES product_bom_versions(id)
+);
 """
 
 
@@ -243,6 +340,12 @@ def init_master_db() -> None:
     WAREHOUSE_DB_DIR.mkdir(parents=True, exist_ok=True)
     with closing(sqlite3.connect(MASTER_DB)) as conn:
         conn.executescript(MASTER_SCHEMA)
+        # Seed single-row procurement_config if missing (id=1 is the only row).
+        row = conn.execute("SELECT 1 FROM procurement_config WHERE id=1").fetchone()
+        if row is None:
+            conn.execute(
+                "INSERT INTO procurement_config (id, cover_days, min_absolute) VALUES (1, 14, 0)"
+            )
         conn.commit()
 
 
@@ -302,5 +405,11 @@ def migrate_warehouse_db_columns(db_path: Path) -> None:
         if "gram_per_unit" not in item_cols:
             conn.execute(
                 "ALTER TABLE items ADD COLUMN gram_per_unit REAL NOT NULL DEFAULT 0"
+            )
+        # Subproject 5: products.current_version_id migration (spec §2.2).
+        product_cols = {r[1] for r in conn.execute("PRAGMA table_info(products)").fetchall()}
+        if "current_version_id" not in product_cols:
+            conn.execute(
+                "ALTER TABLE products ADD COLUMN current_version_id INTEGER"
             )
         conn.commit()

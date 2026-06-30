@@ -1,0 +1,35 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "总览" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e5] [cursor=pointer]:
+      - /url: /summary
+    - link "品类管理" [ref=e6] [cursor=pointer]:
+      - /url: /categories
+    - link "库存品管理" [ref=e7] [cursor=pointer]:
+      - /url: /items
+    - link "库存盘点" [ref=e8] [cursor=pointer]:
+      - /url: /stocktake
+    - link "库存查阅" [ref=e9] [cursor=pointer]:
+      - /url: /inventory
+    - link "补货记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "出库记录" [ref=e11] [cursor=pointer]:
+      - /url: /outbound
+  - main [ref=e13]:
+    - heading "出库报告" [level=2] [ref=e14]
+    - generic [ref=e15]:
+      - link "当日" [ref=e16] [cursor=pointer]:
+        - /url: /report/outbound?scope=today
+      - link "总计" [ref=e17] [cursor=pointer]:
+        - /url: /report/outbound?scope=all
+    - table [ref=e18]:
+      - rowgroup [ref=e19]:
+        - row "操作时间 品项 出库总数量 出库次数" [ref=e20]:
+          - columnheader "操作时间" [ref=e21]
+          - columnheader "品项" [ref=e22]
+          - columnheader "出库总数量" [ref=e23]
+          - columnheader "出库次数" [ref=e24]
+        - row "暂无出库记录" [ref=e25]:
+          - cell "暂无出库记录" [ref=e26]

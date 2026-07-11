@@ -435,3 +435,5 @@
 101.82.153.230 - - [24/May/2026:19:24:04 +0800] "GET /adjustment HTTP/1.1" 500 265 "http://112.124.18.246:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36"
 127.0.0.1 - - [24/May/2026:19:33:54 +0800] "GET / HTTP/1.1" 200 3533 "-" "curl/8.5.0"
 127.0.0.1 - - [24/May/2026:19:34:02 +0800] "GET / HTTP/1.1" 200 3533 "-" "curl/8.5.0"
+{"ts": "2026-06-29T16:17:36.410752Z", "agent_token_id": null, "path": "/admin/mpc-usage", "method": "GET", "status": 200, "duration_ms": 4}
+{"ts": "2026-07-10T15:04:20.579265Z", "agent_token_id": null, "path": "/admin/mpc-usage", "method": "GET", "status": 200, "duration_ms": 15}

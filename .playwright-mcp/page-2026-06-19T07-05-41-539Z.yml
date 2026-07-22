@@ -1,0 +1,161 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "账号管理" [ref=e4] [cursor=pointer]:
+      - /url: /users
+    - link "品类与品项" [ref=e5] [cursor=pointer]:
+      - /url: /items
+    - link "总览" [ref=e6] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e7] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e8] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e9] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e11] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e12] [cursor=pointer]:
+      - /url: /outbound
+  - generic [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]: 中央仓 (wh_001)
+      - link "切换" [ref=e16] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e17]: admin [平台管理员]
+      - link "注销" [ref=e18] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e19]:
+      - heading "账号管理" [level=2] [ref=e20]
+      - group [ref=e21]:
+        - generic "新建账号" [ref=e22]:
+          - strong [ref=e23]: 新建账号
+        - generic [ref=e24]:
+          - generic [ref=e25]:
+            - generic [ref=e26]:
+              - text: 账号
+              - textbox "账号" [ref=e27]
+            - generic [ref=e28]:
+              - text: 密码
+              - textbox "密码" [ref=e29]
+          - generic [ref=e30]:
+            - checkbox "平台管理员(可访问所有仓库,绕过权限)" [ref=e31]
+            - text: 平台管理员(可访问所有仓库,绕过权限)
+          - group "仓库权限(可选,创建时直接绑定)" [ref=e32]:
+            - generic [ref=e33]: 仓库权限(可选,创建时直接绑定)
+            - table [ref=e34]:
+              - rowgroup [ref=e35]:
+                - row "仓库 无权限 staff manager admin" [ref=e36]:
+                  - columnheader "仓库" [ref=e37]
+                  - columnheader "无权限" [ref=e38]
+                  - columnheader "staff" [ref=e39]
+                  - columnheader "manager" [ref=e40]
+                  - columnheader "admin" [ref=e41]
+                - row "中央仓 (wh_001)" [ref=e42]:
+                  - cell "中央仓 (wh_001)" [ref=e43]:
+                    - strong [ref=e44]: 中央仓
+                    - text: (wh_001)
+                  - cell [ref=e45]:
+                    - radio [checked] [ref=e46]
+                  - cell [ref=e47]:
+                    - radio [ref=e48]
+                  - cell [ref=e49]:
+                    - radio [ref=e50]
+                  - cell [ref=e51]:
+                    - radio [ref=e52]
+          - button "创建" [ref=e53]
+      - table [ref=e54]:
+        - rowgroup [ref=e55]:
+          - row "账号 角色 仓库权限 最近登录 创建时间 操作" [ref=e56]:
+            - columnheader "账号" [ref=e57]
+            - columnheader "角色" [ref=e58]
+            - columnheader "仓库权限" [ref=e59]
+            - columnheader "最近登录" [ref=e60]
+            - columnheader "创建时间" [ref=e61]
+            - columnheader "操作" [ref=e62]
+        - rowgroup [ref=e63]:
+          - row "admin (我) 平台管理员 — 无 — (平台管理员已可访问全部) 2026-06-19 15:05:36 2026-06-19 14:30:50" [ref=e64]:
+            - cell "admin (我)" [ref=e65]:
+              - strong [ref=e66]: admin
+              - text: (我)
+            - cell "平台管理员" [ref=e67]
+            - cell "— 无 — (平台管理员已可访问全部)" [ref=e68]
+            - cell "2026-06-19 15:05:36" [ref=e69]
+            - cell "2026-06-19 14:30:50" [ref=e70]
+            - cell [ref=e71]:
+              - group [ref=e72]:
+                - generic "重置密码" [ref=e73]
+              - group [ref=e74]:
+                - generic "编辑仓库权限" [ref=e75]
+                - option "staff"
+                - option "manager" [selected]
+                - option "admin"
+          - row "staff1 普通用户 中央仓:staff 2026-06-19 14:58:05 2026-06-19 14:30:50 设为管理员" [ref=e76]:
+            - cell "staff1" [ref=e77]:
+              - strong [ref=e78]: staff1
+            - cell "普通用户" [ref=e79]
+            - cell "中央仓:staff" [ref=e80]
+            - cell "2026-06-19 14:58:05" [ref=e81]
+            - cell "2026-06-19 14:30:50" [ref=e82]
+            - cell "设为管理员" [ref=e83]:
+              - group [ref=e84]:
+                - generic "重置密码" [ref=e85]
+              - button "设为管理员" [ref=e87] [cursor=pointer]
+              - group [ref=e88]:
+                - generic "编辑仓库权限" [ref=e89]
+                - option "staff" [selected]
+                - option "manager"
+                - option "admin"
+          - row "manager1 普通用户 中央仓:manager 2026-06-19 14:40:56 2026-06-19 14:30:51 设为管理员" [ref=e90]:
+            - cell "manager1" [ref=e91]:
+              - strong [ref=e92]: manager1
+            - cell "普通用户" [ref=e93]
+            - cell "中央仓:manager" [ref=e94]
+            - cell "2026-06-19 14:40:56" [ref=e95]
+            - cell "2026-06-19 14:30:51" [ref=e96]
+            - cell "设为管理员" [ref=e97]:
+              - group [ref=e98]:
+                - generic "重置密码" [ref=e99]
+              - button "设为管理员" [ref=e101] [cursor=pointer]
+              - group [ref=e102]:
+                - generic "编辑仓库权限" [ref=e103]
+                - option "staff"
+                - option "manager" [selected]
+                - option "admin"
+          - row "jlin13 普通用户 — 无 — — 2026-06-19 15:00:48 设为管理员" [ref=e104]:
+            - cell "jlin13" [ref=e105]:
+              - strong [ref=e106]: jlin13
+            - cell "普通用户" [ref=e107]
+            - cell "— 无 —" [ref=e108]
+            - cell "—" [ref=e109]
+            - cell "2026-06-19 15:00:48" [ref=e110]
+            - cell "设为管理员" [ref=e111]:
+              - group [ref=e112]:
+                - generic "重置密码" [ref=e113]
+              - button "设为管理员" [ref=e115] [cursor=pointer]
+              - group [ref=e116]:
+                - generic "编辑仓库权限" [ref=e117]
+                - option "staff"
+                - option "manager" [selected]
+                - option "admin"
+          - row "tester 普通用户 中央仓:admin — 2026-06-19 15:05:00 设为管理员" [ref=e118]:
+            - cell "tester" [ref=e119]:
+              - strong [ref=e120]: tester
+            - cell "普通用户" [ref=e121]
+            - cell "中央仓:admin" [ref=e122]
+            - cell "—" [ref=e123]
+            - cell "2026-06-19 15:05:00" [ref=e124]
+            - cell "设为管理员" [ref=e125]:
+              - group [ref=e126]:
+                - generic "重置密码" [ref=e127]
+              - button "设为管理员" [ref=e129] [cursor=pointer]
+              - group [ref=e130]:
+                - generic "编辑仓库权限" [ref=e131]
+                - option "staff"
+                - option "manager"
+                - option "admin" [selected]
+      - paragraph [ref=e132]:
+        - text: 平台管理员(is_admin=1)不受仓库级权限检查约束。
+        - text: 仓库级 admin 等价于"该仓全权";manager 可审批/删除单据;staff 仅录入。

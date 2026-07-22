@@ -1,0 +1,216 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - paragraph [ref=e4]: 项目运营
+    - heading "轻量库存管理" [level=1] [ref=e5]
+  - generic [ref=e6]:
+    - generic [ref=e7]: 中央仓 (wh_001)
+    - link "切换" [ref=e8] [cursor=pointer]:
+      - /url: /select-warehouse
+    - generic [ref=e9]: admin [平台管理员]
+    - link "注销" [ref=e10] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e11]:
+    - heading "账号管理" [level=2] [ref=e12]
+    - group [ref=e13]:
+      - generic "新建账号" [ref=e14]:
+        - strong [ref=e15]: 新建账号
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - generic [ref=e18]:
+            - text: 账号
+            - textbox "账号" [ref=e19]
+          - generic [ref=e20]:
+            - text: 密码
+            - textbox "密码" [ref=e21]
+        - generic [ref=e22]:
+          - checkbox "平台管理员(可访问所有仓库,绕过权限)" [ref=e23]
+          - text: 平台管理员(可访问所有仓库,绕过权限)
+        - group "仓库权限(可选,创建时直接绑定)" [ref=e24]:
+          - generic [ref=e25]: 仓库权限(可选,创建时直接绑定)
+          - table [ref=e26]:
+            - rowgroup [ref=e27]:
+              - row "仓库 无权限 staff manager admin" [ref=e28]:
+                - columnheader "仓库" [ref=e29]
+                - columnheader "无权限" [ref=e30]
+                - columnheader "staff" [ref=e31]
+                - columnheader "manager" [ref=e32]
+                - columnheader "admin" [ref=e33]
+              - row "中央仓 (wh_001)" [ref=e34]:
+                - cell "中央仓 (wh_001)" [ref=e35]:
+                  - strong [ref=e36]: 中央仓
+                  - text: (wh_001)
+                - cell [ref=e37]:
+                  - radio [checked] [ref=e38]
+                - cell [ref=e39]:
+                  - radio [ref=e40]
+                - cell [ref=e41]:
+                  - radio [ref=e42]
+                - cell [ref=e43]:
+                  - radio [ref=e44]
+              - row "新世界店 (wh_002)" [ref=e45]:
+                - cell "新世界店 (wh_002)" [ref=e46]:
+                  - strong [ref=e47]: 新世界店
+                  - text: (wh_002)
+                - cell [ref=e48]:
+                  - radio [checked] [ref=e49]
+                - cell [ref=e50]:
+                  - radio [ref=e51]
+                - cell [ref=e52]:
+                  - radio [ref=e53]
+                - cell [ref=e54]:
+                  - radio [ref=e55]
+        - button "创建" [ref=e56]
+    - heading "用户列表" [level=3] [ref=e57]
+    - generic [ref=e58]:
+      - article [ref=e59]:
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - strong [ref=e62]: admin
+            - text: (我)
+            - generic [ref=e63]: 平台管理员
+          - generic [ref=e64]:
+            - text: "最近登录: 2026-06-20 09:17:36"
+            - text: "创建: 2026-06-19 14:30:50"
+        - generic [ref=e65]: 仓库权限 — 无 — (平台管理员可访问全部)
+        - group [ref=e66]:
+          - generic "编辑仓库权限" [ref=e67]
+          - option "staff"
+          - option "manager" [selected]
+          - option "admin"
+          - option "staff"
+          - option "manager" [selected]
+          - option "admin"
+        - group [ref=e68]:
+          - generic "重置密码" [ref=e69]
+      - article [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - strong [ref=e73]: staff1
+            - generic [ref=e74]: 普通用户
+          - generic [ref=e75]:
+            - text: "最近登录: 2026-06-19 16:04:14"
+            - text: "创建: 2026-06-19 14:30:50"
+        - generic [ref=e76]:
+          - text: 仓库权限
+          - generic [ref=e77]: 中央仓:staff
+        - group [ref=e78]:
+          - generic "编辑仓库权限" [ref=e79]
+          - option "staff" [selected]
+          - option "manager"
+          - option "admin"
+          - option "staff"
+          - option "manager" [selected]
+          - option "admin"
+        - group [ref=e80]:
+          - generic "重置密码" [ref=e81]
+        - generic [ref=e82]:
+          - button "设为管理员" [ref=e84] [cursor=pointer]
+          - button "删除账号" [ref=e86] [cursor=pointer]
+      - article [ref=e87]:
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - strong [ref=e90]: manager1
+            - generic [ref=e91]: 普通用户
+          - generic [ref=e92]:
+            - text: "最近登录: 2026-06-19 14:40:56"
+            - text: "创建: 2026-06-19 14:30:51"
+        - generic [ref=e93]:
+          - text: 仓库权限
+          - generic [ref=e94]: 中央仓:manager
+        - group [ref=e95]:
+          - generic "编辑仓库权限" [ref=e96]
+          - option "staff"
+          - option "manager" [selected]
+          - option "admin"
+          - option "staff"
+          - option "manager" [selected]
+          - option "admin"
+        - group [ref=e97]:
+          - generic "重置密码" [ref=e98]
+        - generic [ref=e99]:
+          - button "设为管理员" [ref=e101] [cursor=pointer]
+          - button "删除账号" [ref=e103] [cursor=pointer]
+      - article [ref=e104]:
+        - generic [ref=e105]:
+          - generic [ref=e106]:
+            - strong [ref=e107]: jlin13
+            - generic [ref=e108]: 普通用户
+          - generic [ref=e109]:
+            - text: "最近登录: —"
+            - text: "创建: 2026-06-19 15:00:48"
+        - generic [ref=e110]: 仓库权限 — 无 —
+        - group [ref=e111]:
+          - generic "编辑仓库权限" [ref=e112]
+          - option "staff"
+          - option "manager" [selected]
+          - option "admin"
+          - option "staff"
+          - option "manager" [selected]
+          - option "admin"
+        - group [ref=e113]:
+          - generic "重置密码" [ref=e114]
+        - generic [ref=e115]:
+          - button "设为管理员" [ref=e117] [cursor=pointer]
+          - button "删除账号" [ref=e119] [cursor=pointer]
+      - article [ref=e120]:
+        - generic [ref=e121]:
+          - generic [ref=e122]:
+            - strong [ref=e123]: tester
+            - generic [ref=e124]: 普通用户
+          - generic [ref=e125]:
+            - text: "最近登录: —"
+            - text: "创建: 2026-06-19 15:05:00"
+        - generic [ref=e126]:
+          - text: 仓库权限
+          - generic [ref=e127]: 中央仓:admin
+        - group [ref=e128]:
+          - generic "编辑仓库权限" [ref=e129]
+          - option "staff"
+          - option "manager"
+          - option "admin" [selected]
+          - option "staff"
+          - option "manager" [selected]
+          - option "admin"
+        - group [ref=e130]:
+          - generic "重置密码" [ref=e131]
+        - generic [ref=e132]:
+          - button "设为管理员" [ref=e134] [cursor=pointer]
+          - button "删除账号" [ref=e136] [cursor=pointer]
+    - heading "仓库管理" [level=3] [ref=e137]
+    - generic [ref=e138]:
+      - article [ref=e139]:
+        - generic [ref=e140]:
+          - strong [ref=e141]: 中央仓
+          - text: (wh_001)
+        - paragraph [ref=e142]: 初始化将清空所有入库/出库/盘点/调整/审计流水,并把品项库存与安全库存归零。 品类和品项(规格/单价)保留。
+        - group [ref=e143]:
+          - generic "初始化仓库" [ref=e144] [cursor=pointer]
+      - article [ref=e145]:
+        - generic [ref=e146]:
+          - strong [ref=e147]: 新世界店
+          - text: (wh_002)
+        - paragraph [ref=e148]: 初始化将清空所有入库/出库/盘点/调整/审计流水,并把品项库存与安全库存归零。 品类和品项(规格/单价)保留。
+        - group [ref=e149]:
+          - generic "初始化仓库" [ref=e150] [cursor=pointer]
+    - paragraph [ref=e151]:
+      - text: 平台管理员(is_admin=1)不受仓库级权限检查约束。
+      - text: 仓库级 admin 等价于"该仓全权";manager 可审批/删除单据;staff 仅录入。
+  - navigation [ref=e152]:
+    - link "账号" [ref=e153] [cursor=pointer]:
+      - /url: /users
+    - link "总览" [ref=e154] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e155] [cursor=pointer]:
+      - /url: /summary
+    - link "库存" [ref=e156] [cursor=pointer]:
+      - /url: /inventory
+    - link "品项" [ref=e157] [cursor=pointer]:
+      - /url: /items
+    - link "盘点" [ref=e158] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库" [ref=e159] [cursor=pointer]:
+      - /url: /restock
+    - link "调整" [ref=e160] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库" [ref=e161] [cursor=pointer]:
+      - /url: /outbound

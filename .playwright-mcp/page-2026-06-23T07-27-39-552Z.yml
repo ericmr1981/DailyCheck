@@ -1,0 +1,23 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: 中央仓 (wh_001)
+    - link "切换" [ref=e5] [cursor=pointer]:
+      - /url: /select-warehouse
+    - generic [ref=e6]: admin [平台管理员]
+    - link "注销" [ref=e7] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e8]:
+    - heading "选择仓库" [level=2] [ref=e9]
+    - paragraph [ref=e10]: 当前账号：admin (平台管理员)
+    - list [ref=e11]:
+      - listitem [ref=e12]:
+        - button "中央仓 wh_001" [ref=e14] [cursor=pointer]:
+          - strong [ref=e15]: 中央仓
+          - text: wh_001
+      - listitem [ref=e16]:
+        - button "新世界店 wh_002" [ref=e18] [cursor=pointer]:
+          - strong [ref=e19]: 新世界店
+          - text: wh_002
+    - paragraph [ref=e20]:
+      - link "注销" [ref=e21] [cursor=pointer]:
+        - /url: /logout

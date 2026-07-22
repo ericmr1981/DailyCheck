@@ -1,0 +1,11 @@
+[    9224ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://127.0.0.1:5001/select-warehouse:0
+[    9229ms] [WARNING] Error while trying to use the following icon from the Manifest: http://127.0.0.1:5001/static/icons/icon-192.png (Download error or resource isn't a valid image) @ http://127.0.0.1:5001/select-warehouse:0
+[   14890ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://127.0.0.1:5001/:0
+[   14930ms] [WARNING] Error while trying to use the following icon from the Manifest: http://127.0.0.1:5001/static/icons/icon-192.png (Download error or resource isn't a valid image) @ http://127.0.0.1:5001/:0
+[   25631ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://127.0.0.1:5001/items:0
+[   25633ms] [WARNING] Error while trying to use the following icon from the Manifest: http://127.0.0.1:5001/static/icons/icon-192.png (Download error or resource isn't a valid image) @ http://127.0.0.1:5001/items:0
+[   37636ms] [VERBOSE] [DOM] Password forms should have (optionally hidden) username fields for accessibility: (More info: https://goo.gl/9p2vKq) %o @ http://127.0.0.1:5001/users:0
+[   37637ms] [VERBOSE] [DOM] Password forms should have (optionally hidden) username fields for accessibility: (More info: https://goo.gl/9p2vKq) %o @ http://127.0.0.1:5001/users:0
+[   37637ms] [VERBOSE] [DOM] Password forms should have (optionally hidden) username fields for accessibility: (More info: https://goo.gl/9p2vKq) %o @ http://127.0.0.1:5001/users:0
+[   37644ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://127.0.0.1:5001/users:0
+[   37645ms] [WARNING] Error while trying to use the following icon from the Manifest: http://127.0.0.1:5001/static/icons/icon-192.png (Download error or resource isn't a valid image) @ http://127.0.0.1:5001/users:0

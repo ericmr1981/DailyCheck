@@ -1,0 +1,24 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: 中央仓 (wh_001)
+    - link "切换" [ref=e5] [cursor=pointer]:
+      - /url: /select-warehouse
+    - generic [ref=e6]: admin [平台管理员]
+    - link "注销" [ref=e7] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - heading "生产录入" [level=2] [ref=e10]
+      - link "← 返回落地页" [ref=e11] [cursor=pointer]:
+        - /url: /land
+    - paragraph [ref=e12]:
+      - text: 产品：
+      - strong [ref=e13]: 榛子巧克力Gelato
+      - text: （产出单位 件）·
+      - link "← 返回产品列表" [ref=e14] [cursor=pointer]:
+        - /url: /production
+    - paragraph [ref=e15]:
+      - text: 该产品还没有配方，请先
+      - link "编辑配方" [ref=e16] [cursor=pointer]:
+        - /url: /production/products/4/edit
+      - text: 。

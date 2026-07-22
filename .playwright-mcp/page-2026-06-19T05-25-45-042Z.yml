@@ -1,0 +1,53 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "总览" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e5] [cursor=pointer]:
+      - /url: /summary
+    - link "品类管理" [ref=e6] [cursor=pointer]:
+      - /url: /categories
+    - link "库存品管理" [ref=e7] [cursor=pointer]:
+      - /url: /items
+    - link "库存盘点" [ref=e8] [cursor=pointer]:
+      - /url: /stocktake
+    - link "库存查阅" [ref=e9] [cursor=pointer]:
+      - /url: /inventory
+    - link "补货记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e11] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e12] [cursor=pointer]:
+      - /url: /outbound
+  - main [ref=e14]:
+    - heading "后台总览" [level=2] [ref=e15]
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - paragraph [ref=e18]: 品类数
+        - strong [ref=e19]: "4"
+      - generic [ref=e20]:
+        - paragraph [ref=e21]: 库存品数
+        - strong [ref=e22]: "1"
+      - generic [ref=e23]:
+        - paragraph [ref=e24]: 低库存项
+        - strong [ref=e25]: "1"
+      - generic [ref=e26]:
+        - paragraph [ref=e27]: 提交中补货
+        - strong [ref=e28]: "0"
+    - generic [ref=e29]:
+      - link "当日出库报告 0 条记录" [ref=e30] [cursor=pointer]:
+        - /url: /report/outbound
+        - paragraph [ref=e31]: 当日出库报告
+        - strong [ref=e32]: 0 条记录
+      - link "当日入库报告 0 条记录" [ref=e33] [cursor=pointer]:
+        - /url: /report/inbound
+        - paragraph [ref=e34]: 当日入库报告
+        - strong [ref=e35]: 0 条记录
+    - heading "最近库存变动" [level=3] [ref=e36]
+    - table [ref=e37]:
+      - rowgroup [ref=e38]:
+        - row "时间 品项 动作 数量变化" [ref=e39]:
+          - columnheader "时间" [ref=e40]
+          - columnheader "品项" [ref=e41]
+          - columnheader "动作" [ref=e42]
+          - columnheader "数量变化" [ref=e43]

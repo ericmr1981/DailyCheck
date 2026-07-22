@@ -1,0 +1,24 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: 中央仓 (wh_001)
+    - link "切换" [ref=e5] [cursor=pointer]:
+      - /url: /select-warehouse
+    - generic [ref=e6]: staff1[staff]
+    - link "注销" [ref=e7] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e8]:
+    - list [ref=e9]:
+      - listitem [ref=e10]: 需要 manager 及以上权限
+    - heading "请选择功能" [level=2] [ref=e11]
+    - paragraph [ref=e12]:
+      - text: 当前仓库：
+      - strong [ref=e13]: 中央仓
+    - generic [ref=e14]:
+      - link "库存管理 品项 / 盘点 / 入库 / 出库 / 调整 / 库存查阅" [ref=e15] [cursor=pointer]:
+        - /url: /items
+        - heading "库存管理" [level=3] [ref=e16]
+        - paragraph [ref=e17]: 品项 / 盘点 / 入库 / 出库 / 调整 / 库存查阅
+      - link "生产录入 产品配方 / 按产出量自动领料" [ref=e18] [cursor=pointer]:
+        - /url: /production
+        - heading "生产录入" [level=3] [ref=e19]
+        - paragraph [ref=e20]: 产品配方 / 按产出量自动领料

@@ -1,0 +1,54 @@
+- generic [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "总览" [ref=e4] [cursor=pointer]:
+      - /url: /dashboard
+    - link "汇总" [ref=e5] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e6] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e7] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e8] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e9] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e10] [cursor=pointer]:
+      - /url: /outbound
+    - link "生产录入" [ref=e11] [cursor=pointer]:
+      - /url: /production
+  - generic [ref=e12]:
+    - generic [ref=e13]:
+      - generic [ref=e14]: 中央仓 (wh_001)
+      - link "切换" [ref=e15] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e16]: staff1[staff]
+      - link "注销" [ref=e17] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e18]:
+      - generic [ref=e19]:
+        - textbox "按品项名/品类搜索" [active] [ref=e20]
+        - button "查询" [ref=e21]
+      - paragraph [ref=e22]: 卡片内的「日均消耗」分母为该品项 7 日窗口内实际有消耗的天数（不是固定 7 天）。
+      - tablist "按品类筛选" [ref=e23]:
+        - tab "全部" [selected] [ref=e24] [cursor=pointer]
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: 品项数
+          - generic [ref=e28]: "0"
+        - generic [ref=e29]:
+          - generic [ref=e30]: 库存总数量
+          - generic [ref=e31]: "0"
+        - generic [ref=e32]:
+          - generic [ref=e33]: 库存总金额
+          - generic [ref=e34]: ¥ 0.00
+        - generic [ref=e35]:
+          - generic [ref=e36]: 7日消耗
+          - generic [ref=e37]: "0"
+        - generic [ref=e38]:
+          - generic [ref=e39]: 7日日均
+          - generic [ref=e40]: "0"
+        - generic [ref=e41]:
+          - generic [ref=e42]: 7日消耗金额
+          - generic [ref=e43]: ¥ 0.00
+      - paragraph [ref=e45]: 未找到匹配的品项。

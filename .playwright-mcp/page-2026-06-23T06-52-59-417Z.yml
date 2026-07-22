@@ -1,0 +1,66 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: 中央仓 (wh_001)
+    - link "切换" [ref=e5] [cursor=pointer]:
+      - /url: /select-warehouse
+    - generic [ref=e6]: admin [平台管理员]
+    - link "注销" [ref=e7] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - heading "编辑产品" [level=2] [ref=e10]
+      - link "← 返回落地页" [ref=e11] [cursor=pointer]:
+        - /url: /land
+      - link "← 返回列表" [ref=e12] [cursor=pointer]:
+        - /url: /production
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - text: 产品名称
+        - textbox "产品名称" [ref=e15]: 奶茶
+      - generic [ref=e16]:
+        - text: 产出单位
+        - textbox "产出单位" [ref=e17]: 杯
+      - generic [ref=e18]:
+        - text: 备注
+        - textbox "备注" [ref=e19]: smoke
+      - button "保存产品" [ref=e20]
+    - separator [ref=e21]
+    - heading "配方 (BOM)" [level=3] [ref=e22]
+    - paragraph [ref=e23]: 每生产 1 单位产品，消耗多少该原料。
+    - generic [ref=e24]:
+      - table [ref=e25]:
+        - rowgroup [ref=e26]:
+          - row "原料 每单位用量 单位 操作" [ref=e27]:
+            - columnheader "原料" [ref=e28]
+            - columnheader "每单位用量" [ref=e29]
+            - columnheader "单位" [ref=e30]
+            - columnheader "操作" [ref=e31]
+        - rowgroup [ref=e32]:
+          - row "原料 / 面粉 (克) 0.05 克 删除" [ref=e33]:
+            - cell "原料 / 面粉 (克)" [ref=e34]:
+              - combobox [ref=e35]:
+                - option "原料 / 糖 (克)"
+                - option "原料 / 面粉 (克)" [selected]
+                - option "工具 / 22 (克)"
+            - cell "0.05" [ref=e36]:
+              - spinbutton [ref=e37]: "0.05"
+            - cell "克" [ref=e38]
+            - cell "删除" [ref=e39]:
+              - generic [ref=e40]:
+                - checkbox "删除" [ref=e41]
+                - text: 删除
+          - row "原料 / 糖 (克) 0.2 克 删除" [ref=e42]:
+            - cell "原料 / 糖 (克)" [ref=e43]:
+              - combobox [ref=e44]:
+                - option "原料 / 糖 (克)" [selected]
+                - option "原料 / 面粉 (克)"
+                - option "工具 / 22 (克)"
+            - cell "0.2" [ref=e45]:
+              - spinbutton [ref=e46]: "0.2"
+            - cell "克" [ref=e47]
+            - cell "删除" [ref=e48]:
+              - generic [ref=e49]:
+                - checkbox "删除" [ref=e50]
+                - text: 删除
+      - button "+ 新增一行" [ref=e51] [cursor=pointer]
+      - button "保存配方" [ref=e52]

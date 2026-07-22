@@ -1,0 +1,40 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: 新世界店二店 (wh_003)
+    - link "切换" [ref=e5] [cursor=pointer]:
+      - /url: /select-warehouse
+    - generic [ref=e6]: admin [平台管理员]
+    - link "注销" [ref=e7] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - heading "产品" [level=2] [ref=e10]
+      - link "← 返回落地页" [ref=e11] [cursor=pointer]:
+        - /url: /land
+      - link "历史记录 →" [ref=e12] [cursor=pointer]:
+        - /url: /production/runs
+      - link "+ 新建产品" [ref=e13] [cursor=pointer]:
+        - /url: /production/products/new
+    - generic [ref=e14]:
+      - generic [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]:
+          - heading "草莓大福" [level=3] [ref=e17]
+          - paragraph [ref=e18]: 单位：件
+          - paragraph [ref=e19]:
+            - text: 配方项数：
+            - strong [ref=e20]: "3"
+        - generic [ref=e21]:
+          - link "编辑配方" [ref=e22]:
+            - /url: /production/products/2/edit
+          - button "删除" [ref=e24]
+      - generic [ref=e25] [cursor=pointer]:
+        - generic [ref=e26]:
+          - heading "榛子巧克力Gelato" [level=3] [ref=e27]
+          - paragraph [ref=e28]: 单位：件 · ceshi
+          - paragraph [ref=e29]:
+            - text: 配方项数：
+            - strong [ref=e30]: "2"
+        - generic [ref=e31]:
+          - link "编辑配方" [ref=e32]:
+            - /url: /production/products/1/edit
+          - button "删除" [ref=e34]

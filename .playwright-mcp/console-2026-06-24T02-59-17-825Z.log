@@ -1,0 +1,3 @@
+[     126ms] [ERROR] Failed to load resource: the server responded with a status of 404 (NOT FOUND) @ http://localhost:62416/favicon.ico:0
+[    8779ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:62416/select-warehouse:0
+[    8784ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:62416/static/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:62416/select-warehouse:0

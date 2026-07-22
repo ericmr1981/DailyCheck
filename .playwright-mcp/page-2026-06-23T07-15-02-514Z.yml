@@ -1,0 +1,27 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: 中央仓 (wh_001)
+    - link "切换" [ref=e5] [cursor=pointer]:
+      - /url: /select-warehouse
+    - generic [ref=e6]: admin [平台管理员]
+    - link "注销" [ref=e7] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - heading "生产记录" [level=2] [ref=e10]
+      - link "← 返回落地页" [ref=e11] [cursor=pointer]:
+        - /url: /land
+      - link "导出 CSV" [ref=e12] [cursor=pointer]:
+        - /url: /production/runs.csv
+    - generic [ref=e13]:
+      - generic [ref=e14] [cursor=pointer]:
+        - radio "当天" [checked] [ref=e15]
+        - text: 当天
+      - generic [ref=e16] [cursor=pointer]:
+        - radio "最近 7 天" [ref=e17]
+        - text: 最近 7 天
+      - generic [ref=e18] [cursor=pointer]:
+        - radio "单日" [ref=e19]
+        - text: 单日
+        - textbox [ref=e20]
+    - paragraph [ref=e21]: 该时间范围内暂无生产记录。

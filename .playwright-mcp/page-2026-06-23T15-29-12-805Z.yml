@@ -1,0 +1,60 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "品类与品项" [ref=e4] [cursor=pointer]:
+      - /url: /items
+    - link "总览" [ref=e5] [cursor=pointer]:
+      - /url: /dashboard
+    - link "汇总" [ref=e6] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e7] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e8] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e9] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e10] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e11] [cursor=pointer]:
+      - /url: /outbound
+    - link "生产录入" [ref=e12] [cursor=pointer]:
+      - /url: /production
+  - generic [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]: 中央仓 (wh_001)
+      - link "切换" [ref=e16] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e17]: manager1[manager]
+      - link "注销" [ref=e18] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e19]:
+      - heading "调整单" [level=2] [ref=e20]
+      - paragraph [ref=e21]: 调整出库直接从库存中扣减数量，不计入消耗统计。
+      - button "新建调整单" [ref=e23]
+      - table [ref=e24]:
+        - rowgroup [ref=e25]:
+          - row "时间 品项 调整数量 原因 状态 操作" [ref=e26]:
+            - columnheader "时间" [ref=e27]
+            - columnheader "品项" [ref=e28]
+            - columnheader "调整数量" [ref=e29]
+            - columnheader "原因" [ref=e30]
+            - columnheader "状态" [ref=e31]
+            - columnheader "操作" [ref=e32]
+          - row "2026-06-19 17:05:00 22 0 克 test-zero-v3 已执行 回退 删除" [ref=e33]:
+            - cell "2026-06-19 17:05:00" [ref=e34]
+            - cell "22" [ref=e35]
+            - cell "0 克" [ref=e36]
+            - cell "test-zero-v3" [ref=e37]
+            - cell "已执行" [ref=e38]
+            - cell "回退 删除" [ref=e39]:
+              - button "回退" [ref=e41] [cursor=pointer]
+              - button "删除" [ref=e43] [cursor=pointer]
+          - row "2026-06-19 14:51:06 22 1 克 已执行 回退 删除" [ref=e44]:
+            - cell "2026-06-19 14:51:06" [ref=e45]
+            - cell "22" [ref=e46]
+            - cell "1 克" [ref=e47]
+            - cell [ref=e48]
+            - cell "已执行" [ref=e49]
+            - cell "回退 删除" [ref=e50]:
+              - button "回退" [ref=e52] [cursor=pointer]
+              - button "删除" [ref=e54] [cursor=pointer]

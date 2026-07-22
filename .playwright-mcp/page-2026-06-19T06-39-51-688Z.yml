@@ -1,0 +1,37 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "总览" [ref=e4] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e5] [cursor=pointer]:
+      - /url: /summary
+    - link "品类管理" [ref=e6] [cursor=pointer]:
+      - /url: /categories
+    - link "库存品管理" [ref=e7] [cursor=pointer]:
+      - /url: /items
+    - link "库存盘点" [ref=e8] [cursor=pointer]:
+      - /url: /stocktake
+    - link "库存查阅" [ref=e9] [cursor=pointer]:
+      - /url: /inventory
+    - link "补货记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e11] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e12] [cursor=pointer]:
+      - /url: /outbound
+  - generic [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]: admin [平台管理员]
+      - link "注销" [ref=e16] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e17]:
+      - heading "选择仓库" [level=2] [ref=e18]
+      - paragraph [ref=e19]: 当前账号：admin (平台管理员)
+      - list [ref=e20]:
+        - listitem [ref=e21]:
+          - button "中央仓 wh_001" [ref=e23] [cursor=pointer]:
+            - strong [ref=e24]: 中央仓
+            - text: wh_001
+      - paragraph [ref=e25]:
+        - link "注销" [ref=e26] [cursor=pointer]:
+          - /url: /logout

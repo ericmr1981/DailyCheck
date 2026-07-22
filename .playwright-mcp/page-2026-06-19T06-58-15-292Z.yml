@@ -1,0 +1,69 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "品类与品项" [ref=e4] [cursor=pointer]:
+      - /url: /items
+    - link "总览" [ref=e5] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e6] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e7] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e8] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e9] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e10] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e11] [cursor=pointer]:
+      - /url: /outbound
+  - generic [ref=e12]:
+    - generic [ref=e13]:
+      - generic [ref=e14]: 中央仓 (wh_001)
+      - link "切换" [ref=e15] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e16]: staff1[staff]
+      - link "注销" [ref=e17] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e18]:
+      - heading "后台总览" [level=2] [ref=e19]
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: 品类数
+          - strong [ref=e23]: "4"
+        - generic [ref=e24]:
+          - paragraph [ref=e25]: 库存品数
+          - strong [ref=e26]: "1"
+        - generic [ref=e27]:
+          - paragraph [ref=e28]: 低库存项
+          - strong [ref=e29]: "1"
+        - generic [ref=e30]:
+          - paragraph [ref=e31]: 待入库请求
+          - strong [ref=e32]: "0"
+      - generic [ref=e33]:
+        - link "当日出库报告 0 条记录" [ref=e34] [cursor=pointer]:
+          - /url: /report/outbound
+          - paragraph [ref=e35]: 当日出库报告
+          - strong [ref=e36]: 0 条记录
+        - link "当日入库报告 1 条记录" [ref=e37] [cursor=pointer]:
+          - /url: /report/inbound
+          - paragraph [ref=e38]: 当日入库报告
+          - strong [ref=e39]: 1 条记录
+      - heading "最近库存变动" [level=3] [ref=e40]
+      - table [ref=e41]:
+        - rowgroup [ref=e42]:
+          - row "时间 品项 动作 数量变化" [ref=e43]:
+            - columnheader "时间" [ref=e44]
+            - columnheader "品项" [ref=e45]
+            - columnheader "动作" [ref=e46]
+            - columnheader "数量变化" [ref=e47]
+          - row "2026-06-19 14:51:06 22 调整出库 -1" [ref=e48]:
+            - cell "2026-06-19 14:51:06" [ref=e49]
+            - cell "22" [ref=e50]
+            - cell "调整出库" [ref=e51]
+            - cell "-1" [ref=e52]
+          - row "2026-06-19 14:50:38 22 补货入库 2" [ref=e53]:
+            - cell "2026-06-19 14:50:38" [ref=e54]
+            - cell "22" [ref=e55]
+            - cell "补货入库" [ref=e56]
+            - cell "2" [ref=e57]

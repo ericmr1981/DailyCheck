@@ -1,0 +1,1110 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "账号管理" [ref=e4] [cursor=pointer]:
+      - /url: /users
+    - link "品类与品项" [ref=e5] [cursor=pointer]:
+      - /url: /items
+    - link "总览" [ref=e6] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e7] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e8] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e9] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e11] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e12] [cursor=pointer]:
+      - /url: /outbound
+  - generic [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]: 新世界店 (wh_002)
+      - link "切换" [ref=e16] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e17]: admin [平台管理员]
+      - link "注销" [ref=e18] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e19]:
+      - generic [ref=e20]:
+        - generic [ref=e21]:
+          - heading "入库录入" [level=2] [ref=e22]
+          - generic [ref=e23]:
+            - textbox "本次入库原因（可选）" [ref=e24]
+            - button "提交并入库" [ref=e25]
+          - paragraph [ref=e26]: 留空 = 本次不入库该品项。平板/手机均可左右双指缩放。
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - generic [ref=e29]:
+              - generic [ref=e30]: 乳制品
+              - generic [ref=e31]: 淡奶油
+            - generic [ref=e32]:
+              - generic [ref=e33]:
+                - text: 当前
+                - strong [ref=e34]: "0"
+                - text: 箱
+              - generic [ref=e35]:
+                - text: 安全
+                - strong [ref=e36]: "0"
+                - text: 箱
+            - generic [ref=e37]:
+              - spinbutton [ref=e38]
+              - generic [ref=e39]: 箱
+          - generic [ref=e40]:
+            - generic [ref=e41]:
+              - generic [ref=e42]: 乳制品
+              - generic [ref=e43]: 纯牛奶
+            - generic [ref=e44]:
+              - generic [ref=e45]:
+                - text: 当前
+                - strong [ref=e46]: "55"
+                - text: 盒
+              - generic [ref=e47]:
+                - text: 安全
+                - strong [ref=e48]: "0"
+                - text: 盒
+            - generic [ref=e49]:
+              - spinbutton [ref=e50]
+              - generic [ref=e51]: 盒
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - generic [ref=e54]: 冰激凌成品
+              - generic [ref=e55]: 迷你冰糕
+            - generic [ref=e56]:
+              - generic [ref=e57]:
+                - text: 当前
+                - strong [ref=e58]: "0"
+                - text: 盒
+              - generic [ref=e59]:
+                - text: 安全
+                - strong [ref=e60]: "0"
+                - text: 盒
+            - generic [ref=e61]:
+              - spinbutton [ref=e62]
+              - generic [ref=e63]: 盒
+          - generic [ref=e64]:
+            - generic [ref=e65]:
+              - generic [ref=e66]: 包材
+              - generic [ref=e67]: 保温袋6寸
+            - generic [ref=e68]:
+              - generic [ref=e69]:
+                - text: 当前
+                - strong [ref=e70]: "0"
+                - text: 分装箱
+              - generic [ref=e71]:
+                - text: 安全
+                - strong [ref=e72]: "0"
+                - text: 分装箱
+            - generic [ref=e73]:
+              - spinbutton [ref=e74]
+              - generic [ref=e75]: 分装箱
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - generic [ref=e78]: 包材
+              - generic [ref=e79]: 冰激凌勺短
+            - generic [ref=e80]:
+              - generic [ref=e81]:
+                - text: 当前
+                - strong [ref=e82]: "0"
+                - text: 包
+              - generic [ref=e83]:
+                - text: 安全
+                - strong [ref=e84]: "0"
+                - text: 包
+            - generic [ref=e85]:
+              - spinbutton [ref=e86]
+              - generic [ref=e87]: 包
+          - generic [ref=e88]:
+            - generic [ref=e89]:
+              - generic [ref=e90]: 包材
+              - generic [ref=e91]: 冰激凌勺长
+            - generic [ref=e92]:
+              - generic [ref=e93]:
+                - text: 当前
+                - strong [ref=e94]: "0"
+                - text: 包
+              - generic [ref=e95]:
+                - text: 安全
+                - strong [ref=e96]: "0"
+                - text: 包
+            - generic [ref=e97]:
+              - spinbutton [ref=e98]
+              - generic [ref=e99]: 包
+          - generic [ref=e100]:
+            - generic [ref=e101]:
+              - generic [ref=e102]: 包材
+              - generic [ref=e103]: 冰碗3oz
+            - generic [ref=e104]:
+              - generic [ref=e105]:
+                - text: 当前
+                - strong [ref=e106]: "0"
+                - text: 箱
+              - generic [ref=e107]:
+                - text: 安全
+                - strong [ref=e108]: "0"
+                - text: 箱
+            - generic [ref=e109]:
+              - spinbutton [ref=e110]
+              - generic [ref=e111]: 箱
+          - generic [ref=e112]:
+            - generic [ref=e113]:
+              - generic [ref=e114]: 包材
+              - generic [ref=e115]: 冰碗5oz
+            - generic [ref=e116]:
+              - generic [ref=e117]:
+                - text: 当前
+                - strong [ref=e118]: "0"
+                - text: 箱
+              - generic [ref=e119]:
+                - text: 安全
+                - strong [ref=e120]: "0"
+                - text: 箱
+            - generic [ref=e121]:
+              - spinbutton [ref=e122]
+              - generic [ref=e123]: 箱
+          - generic [ref=e124]:
+            - generic [ref=e125]:
+              - generic [ref=e126]: 包材
+              - generic [ref=e127]: 冰碗8oz
+            - generic [ref=e128]:
+              - generic [ref=e129]:
+                - text: 当前
+                - strong [ref=e130]: "0"
+                - text: 箱
+              - generic [ref=e131]:
+                - text: 安全
+                - strong [ref=e132]: "0"
+                - text: 箱
+            - generic [ref=e133]:
+              - spinbutton [ref=e134]
+              - generic [ref=e135]: 箱
+          - generic [ref=e136]:
+            - generic [ref=e137]:
+              - generic [ref=e138]: 包材
+              - generic [ref=e139]: 杯子-蓝
+            - generic [ref=e140]:
+              - generic [ref=e141]:
+                - text: 当前
+                - strong [ref=e142]: "0"
+                - text: 箱
+              - generic [ref=e143]:
+                - text: 安全
+                - strong [ref=e144]: "0"
+                - text: 箱
+            - generic [ref=e145]:
+              - spinbutton [ref=e146]
+              - generic [ref=e147]: 箱
+          - generic [ref=e148]:
+            - generic [ref=e149]:
+              - generic [ref=e150]: 包材
+              - generic [ref=e151]: 甜筒托
+            - generic [ref=e152]:
+              - generic [ref=e153]:
+                - text: 当前
+                - strong [ref=e154]: "0"
+                - text: 分装箱
+              - generic [ref=e155]:
+                - text: 安全
+                - strong [ref=e156]: "0"
+                - text: 分装箱
+            - generic [ref=e157]:
+              - spinbutton [ref=e158]
+              - generic [ref=e159]: 分装箱
+          - generic [ref=e160]:
+            - generic [ref=e161]:
+              - generic [ref=e162]: 包材
+              - generic [ref=e163]: 甜筒杯圈
+            - generic [ref=e164]:
+              - generic [ref=e165]:
+                - text: 当前
+                - strong [ref=e166]: "0"
+                - text: 分装箱
+              - generic [ref=e167]:
+                - text: 安全
+                - strong [ref=e168]: "0"
+                - text: 分装箱
+            - generic [ref=e169]:
+              - spinbutton [ref=e170]
+              - generic [ref=e171]: 分装箱
+          - generic [ref=e172]:
+            - generic [ref=e173]:
+              - generic [ref=e174]: 包材
+              - generic [ref=e175]: 试吃勺
+            - generic [ref=e176]:
+              - generic [ref=e177]:
+                - text: 当前
+                - strong [ref=e178]: "0"
+                - text: 箱
+              - generic [ref=e179]:
+                - text: 安全
+                - strong [ref=e180]: "0"
+                - text: 箱
+            - generic [ref=e181]:
+              - spinbutton [ref=e182]
+              - generic [ref=e183]: 箱
+          - generic [ref=e184]:
+            - generic [ref=e185]:
+              - generic [ref=e186]: 包材
+              - generic [ref=e187]: 金卡单面烫黑金
+            - generic [ref=e188]:
+              - generic [ref=e189]:
+                - text: 当前
+                - strong [ref=e190]: "0"
+                - text: 箱
+              - generic [ref=e191]:
+                - text: 安全
+                - strong [ref=e192]: "0"
+                - text: 箱
+            - generic [ref=e193]:
+              - spinbutton [ref=e194]
+              - generic [ref=e195]: 箱
+          - generic [ref=e196]:
+            - generic [ref=e197]:
+              - generic [ref=e198]: 包材
+              - generic [ref=e199]: 银卡单面烫黑金
+            - generic [ref=e200]:
+              - generic [ref=e201]:
+                - text: 当前
+                - strong [ref=e202]: "0"
+                - text: 箱
+              - generic [ref=e203]:
+                - text: 安全
+                - strong [ref=e204]: "0"
+                - text: 箱
+            - generic [ref=e205]:
+              - spinbutton [ref=e206]
+              - generic [ref=e207]: 箱
+          - generic [ref=e208]:
+            - generic [ref=e209]:
+              - generic [ref=e210]: 包材
+              - generic [ref=e211]: 餐巾纸
+            - generic [ref=e212]:
+              - generic [ref=e213]:
+                - text: 当前
+                - strong [ref=e214]: "0"
+                - text: 箱
+              - generic [ref=e215]:
+                - text: 安全
+                - strong [ref=e216]: "0"
+                - text: 箱
+            - generic [ref=e217]:
+              - spinbutton [ref=e218]
+              - generic [ref=e219]: 箱
+          - generic [ref=e220]:
+            - generic [ref=e221]:
+              - generic [ref=e222]: 生产工具
+              - generic [ref=e223]: 卫衣-冬
+            - generic [ref=e224]:
+              - generic [ref=e225]:
+                - text: 当前
+                - strong [ref=e226]: "0"
+                - text: 个
+              - generic [ref=e227]:
+                - text: 安全
+                - strong [ref=e228]: "0"
+                - text: 个
+            - generic [ref=e229]:
+              - spinbutton [ref=e230]
+              - generic [ref=e231]: 个
+          - generic [ref=e232]:
+            - generic [ref=e233]:
+              - generic [ref=e234]: 生产工具
+              - generic [ref=e235]: 帽子-冬
+            - generic [ref=e236]:
+              - generic [ref=e237]:
+                - text: 当前
+                - strong [ref=e238]: "0"
+                - text: 个
+              - generic [ref=e239]:
+                - text: 安全
+                - strong [ref=e240]: "0"
+                - text: 个
+            - generic [ref=e241]:
+              - spinbutton [ref=e242]
+              - generic [ref=e243]: 个
+          - generic [ref=e244]:
+            - generic [ref=e245]:
+              - generic [ref=e246]: 生产工具
+              - generic [ref=e247]: 挤酱瓶800ml
+            - generic [ref=e248]:
+              - generic [ref=e249]:
+                - text: 当前
+                - strong [ref=e250]: "0"
+                - text: 个
+              - generic [ref=e251]:
+                - text: 安全
+                - strong [ref=e252]: "0"
+                - text: 个
+            - generic [ref=e253]:
+              - spinbutton [ref=e254]
+              - generic [ref=e255]: 个
+          - generic [ref=e256]:
+            - generic [ref=e257]:
+              - generic [ref=e258]: 生产工具
+              - generic [ref=e259]: 马甲-冬
+            - generic [ref=e260]:
+              - generic [ref=e261]:
+                - text: 当前
+                - strong [ref=e262]: "0"
+                - text: 个
+              - generic [ref=e263]:
+                - text: 安全
+                - strong [ref=e264]: "0"
+                - text: 个
+            - generic [ref=e265]:
+              - spinbutton [ref=e266]
+              - generic [ref=e267]: 个
+          - generic [ref=e268]:
+            - generic [ref=e269]:
+              - generic [ref=e270]: 生产消耗品
+              - generic [ref=e271]: 一次性手套
+            - generic [ref=e272]:
+              - generic [ref=e273]:
+                - text: 当前
+                - strong [ref=e274]: "0"
+                - text: 盒
+              - generic [ref=e275]:
+                - text: 安全
+                - strong [ref=e276]: "0"
+                - text: 盒
+            - generic [ref=e277]:
+              - spinbutton [ref=e278]
+              - generic [ref=e279]: 盒
+          - generic [ref=e280]:
+            - generic [ref=e281]:
+              - generic [ref=e282]: 生产消耗品
+              - generic [ref=e283]: 方巾-白
+            - generic [ref=e284]:
+              - generic [ref=e285]:
+                - text: 当前
+                - strong [ref=e286]: "0"
+                - text: 条
+              - generic [ref=e287]:
+                - text: 安全
+                - strong [ref=e288]: "0"
+                - text: 条
+            - generic [ref=e289]:
+              - spinbutton [ref=e290]
+              - generic [ref=e291]: 条
+          - generic [ref=e292]:
+            - generic [ref=e293]:
+              - generic [ref=e294]: 生产消耗品
+              - generic [ref=e295]: 方巾-蓝
+            - generic [ref=e296]:
+              - generic [ref=e297]:
+                - text: 当前
+                - strong [ref=e298]: "0"
+                - text: 条
+              - generic [ref=e299]:
+                - text: 安全
+                - strong [ref=e300]: "0"
+                - text: 条
+            - generic [ref=e301]:
+              - spinbutton [ref=e302]
+              - generic [ref=e303]: 条
+          - generic [ref=e304]:
+            - generic [ref=e305]:
+              - generic [ref=e306]: 生产消耗品
+              - generic [ref=e307]: 方巾-褐
+            - generic [ref=e308]:
+              - generic [ref=e309]:
+                - text: 当前
+                - strong [ref=e310]: "0"
+                - text: 条
+              - generic [ref=e311]:
+                - text: 安全
+                - strong [ref=e312]: "0"
+                - text: 条
+            - generic [ref=e313]:
+              - spinbutton [ref=e314]
+              - generic [ref=e315]: 条
+          - generic [ref=e316]:
+            - generic [ref=e317]:
+              - generic [ref=e318]: 调味酱
+              - generic [ref=e319]: 冷冻芒果酱
+            - generic [ref=e320]:
+              - generic [ref=e321]:
+                - text: 当前
+                - strong [ref=e322]: "0"
+                - text: 箱
+              - generic [ref=e323]:
+                - text: 安全
+                - strong [ref=e324]: "0"
+                - text: 箱
+            - generic [ref=e325]:
+              - spinbutton [ref=e326]
+              - generic [ref=e327]: 箱
+          - generic [ref=e328]:
+            - generic [ref=e329]:
+              - generic [ref=e330]: 调味酱
+              - generic [ref=e331]: 巧克力布朗尼装饰酱
+            - generic [ref=e332]:
+              - generic [ref=e333]:
+                - text: 当前
+                - strong [ref=e334]: "0"
+                - text: 桶
+              - generic [ref=e335]:
+                - text: 安全
+                - strong [ref=e336]: "0"
+                - text: 桶
+            - generic [ref=e337]:
+              - spinbutton [ref=e338]
+              - generic [ref=e339]: 桶
+          - generic [ref=e340]:
+            - generic [ref=e341]:
+              - generic [ref=e342]: 调味酱
+              - generic [ref=e343]: 希腊酸奶风味酱
+            - generic [ref=e344]:
+              - generic [ref=e345]:
+                - text: 当前
+                - strong [ref=e346]: "0"
+                - text: 桶
+              - generic [ref=e347]:
+                - text: 安全
+                - strong [ref=e348]: "0"
+                - text: 桶
+            - generic [ref=e349]:
+              - spinbutton [ref=e350]
+              - generic [ref=e351]: 桶
+          - generic [ref=e352]:
+            - generic [ref=e353]:
+              - generic [ref=e354]: 调味酱
+              - generic [ref=e355]: 开心果酱分装
+            - generic [ref=e356]:
+              - generic [ref=e357]:
+                - text: 当前
+                - strong [ref=e358]: "0"
+                - text: 罐
+              - generic [ref=e359]:
+                - text: 安全
+                - strong [ref=e360]: "0"
+                - text: 罐
+            - generic [ref=e361]:
+              - spinbutton [ref=e362]
+              - generic [ref=e363]: 罐
+          - generic [ref=e364]:
+            - generic [ref=e365]:
+              - generic [ref=e366]: 调味酱
+              - generic [ref=e367]: 无色树莓调味酱
+            - generic [ref=e368]:
+              - generic [ref=e369]:
+                - text: 当前
+                - strong [ref=e370]: "0"
+                - text: 桶
+              - generic [ref=e371]:
+                - text: 安全
+                - strong [ref=e372]: "0"
+                - text: 桶
+            - generic [ref=e373]:
+              - spinbutton [ref=e374]
+              - generic [ref=e375]: 桶
+          - generic [ref=e376]:
+            - generic [ref=e377]:
+              - generic [ref=e378]: 调味酱
+              - generic [ref=e379]: 有色树莓调味酱
+            - generic [ref=e380]:
+              - generic [ref=e381]:
+                - text: 当前
+                - strong [ref=e382]: "0"
+                - text: 桶
+              - generic [ref=e383]:
+                - text: 安全
+                - strong [ref=e384]: "0"
+                - text: 桶
+            - generic [ref=e385]:
+              - spinbutton [ref=e386]
+              - generic [ref=e387]: 桶
+          - generic [ref=e388]:
+            - generic [ref=e389]:
+              - generic [ref=e390]: 调味酱
+              - generic [ref=e391]: 朗姆酒葡萄⼲
+            - generic [ref=e392]:
+              - generic [ref=e393]:
+                - text: 当前
+                - strong [ref=e394]: "0"
+                - text: 桶
+              - generic [ref=e395]:
+                - text: 安全
+                - strong [ref=e396]: "0"
+                - text: 桶
+            - generic [ref=e397]:
+              - spinbutton [ref=e398]
+              - generic [ref=e399]: 桶
+          - generic [ref=e400]:
+            - generic [ref=e401]:
+              - generic [ref=e402]: 调味酱
+              - generic [ref=e403]: 榛子巧克力
+            - generic [ref=e404]:
+              - generic [ref=e405]:
+                - text: 当前
+                - strong [ref=e406]: "0"
+                - text: 桶
+              - generic [ref=e407]:
+                - text: 安全
+                - strong [ref=e408]: "0"
+                - text: 桶
+            - generic [ref=e409]:
+              - spinbutton [ref=e410]
+              - generic [ref=e411]: 桶
+          - generic [ref=e412]:
+            - generic [ref=e413]:
+              - generic [ref=e414]: 调味酱
+              - generic [ref=e415]: 橙子酱
+            - generic [ref=e416]:
+              - generic [ref=e417]:
+                - text: 当前
+                - strong [ref=e418]: "0"
+                - text: 桶
+              - generic [ref=e419]:
+                - text: 安全
+                - strong [ref=e420]: "0"
+                - text: 桶
+            - generic [ref=e421]:
+              - spinbutton [ref=e422]
+              - generic [ref=e423]: 桶
+          - generic [ref=e424]:
+            - generic [ref=e425]:
+              - generic [ref=e426]: 调味酱
+              - generic [ref=e427]: 焦糖酱
+            - generic [ref=e428]:
+              - generic [ref=e429]:
+                - text: 当前
+                - strong [ref=e430]: "0"
+                - text: 桶
+              - generic [ref=e431]:
+                - text: 安全
+                - strong [ref=e432]: "0"
+                - text: 桶
+            - generic [ref=e433]:
+              - spinbutton [ref=e434]
+              - generic [ref=e435]: 桶
+          - generic [ref=e436]:
+            - generic [ref=e437]:
+              - generic [ref=e438]: 调味酱
+              - generic [ref=e439]: 玫瑰调味酱
+            - generic [ref=e440]:
+              - generic [ref=e441]:
+                - text: 当前
+                - strong [ref=e442]: "0"
+                - text: 桶
+              - generic [ref=e443]:
+                - text: 安全
+                - strong [ref=e444]: "0"
+                - text: 桶
+            - generic [ref=e445]:
+              - spinbutton [ref=e446]
+              - generic [ref=e447]: 桶
+          - generic [ref=e448]:
+            - generic [ref=e449]:
+              - generic [ref=e450]: 调味酱
+              - generic [ref=e451]: 百士多开心果调味酱
+            - generic [ref=e452]:
+              - generic [ref=e453]:
+                - text: 当前
+                - strong [ref=e454]: "0"
+                - text: 桶
+              - generic [ref=e455]:
+                - text: 安全
+                - strong [ref=e456]: "0"
+                - text: 桶
+            - generic [ref=e457]:
+              - spinbutton [ref=e458]
+              - generic [ref=e459]: 桶
+          - generic [ref=e460]:
+            - generic [ref=e461]:
+              - generic [ref=e462]: 调味酱
+              - generic [ref=e463]: 芝华香醇黑芝麻酱
+            - generic [ref=e464]:
+              - generic [ref=e465]:
+                - text: 当前
+                - strong [ref=e466]: "0"
+                - text: 桶
+              - generic [ref=e467]:
+                - text: 安全
+                - strong [ref=e468]: "0"
+                - text: 桶
+            - generic [ref=e469]:
+              - spinbutton [ref=e470]
+              - generic [ref=e471]: 桶
+          - generic [ref=e472]:
+            - generic [ref=e473]:
+              - generic [ref=e474]: 调味酱
+              - generic [ref=e475]: 草莓风味酱-B
+            - generic [ref=e476]:
+              - generic [ref=e477]:
+                - text: 当前
+                - strong [ref=e478]: "3.5"
+                - text: 桶
+              - generic [ref=e479]:
+                - text: 安全
+                - strong [ref=e480]: "0"
+                - text: 桶
+            - generic [ref=e481]:
+              - spinbutton [ref=e482]
+              - generic [ref=e483]: 桶
+          - generic [ref=e484]:
+            - generic [ref=e485]:
+              - generic [ref=e486]: 调味酱
+              - generic [ref=e487]: 重瓣玫瑰花粉
+            - generic [ref=e488]:
+              - generic [ref=e489]:
+                - text: 当前
+                - strong [ref=e490]: "0"
+                - text: 包
+              - generic [ref=e491]:
+                - text: 安全
+                - strong [ref=e492]: "0"
+                - text: 包
+            - generic [ref=e493]:
+              - spinbutton [ref=e494]
+              - generic [ref=e495]: 包
+          - generic [ref=e496]:
+            - generic [ref=e497]:
+              - generic [ref=e498]: 调味酱 分
+              - generic [ref=e499]: 希腊酸奶风味酱 - 散
+            - generic [ref=e500]:
+              - generic [ref=e501]:
+                - text: 当前
+                - strong [ref=e502]: "0"
+                - text: 罐
+              - generic [ref=e503]:
+                - text: 安全
+                - strong [ref=e504]: "0"
+                - text: 罐
+            - generic [ref=e505]:
+              - spinbutton [ref=e506]
+              - generic [ref=e507]: 罐
+          - generic [ref=e508]:
+            - generic [ref=e509]:
+              - generic [ref=e510]: 调味酱 分
+              - generic [ref=e511]: 无色树莓调味酱 - 散
+            - generic [ref=e512]:
+              - generic [ref=e513]:
+                - text: 当前
+                - strong [ref=e514]: "0"
+                - text: 罐
+              - generic [ref=e515]:
+                - text: 安全
+                - strong [ref=e516]: "0"
+                - text: 罐
+            - generic [ref=e517]:
+              - spinbutton [ref=e518]
+              - generic [ref=e519]: 罐
+          - generic [ref=e520]:
+            - generic [ref=e521]:
+              - generic [ref=e522]: 调味酱 分
+              - generic [ref=e523]: 有色树莓调味酱 - 散
+            - generic [ref=e524]:
+              - generic [ref=e525]:
+                - text: 当前
+                - strong [ref=e526]: "0"
+                - text: 罐
+              - generic [ref=e527]:
+                - text: 安全
+                - strong [ref=e528]: "0"
+                - text: 罐
+            - generic [ref=e529]:
+              - spinbutton [ref=e530]
+              - generic [ref=e531]: 罐
+          - generic [ref=e532]:
+            - generic [ref=e533]:
+              - generic [ref=e534]: 调味酱 分
+              - generic [ref=e535]: 榛子巧克力-散
+            - generic [ref=e536]:
+              - generic [ref=e537]:
+                - text: 当前
+                - strong [ref=e538]: "0"
+                - text: 罐
+              - generic [ref=e539]:
+                - text: 安全
+                - strong [ref=e540]: "0"
+                - text: 罐
+            - generic [ref=e541]:
+              - spinbutton [ref=e542]
+              - generic [ref=e543]: 罐
+          - generic [ref=e544]:
+            - generic [ref=e545]:
+              - generic [ref=e546]: 调味酱 分
+              - generic [ref=e547]: 橙子酱 - 散
+            - generic [ref=e548]:
+              - generic [ref=e549]:
+                - text: 当前
+                - strong [ref=e550]: "0"
+                - text: 罐
+              - generic [ref=e551]:
+                - text: 安全
+                - strong [ref=e552]: "0"
+                - text: 罐
+            - generic [ref=e553]:
+              - spinbutton [ref=e554]
+              - generic [ref=e555]: 罐
+          - generic [ref=e556]:
+            - generic [ref=e557]:
+              - generic [ref=e558]: 调味酱 分
+              - generic [ref=e559]: 焦糖酱 - 散
+            - generic [ref=e560]:
+              - generic [ref=e561]:
+                - text: 当前
+                - strong [ref=e562]: "0"
+                - text: 罐
+              - generic [ref=e563]:
+                - text: 安全
+                - strong [ref=e564]: "0"
+                - text: 罐
+            - generic [ref=e565]:
+              - spinbutton [ref=e566]
+              - generic [ref=e567]: 罐
+          - generic [ref=e568]:
+            - generic [ref=e569]:
+              - generic [ref=e570]: 调味酱 分
+              - generic [ref=e571]: 玫瑰调味酱 - 散
+            - generic [ref=e572]:
+              - generic [ref=e573]:
+                - text: 当前
+                - strong [ref=e574]: "0"
+                - text: 罐
+              - generic [ref=e575]:
+                - text: 安全
+                - strong [ref=e576]: "0"
+                - text: 罐
+            - generic [ref=e577]:
+              - spinbutton [ref=e578]
+              - generic [ref=e579]: 罐
+          - generic [ref=e580]:
+            - generic [ref=e581]:
+              - generic [ref=e582]: 调味酱 分
+              - generic [ref=e583]: 草莓风味酱-散
+            - generic [ref=e584]:
+              - generic [ref=e585]:
+                - text: 当前
+                - strong [ref=e586]: "0"
+                - text: 罐
+              - generic [ref=e587]:
+                - text: 安全
+                - strong [ref=e588]: "0"
+                - text: 罐
+            - generic [ref=e589]:
+              - spinbutton [ref=e590]
+              - generic [ref=e591]: 罐
+          - generic [ref=e592]:
+            - generic [ref=e593]:
+              - generic [ref=e594]: 辅料
+              - generic [ref=e595]: ⽔果粉
+            - generic [ref=e596]:
+              - generic [ref=e597]:
+                - text: 当前
+                - strong [ref=e598]: "0"
+                - text: 袋
+              - generic [ref=e599]:
+                - text: 安全
+                - strong [ref=e600]: "0"
+                - text: 袋
+            - generic [ref=e601]:
+              - spinbutton [ref=e602]
+              - generic [ref=e603]: 袋
+          - generic [ref=e604]:
+            - generic [ref=e605]:
+              - generic [ref=e606]: 辅料
+              - generic [ref=e607]: 五谷杂粮炒米
+            - generic [ref=e608]:
+              - generic [ref=e609]:
+                - text: 当前
+                - strong [ref=e610]: "0"
+                - text: 包
+              - generic [ref=e611]:
+                - text: 安全
+                - strong [ref=e612]: "0"
+                - text: 包
+            - generic [ref=e613]:
+              - spinbutton [ref=e614]
+              - generic [ref=e615]: 包
+          - generic [ref=e616]:
+            - generic [ref=e617]:
+              - generic [ref=e618]: 辅料
+              - generic [ref=e619]: 冻干无花果碎粒
+            - generic [ref=e620]:
+              - generic [ref=e621]:
+                - text: 当前
+                - strong [ref=e622]: "0"
+                - text: 包
+              - generic [ref=e623]:
+                - text: 安全
+                - strong [ref=e624]: "0"
+                - text: 包
+            - generic [ref=e625]:
+              - spinbutton [ref=e626]
+              - generic [ref=e627]: 包
+          - generic [ref=e628]:
+            - generic [ref=e629]:
+              - generic [ref=e630]: 辅料
+              - generic [ref=e631]: 华夫蛋筒
+            - generic [ref=e632]:
+              - generic [ref=e633]:
+                - text: 当前
+                - strong [ref=e634]: "0"
+                - text: 箱
+              - generic [ref=e635]:
+                - text: 安全
+                - strong [ref=e636]: "0"
+                - text: 箱
+            - generic [ref=e637]:
+              - spinbutton [ref=e638]
+              - generic [ref=e639]: 箱
+          - generic [ref=e640]:
+            - generic [ref=e641]:
+              - generic [ref=e642]: 辅料
+              - generic [ref=e643]: 可可薄脆
+            - generic [ref=e644]:
+              - generic [ref=e645]:
+                - text: 当前
+                - strong [ref=e646]: "0"
+                - text: 袋
+              - generic [ref=e647]:
+                - text: 安全
+                - strong [ref=e648]: "0"
+                - text: 袋
+            - generic [ref=e649]:
+              - spinbutton [ref=e650]
+              - generic [ref=e651]: 袋
+          - generic [ref=e652]:
+            - generic [ref=e653]:
+              - generic [ref=e654]: 辅料
+              - generic [ref=e655]: 安德鲁杏子酱
+            - generic [ref=e656]:
+              - generic [ref=e657]:
+                - text: 当前
+                - strong [ref=e658]: "0"
+                - text: 袋
+              - generic [ref=e659]:
+                - text: 安全
+                - strong [ref=e660]: "0"
+                - text: 袋
+            - generic [ref=e661]:
+              - spinbutton [ref=e662]
+              - generic [ref=e663]: 袋
+          - generic [ref=e664]:
+            - generic [ref=e665]:
+              - generic [ref=e666]: 辅料
+              - generic [ref=e667]: 巧克力布朗尼酱 罐装
+            - generic [ref=e668]:
+              - generic [ref=e669]:
+                - text: 当前
+                - strong [ref=e670]: "0"
+                - text: 罐
+              - generic [ref=e671]:
+                - text: 安全
+                - strong [ref=e672]: "0"
+                - text: 罐
+            - generic [ref=e673]:
+              - spinbutton [ref=e674]
+              - generic [ref=e675]: 罐
+          - generic [ref=e676]:
+            - generic [ref=e677]:
+              - generic [ref=e678]: 辅料
+              - generic [ref=e679]: 开心果碎1-3cm
+            - generic [ref=e680]:
+              - generic [ref=e681]:
+                - text: 当前
+                - strong [ref=e682]: "0"
+                - text: 袋
+              - generic [ref=e683]:
+                - text: 安全
+                - strong [ref=e684]: "0"
+                - text: 袋
+            - generic [ref=e685]:
+              - spinbutton [ref=e686]
+              - generic [ref=e687]: 袋
+          - generic [ref=e688]:
+            - generic [ref=e689]:
+              - generic [ref=e690]: 辅料
+              - generic [ref=e691]: 梦龙脆脆粒
+            - generic [ref=e692]:
+              - generic [ref=e693]:
+                - text: 当前
+                - strong [ref=e694]: "0"
+                - text: 包
+              - generic [ref=e695]:
+                - text: 安全
+                - strong [ref=e696]: "0"
+                - text: 包
+            - generic [ref=e697]:
+              - spinbutton [ref=e698]
+              - generic [ref=e699]: 包
+          - generic [ref=e700]:
+            - generic [ref=e701]:
+              - generic [ref=e702]: 辅料
+              - generic [ref=e703]: 玫瑰花瓣1.5cm
+            - generic [ref=e704]:
+              - generic [ref=e705]:
+                - text: 当前
+                - strong [ref=e706]: "0"
+                - text: 包
+              - generic [ref=e707]:
+                - text: 安全
+                - strong [ref=e708]: "0"
+                - text: 包
+            - generic [ref=e709]:
+              - spinbutton [ref=e710]
+              - generic [ref=e711]: 包
+          - generic [ref=e712]:
+            - generic [ref=e713]:
+              - generic [ref=e714]: 辅料
+              - generic [ref=e715]: 花生碎1-3cm
+            - generic [ref=e716]:
+              - generic [ref=e717]:
+                - text: 当前
+                - strong [ref=e718]: "0"
+                - text: 包
+              - generic [ref=e719]:
+                - text: 安全
+                - strong [ref=e720]: "0"
+                - text: 包
+            - generic [ref=e721]:
+              - spinbutton [ref=e722]
+              - generic [ref=e723]: 包
+          - generic [ref=e724]:
+            - generic [ref=e725]:
+              - generic [ref=e726]: 辅料
+              - generic [ref=e727]: 草莓丁
+            - generic [ref=e728]:
+              - generic [ref=e729]:
+                - text: 当前
+                - strong [ref=e730]: "0"
+                - text: 包
+              - generic [ref=e731]:
+                - text: 安全
+                - strong [ref=e732]: "0"
+                - text: 包
+            - generic [ref=e733]:
+              - spinbutton [ref=e734]
+              - generic [ref=e735]: 包
+          - generic [ref=e736]:
+            - generic [ref=e737]:
+              - generic [ref=e738]: 辅料
+              - generic [ref=e739]: 蓝钻杏仁片
+            - generic [ref=e740]:
+              - generic [ref=e741]:
+                - text: 当前
+                - strong [ref=e742]: "0"
+                - text: 包
+              - generic [ref=e743]:
+                - text: 安全
+                - strong [ref=e744]: "0"
+                - text: 包
+            - generic [ref=e745]:
+              - spinbutton [ref=e746]
+              - generic [ref=e747]: 包
+          - generic [ref=e748]:
+            - generic [ref=e749]:
+              - generic [ref=e750]: 辅料
+              - generic [ref=e751]: 重瓣玫瑰花粉 - 散
+            - generic [ref=e752]:
+              - generic [ref=e753]:
+                - text: 当前
+                - strong [ref=e754]: "0"
+                - text: 罐
+              - generic [ref=e755]:
+                - text: 安全
+                - strong [ref=e756]: "0"
+                - text: 罐
+            - generic [ref=e757]:
+              - spinbutton [ref=e758]
+              - generic [ref=e759]: 罐
+          - generic [ref=e760]:
+            - generic [ref=e761]:
+              - generic [ref=e762]: 辅料
+              - generic [ref=e763]: 黄金椰子粒
+            - generic [ref=e764]:
+              - generic [ref=e765]:
+                - text: 当前
+                - strong [ref=e766]: "0"
+                - text: 包
+              - generic [ref=e767]:
+                - text: 安全
+                - strong [ref=e768]: "0"
+                - text: 包
+            - generic [ref=e769]:
+              - spinbutton [ref=e770]
+              - generic [ref=e771]: 包
+          - generic [ref=e772]:
+            - generic [ref=e773]:
+              - generic [ref=e774]: 风味奶浆
+              - generic [ref=e775]: 北海道牛乳60
+            - generic [ref=e776]:
+              - generic [ref=e777]:
+                - text: 当前
+                - strong [ref=e778]: "0"
+                - text: 袋
+              - generic [ref=e779]:
+                - text: 安全
+                - strong [ref=e780]: "0"
+                - text: 袋
+            - generic [ref=e781]:
+              - spinbutton [ref=e782]
+              - generic [ref=e783]: 袋
+          - generic [ref=e784]:
+            - generic [ref=e785]:
+              - generic [ref=e786]: 风味奶浆
+              - generic [ref=e787]: 原味奶浆JYX001
+            - generic [ref=e788]:
+              - generic [ref=e789]:
+                - text: 当前
+                - strong [ref=e790]: "0"
+                - text: 袋
+              - generic [ref=e791]:
+                - text: 安全
+                - strong [ref=e792]: "0"
+                - text: 袋
+            - generic [ref=e793]:
+              - spinbutton [ref=e794]
+              - generic [ref=e795]: 袋
+          - generic [ref=e796]:
+            - generic [ref=e797]:
+              - generic [ref=e798]: 风味奶浆
+              - generic [ref=e799]: 哈密瓜口味
+            - generic [ref=e800]:
+              - generic [ref=e801]:
+                - text: 当前
+                - strong [ref=e802]: "0"
+                - text: 袋
+              - generic [ref=e803]:
+                - text: 安全
+                - strong [ref=e804]: "0"
+                - text: 袋
+            - generic [ref=e805]:
+              - spinbutton [ref=e806]
+              - generic [ref=e807]: 袋
+          - generic [ref=e808]:
+            - generic [ref=e809]:
+              - generic [ref=e810]: 风味奶浆
+              - generic [ref=e811]: 泰茶风味冰激淋
+            - generic [ref=e812]:
+              - generic [ref=e813]:
+                - text: 当前
+                - strong [ref=e814]: "0"
+                - text: 袋
+              - generic [ref=e815]:
+                - text: 安全
+                - strong [ref=e816]: "0"
+                - text: 袋
+            - generic [ref=e817]:
+              - spinbutton [ref=e818]
+              - generic [ref=e819]: 袋
+          - generic [ref=e820]:
+            - generic [ref=e821]:
+              - generic [ref=e822]: 风味奶浆
+              - generic [ref=e823]: 海盐荔枝口味
+            - generic [ref=e824]:
+              - generic [ref=e825]:
+                - text: 当前
+                - strong [ref=e826]: "0"
+                - text: 袋
+              - generic [ref=e827]:
+                - text: 安全
+                - strong [ref=e828]: "0"
+                - text: 袋
+            - generic [ref=e829]:
+              - spinbutton [ref=e830]
+              - generic [ref=e831]: 袋

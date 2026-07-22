@@ -1,0 +1,28 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: admin [平台管理员]
+    - link "注销" [ref=e5] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e6]:
+    - heading "选择仓库" [level=2] [ref=e7]
+    - paragraph [ref=e8]: 当前账号：admin (平台管理员)
+    - list [ref=e9]:
+      - listitem [ref=e10]:
+        - button "中央仓 wh_001" [ref=e12] [cursor=pointer]:
+          - strong [ref=e13]: 中央仓
+          - text: wh_001
+      - listitem [ref=e14]:
+        - button "新世界店 wh_002" [ref=e16] [cursor=pointer]:
+          - strong [ref=e17]: 新世界店
+          - text: wh_002
+      - listitem [ref=e18]:
+        - button "新天地店 wh_003" [ref=e20] [cursor=pointer]:
+          - strong [ref=e21]: 新天地店
+          - text: wh_003
+      - listitem [ref=e22]:
+        - button "飞机 wh_010" [ref=e24] [cursor=pointer]:
+          - strong [ref=e25]: 飞机
+          - text: wh_010
+    - paragraph [ref=e26]:
+      - link "注销" [ref=e27] [cursor=pointer]:
+        - /url: /logout

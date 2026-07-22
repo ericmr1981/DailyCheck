@@ -1,0 +1,7 @@
+[   14712ms] [ERROR] Failed to load resource: the server responded with a status of 401 (UNAUTHORIZED) @ http://localhost:5001/login:0
+[   34693ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:5001/select-warehouse:0
+[   34700ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:5001/static/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:5001/select-warehouse:0
+[   44857ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:5001/land:0
+[   44863ms] [ERROR] Failed to load resource: the server responded with a status of 404 (NOT FOUND) @ http://localhost:5001/favicon.ico:0
+[   44864ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:5001/static/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:5001/land:0
+[   54165ms] [ERROR] Failed to load resource: the server responded with a status of 500 (INTERNAL SERVER ERROR) @ http://localhost:5001/production:0

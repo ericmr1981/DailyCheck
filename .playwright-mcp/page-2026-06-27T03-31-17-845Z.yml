@@ -1,0 +1,78 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "品类与品项" [ref=e4] [cursor=pointer]:
+      - /url: /items
+    - link "总览" [ref=e5] [cursor=pointer]:
+      - /url: /dashboard
+    - link "汇总" [ref=e6] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e7] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e8] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e9] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e10] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e11] [cursor=pointer]:
+      - /url: /outbound
+    - link "生产录入" [ref=e12] [cursor=pointer]:
+      - /url: /production
+  - generic [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]: 中央仓 (wh_001)
+      - link "切换" [ref=e16] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e17]: manager1[manager]
+      - link "注销" [ref=e18] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e19]:
+      - heading "品类与品项" [level=2] [ref=e20]
+      - tablist "按品类筛选" [ref=e21]:
+        - tab "全部" [selected] [ref=e22] [cursor=pointer]
+        - tab "包材" [ref=e23] [cursor=pointer]
+      - generic [ref=e24]:
+        - heading "固定品类" [level=3] [ref=e25]
+        - paragraph [ref=e26]: 品类为系统固定项，不可新增或删除。
+        - list [ref=e27]:
+          - listitem [ref=e28]: 包材
+      - heading "新增库存品" [level=3] [ref=e29]
+      - generic [ref=e30]:
+        - generic [ref=e31]:
+          - generic [ref=e32]: 品项名称
+          - textbox "品项名称" [ref=e33]
+        - generic [ref=e34]:
+          - generic [ref=e35]: 品类
+          - combobox "品类" [ref=e36]:
+            - option "选择品类" [selected]
+            - option "包材"
+        - generic [ref=e37]:
+          - generic [ref=e38]: 初始库存
+          - spinbutton "初始库存" [ref=e39]
+        - generic [ref=e40]:
+          - generic [ref=e41]: 安全库存
+          - spinbutton "安全库存" [ref=e42]
+        - generic [ref=e43]:
+          - generic [ref=e44]: 进货单价（¥）
+          - spinbutton "进货单价（¥）" [ref=e45]
+        - generic [ref=e46]:
+          - generic [ref=e47]: 单位
+          - textbox "单位" [ref=e48]:
+            - /placeholder: 件
+        - generic [ref=e49]:
+          - generic [ref=e50]: 每单位克重（克，0=不启用）
+          - spinbutton "每单位克重（克，0=不启用）" [ref=e51]
+        - button "新增库存品" [ref=e52]
+      - heading "品项列表" [level=3] [ref=e53]
+      - table [ref=e54]:
+        - rowgroup [ref=e55]:
+          - row "品项 品类 库存 安全库存 单价（¥） 克重 更新时间 操作" [ref=e56]:
+            - columnheader "品项" [ref=e57]
+            - columnheader "品类" [ref=e58]
+            - columnheader "库存" [ref=e59]
+            - columnheader "安全库存" [ref=e60]
+            - columnheader "单价（¥）" [ref=e61]
+            - columnheader "克重" [ref=e62]
+            - columnheader "更新时间" [ref=e63]
+            - columnheader "操作" [ref=e64]

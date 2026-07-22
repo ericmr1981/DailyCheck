@@ -1,0 +1,120 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: 新世界店 (wh_002)
+    - link "切换" [ref=e5] [cursor=pointer]:
+      - /url: /select-warehouse
+    - generic [ref=e6]: admin [平台管理员]
+    - link "注销" [ref=e7] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - heading "生产记录" [level=2] [ref=e10]
+      - link "← 返回落地页" [ref=e11] [cursor=pointer]:
+        - /url: /land
+      - link "导出 CSV" [ref=e12] [cursor=pointer]:
+        - /url: /production/runs.csv
+    - generic [ref=e13]:
+      - generic [ref=e14] [cursor=pointer]:
+        - radio "当天" [ref=e15]
+        - text: 当天
+      - generic [ref=e16] [cursor=pointer]:
+        - radio "最近 7 天" [checked] [ref=e17]
+        - text: 最近 7 天
+      - generic [ref=e18] [cursor=pointer]:
+        - radio "单日" [ref=e19]
+        - text: 单日
+        - textbox [ref=e20]
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [ref=e24]: 2026-06-21 20:28:17
+          - generic [ref=e25]: 榛子巧克力Gelato 产出 2 件
+          - generic [ref=e26]:
+            - button "回退" [ref=e28] [cursor=pointer]
+            - button "删除" [ref=e30] [cursor=pointer]
+        - table [ref=e31]:
+          - rowgroup [ref=e32]:
+            - row "原味奶浆JYX001 2 袋" [ref=e33]:
+              - cell "原味奶浆JYX001" [ref=e34]
+              - cell "2 袋" [ref=e35]
+            - row "榛子巧克力-散 2 罐" [ref=e36]:
+              - cell "榛子巧克力-散" [ref=e37]
+              - cell "2 罐" [ref=e38]
+      - generic [ref=e39]:
+        - generic [ref=e40]:
+          - generic [ref=e41]: 2026-06-21 20:06:42
+          - generic [ref=e42]: 榛子巧克力Gelato 产出 1 件
+          - generic [ref=e43]:
+            - button "回退" [ref=e45] [cursor=pointer]
+            - button "删除" [ref=e47] [cursor=pointer]
+        - table [ref=e48]:
+          - rowgroup [ref=e49]:
+            - row "原味奶浆JYX001 1 袋" [ref=e50]:
+              - cell "原味奶浆JYX001" [ref=e51]
+              - cell "1 袋" [ref=e52]
+            - row "榛子巧克力-散 1 罐" [ref=e53]:
+              - cell "榛子巧克力-散" [ref=e54]
+              - cell "1 罐" [ref=e55]
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - generic [ref=e58]: 2026-06-21 19:46:35
+          - generic [ref=e59]: 榛子巧克力Gelato 产出 1 件
+          - generic [ref=e60]:
+            - button "回退" [ref=e62] [cursor=pointer]
+            - button "删除" [ref=e64] [cursor=pointer]
+        - table [ref=e65]:
+          - rowgroup [ref=e66]:
+            - row "原味奶浆JYX001 1 袋" [ref=e67]:
+              - cell "原味奶浆JYX001" [ref=e68]
+              - cell "1 袋" [ref=e69]
+            - row "榛子巧克力-散 1 罐" [ref=e70]:
+              - cell "榛子巧克力-散" [ref=e71]
+              - cell "1 罐" [ref=e72]
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - generic [ref=e75]: 2026-06-21 19:32:25
+          - generic [ref=e76]: 榛子巧克力Gelato 产出 1 件
+          - generic [ref=e77]:
+            - button "回退" [ref=e79] [cursor=pointer]
+            - button "删除" [ref=e81] [cursor=pointer]
+        - table [ref=e82]:
+          - rowgroup [ref=e83]:
+            - row "原味奶浆JYX001 1 袋" [ref=e84]:
+              - cell "原味奶浆JYX001" [ref=e85]
+              - cell "1 袋" [ref=e86]
+            - row "榛子巧克力-散 1 罐" [ref=e87]:
+              - cell "榛子巧克力-散" [ref=e88]
+              - cell "1 罐" [ref=e89]
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - generic [ref=e92]: 2026-06-21 12:05:55
+          - generic [ref=e93]: 榛子巧克力Gelato 产出 1 件
+          - generic [ref=e94]:
+            - button "回退" [ref=e96] [cursor=pointer]
+            - button "删除" [ref=e98] [cursor=pointer]
+        - table [ref=e99]:
+          - rowgroup [ref=e100]:
+            - row "原味奶浆JYX001 1 袋" [ref=e101]:
+              - cell "原味奶浆JYX001" [ref=e102]
+              - cell "1 袋" [ref=e103]
+            - row "榛子巧克力-散 1 罐" [ref=e104]:
+              - cell "榛子巧克力-散" [ref=e105]
+              - cell "1 罐" [ref=e106]
+      - generic [ref=e107]:
+        - generic [ref=e108]:
+          - generic [ref=e109]: 2026-06-20 23:08:34
+          - generic [ref=e110]: 草莓大福 产出 1 件
+          - generic [ref=e111]:
+            - button "回退" [ref=e113] [cursor=pointer]
+            - button "删除" [ref=e115] [cursor=pointer]
+        - table [ref=e116]:
+          - rowgroup [ref=e117]:
+            - row "原味奶浆JYX001 1 袋" [ref=e118]:
+              - cell "原味奶浆JYX001" [ref=e119]
+              - cell "1 袋" [ref=e120]
+            - row "草莓风味酱-散 0.2 罐" [ref=e121]:
+              - cell "草莓风味酱-散" [ref=e122]
+              - cell "0.2 罐" [ref=e123]
+            - row "草莓丁 0.2 包" [ref=e124]:
+              - cell "草莓丁" [ref=e125]
+              - cell "0.2 包" [ref=e126]

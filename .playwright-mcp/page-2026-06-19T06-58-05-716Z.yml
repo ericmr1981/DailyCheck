@@ -1,0 +1,16 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: staff1
+    - link "注销" [ref=e5] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e6]:
+    - heading "选择仓库" [level=2] [ref=e7]
+    - paragraph [ref=e8]: 当前账号：staff1
+    - list [ref=e9]:
+      - listitem [ref=e10]:
+        - button "中央仓 wh_001" [ref=e12] [cursor=pointer]:
+          - strong [ref=e13]: 中央仓
+          - text: wh_001
+    - paragraph [ref=e14]:
+      - link "注销" [ref=e15] [cursor=pointer]:
+        - /url: /logout

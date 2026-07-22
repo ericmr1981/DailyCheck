@@ -1,0 +1,133 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "账号管理" [ref=e4] [cursor=pointer]:
+      - /url: /users
+    - link "品类与品项" [ref=e5] [cursor=pointer]:
+      - /url: /items
+    - link "总览" [ref=e6] [cursor=pointer]:
+      - /url: /dashboard
+    - link "汇总" [ref=e7] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e8] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e9] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e11] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e12] [cursor=pointer]:
+      - /url: /outbound
+    - link "生产录入" [ref=e13] [cursor=pointer]:
+      - /url: /production
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]: 新世界店 (wh_002)
+      - link "切换" [ref=e17] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e18]: admin [平台管理员]
+      - link "注销" [ref=e19] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e20]:
+      - generic [ref=e21]:
+        - heading "汇总" [level=2] [ref=e22]
+        - link "导出 CSV" [ref=e23] [cursor=pointer]:
+          - /url: /summary/export?range=7d
+      - tablist "时间范围" [ref=e24]:
+        - tab "7 日" [selected] [ref=e25] [cursor=pointer]
+        - tab "当月" [ref=e26] [cursor=pointer]
+        - tab "全部" [ref=e27] [cursor=pointer]
+      - generic [ref=e28]:
+        - generic [ref=e29]:
+          - paragraph [ref=e30]: 进货总金额
+          - strong [ref=e31]: ¥24,020.00
+          - text: 7 日滚动
+        - generic [ref=e32]:
+          - paragraph [ref=e33]: 消耗金额
+          - strong [ref=e34]: ¥2,520.00
+          - text: 7 日滚动
+        - generic [ref=e35]:
+          - paragraph [ref=e36]: 库存总价值
+          - strong [ref=e37]: ¥21,748.00
+          - text: 不受时间筛选
+        - generic [ref=e38]:
+          - paragraph [ref=e39]: 库存周转率
+          - strong [ref=e40]: "0.23"
+          - text: ≈ 可售 30.2 天
+      - heading "按品类统计" [level=3] [ref=e41]
+      - table [ref=e43]:
+        - rowgroup [ref=e44]:
+          - row "品类 进货金额 消耗金额 库存金额 周转率" [ref=e45]:
+            - columnheader "品类" [ref=e46]
+            - columnheader "进货金额" [ref=e47]
+            - columnheader "消耗金额" [ref=e48]
+            - columnheader "库存金额" [ref=e49]
+            - columnheader "周转率" [ref=e50]
+          - row "包材 ¥7,668.00 ¥0.00 ¥7,668.00 —" [ref=e51]:
+            - cell "包材" [ref=e52]
+            - cell "¥7,668.00" [ref=e53]
+            - cell "¥0.00" [ref=e54]
+            - cell "¥7,668.00" [ref=e55]
+            - cell "—" [ref=e56]
+          - row "辅料 ¥200.00 ¥8.00 ¥192.00 0.04" [ref=e57]:
+            - cell "辅料" [ref=e58]
+            - cell "¥200.00" [ref=e59]
+            - cell "¥8.00" [ref=e60]
+            - cell "¥192.00" [ref=e61]
+            - cell "0.04" [ref=e62]
+          - row "调味酱 ¥0.00 ¥0.00 ¥-432.00 —" [ref=e63]:
+            - cell "调味酱" [ref=e64]
+            - cell "¥0.00" [ref=e65]
+            - cell "¥0.00" [ref=e66]
+            - cell "¥-432.00" [ref=e67]
+            - cell "—" [ref=e68]
+          - row "调味酱 分 ¥2,920.00 ¥1,252.00 ¥2,068.00 0.18" [ref=e69]:
+            - cell "调味酱 分" [ref=e70]
+            - cell "¥2,920.00" [ref=e71]
+            - cell "¥1,252.00" [ref=e72]
+            - cell "¥2,068.00" [ref=e73]
+            - cell "0.18" [ref=e74]
+          - row "风味奶浆 ¥4,200.00 ¥1,260.00 ¥3,220.00 0.09" [ref=e75]:
+            - cell "风味奶浆" [ref=e76]
+            - cell "¥4,200.00" [ref=e77]
+            - cell "¥1,260.00" [ref=e78]
+            - cell "¥3,220.00" [ref=e79]
+            - cell "0.09" [ref=e80]
+          - row "乳制品 ¥9,032.00 ¥0.00 ¥9,032.00 —" [ref=e81]:
+            - cell "乳制品" [ref=e82]
+            - cell "¥9,032.00" [ref=e83]
+            - cell "¥0.00" [ref=e84]
+            - cell "¥9,032.00" [ref=e85]
+            - cell "—" [ref=e86]
+          - row "生产消耗品 ¥0.00 ¥0.00 ¥0.00 —" [ref=e87]:
+            - cell "生产消耗品" [ref=e88]
+            - cell "¥0.00" [ref=e89]
+            - cell "¥0.00" [ref=e90]
+            - cell "¥0.00" [ref=e91]
+            - cell "—" [ref=e92]
+          - row "生产工具 ¥0.00 ¥0.00 ¥0.00 —" [ref=e93]:
+            - cell "生产工具" [ref=e94]
+            - cell "¥0.00" [ref=e95]
+            - cell "¥0.00" [ref=e96]
+            - cell "¥0.00" [ref=e97]
+            - cell "—" [ref=e98]
+          - row "冰激凌成品 ¥0.00 ¥0.00 ¥0.00 —" [ref=e99]:
+            - cell "冰激凌成品" [ref=e100]
+            - cell "¥0.00" [ref=e101]
+            - cell "¥0.00" [ref=e102]
+            - cell "¥0.00" [ref=e103]
+            - cell "—" [ref=e104]
+      - heading "消耗排行" [level=3] [ref=e105]
+      - table [ref=e107]:
+        - rowgroup [ref=e108]:
+          - row "品项 品类 消耗量 消耗金额" [ref=e109]:
+            - columnheader "品项" [ref=e110]
+            - columnheader "品类" [ref=e111]
+            - columnheader "消耗量" [ref=e112]
+            - columnheader "消耗金额" [ref=e113]
+          - row "原味奶浆JYX001 风味奶浆 2 袋 ¥280.00" [ref=e114]:
+            - cell "原味奶浆JYX001" [ref=e115]
+            - cell "风味奶浆" [ref=e116]
+            - cell "2 袋" [ref=e117]
+            - cell "¥280.00" [ref=e118]

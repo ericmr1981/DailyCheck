@@ -1,0 +1,101 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "账号管理" [ref=e4] [cursor=pointer]:
+      - /url: /users
+    - link "品类与品项" [ref=e5] [cursor=pointer]:
+      - /url: /items
+    - link "总览" [ref=e6] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e7] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e8] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e9] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e11] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e12] [cursor=pointer]:
+      - /url: /outbound
+  - generic [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]: 新世界店 (wh_002)
+      - link "切换" [ref=e16] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e17]: admin [平台管理员]
+      - link "注销" [ref=e18] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e19]:
+      - heading "后台总览" [level=2] [ref=e20]
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - paragraph [ref=e23]: 品类数
+          - strong [ref=e24]: "9"
+        - generic [ref=e25]:
+          - paragraph [ref=e26]: 库存品数
+          - strong [ref=e27]: "67"
+        - generic [ref=e28]:
+          - paragraph [ref=e29]: 低库存项
+          - strong [ref=e30]: "64"
+        - generic [ref=e31]:
+          - paragraph [ref=e32]: 待入库请求
+          - strong [ref=e33]: "0"
+      - generic [ref=e34]:
+        - link "当日出库报告 2 条记录" [ref=e35] [cursor=pointer]:
+          - /url: /report/outbound
+          - paragraph [ref=e36]: 当日出库报告
+          - strong [ref=e37]: 2 条记录
+        - link "当日入库报告 6 条记录" [ref=e38] [cursor=pointer]:
+          - /url: /report/inbound
+          - paragraph [ref=e39]: 当日入库报告
+          - strong [ref=e40]: 6 条记录
+      - heading "最近库存变动" [level=3] [ref=e41]
+      - table [ref=e42]:
+        - rowgroup [ref=e43]:
+          - row "时间 品项 动作 数量变化" [ref=e44]:
+            - columnheader "时间" [ref=e45]
+            - columnheader "品项" [ref=e46]
+            - columnheader "动作" [ref=e47]
+            - columnheader "数量变化" [ref=e48]
+          - row "2026-06-20 15:09:07 冰激凌勺短 补货入库 66" [ref=e49]:
+            - cell "2026-06-20 15:09:07" [ref=e50]
+            - cell "冰激凌勺短" [ref=e51]
+            - cell "补货入库" [ref=e52]
+            - cell "66" [ref=e53]
+          - row "2026-06-20 15:09:00 纯牛奶 补货入库 11" [ref=e54]:
+            - cell "2026-06-20 15:09:00" [ref=e55]
+            - cell "纯牛奶" [ref=e56]
+            - cell "补货入库" [ref=e57]
+            - cell "11" [ref=e58]
+          - row "2026-06-20 15:08:53 淡奶油 补货入库 20" [ref=e59]:
+            - cell "2026-06-20 15:08:53" [ref=e60]
+            - cell "淡奶油" [ref=e61]
+            - cell "补货入库" [ref=e62]
+            - cell "20" [ref=e63]
+          - row "2026-06-20 15:08:43 纯牛奶 补货删除回滚 -55" [ref=e64]:
+            - cell "2026-06-20 15:08:43" [ref=e65]
+            - cell "纯牛奶" [ref=e66]
+            - cell "补货删除回滚" [ref=e67]
+            - cell "-55" [ref=e68]
+          - row "2026-06-20 15:08:41 草莓风味酱-B 补货删除回滚 -5" [ref=e69]:
+            - cell "2026-06-20 15:08:41" [ref=e70]
+            - cell "草莓风味酱-B" [ref=e71]
+            - cell "补货删除回滚" [ref=e72]
+            - cell "-5" [ref=e73]
+          - row "2026-06-20 14:37:05 纯牛奶 出库回退 5" [ref=e74]:
+            - cell "2026-06-20 14:37:05" [ref=e75]
+            - cell "纯牛奶" [ref=e76]
+            - cell "出库回退" [ref=e77]
+            - cell "5" [ref=e78]
+          - row "2026-06-20 14:36:57 纯牛奶 出库 -5" [ref=e79]:
+            - cell "2026-06-20 14:36:57" [ref=e80]
+            - cell "纯牛奶" [ref=e81]
+            - cell "出库" [ref=e82]
+            - cell "-5" [ref=e83]
+          - row "2026-06-20 14:36:50 纯牛奶 补货入库 55" [ref=e84]:
+            - cell "2026-06-20 14:36:50" [ref=e85]
+            - cell "纯牛奶" [ref=e86]
+            - cell "补货入库" [ref=e87]
+            - cell "55" [ref=e88]

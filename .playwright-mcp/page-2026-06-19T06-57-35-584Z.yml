@@ -1,0 +1,80 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "账号管理" [ref=e4] [cursor=pointer]:
+      - /url: /users
+    - link "品类与品项" [ref=e5] [cursor=pointer]:
+      - /url: /items
+    - link "总览" [ref=e6] [cursor=pointer]:
+      - /url: /
+    - link "汇总" [ref=e7] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e8] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e9] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e11] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e12] [cursor=pointer]:
+      - /url: /outbound
+  - generic [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e15]: 中央仓 (wh_001)
+      - link "切换" [ref=e16] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e17]: admin [平台管理员]
+      - link "注销" [ref=e18] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e19]:
+      - heading "账号管理" [level=2] [ref=e20]
+      - group [ref=e21]:
+        - generic "新建账号" [ref=e22]:
+          - strong [ref=e23]: 新建账号
+      - table [ref=e24]:
+        - rowgroup [ref=e25]:
+          - row "账号 角色 仓库绑定 最近登录 创建时间 操作" [ref=e26]:
+            - columnheader "账号" [ref=e27]
+            - columnheader "角色" [ref=e28]
+            - columnheader "仓库绑定" [ref=e29]
+            - columnheader "最近登录" [ref=e30]
+            - columnheader "创建时间" [ref=e31]
+            - columnheader "操作" [ref=e32]
+        - rowgroup [ref=e33]:
+          - row "admin (我) 平台管理员 — 2026-06-19 14:57:06 2026-06-19 14:30:50" [ref=e34]:
+            - cell "admin (我)" [ref=e35]:
+              - strong [ref=e36]: admin
+              - text: (我)
+            - cell "平台管理员" [ref=e37]
+            - cell "—" [ref=e38]
+            - cell "2026-06-19 14:57:06" [ref=e39]
+            - cell "2026-06-19 14:30:50" [ref=e40]
+            - cell [ref=e41]:
+              - group [ref=e42]:
+                - generic "重置密码" [ref=e43]
+          - row "staff1 普通用户 wh_001:staff 2026-06-19 14:40:49 2026-06-19 14:30:50 设为管理员" [ref=e44]:
+            - cell "staff1" [ref=e45]:
+              - strong [ref=e46]: staff1
+            - cell "普通用户" [ref=e47]
+            - cell "wh_001:staff" [ref=e48]
+            - cell "2026-06-19 14:40:49" [ref=e49]
+            - cell "2026-06-19 14:30:50" [ref=e50]
+            - cell "设为管理员" [ref=e51]:
+              - group [ref=e52]:
+                - generic "重置密码" [ref=e53]
+              - button "设为管理员" [ref=e55] [cursor=pointer]
+          - row "manager1 普通用户 wh_001:manager 2026-06-19 14:40:56 2026-06-19 14:30:51 设为管理员" [ref=e56]:
+            - cell "manager1" [ref=e57]:
+              - strong [ref=e58]: manager1
+            - cell "普通用户" [ref=e59]
+            - cell "wh_001:manager" [ref=e60]
+            - cell "2026-06-19 14:40:56" [ref=e61]
+            - cell "2026-06-19 14:30:51" [ref=e62]
+            - cell "设为管理员" [ref=e63]:
+              - group [ref=e64]:
+                - generic "重置密码" [ref=e65]
+              - button "设为管理员" [ref=e67] [cursor=pointer]
+      - paragraph [ref=e68]:
+        - text: "仓库级角色(staff/manager)绑定请通过 CLI:"
+        - code [ref=e69]: flask --app app assign-role <username> <warehouse_code> <staff|manager|admin>

@@ -1,0 +1,15 @@
+- generic [ref=e3]:
+  - generic [ref=e6]:
+    - heading "This page isn’t working" [level=1] [ref=e7]
+    - paragraph [ref=e8]:
+      - strong [ref=e9]: 127.0.0.1
+      - text: redirected you too many times.
+    - generic [ref=e10]:
+      - paragraph
+      - list [ref=e11]:
+        - listitem [ref=e12]:
+          - link "Try deleting your cookies" [ref=e13] [cursor=pointer]:
+            - /url: https://support.google.com/chrome?p=rl_error&hl=en-US
+          - text: .
+    - generic [ref=e14]: ERR_TOO_MANY_REDIRECTS
+  - button "Reload" [ref=e17] [cursor=pointer]

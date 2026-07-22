@@ -1,0 +1,86 @@
+- generic [active] [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "账号管理" [ref=e4] [cursor=pointer]:
+      - /url: /users
+    - link "品类与品项" [ref=e5] [cursor=pointer]:
+      - /url: /items
+    - link "总览" [ref=e6] [cursor=pointer]:
+      - /url: /dashboard
+    - link "汇总" [ref=e7] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e8] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e9] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e11] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e12] [cursor=pointer]:
+      - /url: /outbound
+    - link "生产录入" [ref=e13] [cursor=pointer]:
+      - /url: /production
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]: 中央仓 (wh_001)
+      - link "切换" [ref=e17] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e18]: admin [平台管理员]
+      - link "注销" [ref=e19] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e20]:
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - heading "出库录入" [level=2] [ref=e23]
+          - generic [ref=e24]:
+            - textbox "本次出库原因（可选）" [ref=e25]
+            - button "提交并出库" [ref=e26]
+          - paragraph [ref=e27]: 留空 = 本次不出该品项。点击下方品类可快速定位。
+        - tablist "按品类筛选" [ref=e28]:
+          - tab "全部" [selected] [ref=e29] [cursor=pointer]
+          - tab "原料" [ref=e30] [cursor=pointer]
+          - tab "工具" [ref=e31] [cursor=pointer]
+        - generic [ref=e32]:
+          - generic [ref=e33]:
+            - generic [ref=e34]: 原料 糖
+            - generic [ref=e35]:
+              - generic [ref=e36]:
+                - text: 当前
+                - strong [ref=e37]: "180"
+                - text: 克
+              - generic [ref=e38]:
+                - text: 安全
+                - strong [ref=e39]: "0"
+                - text: 克
+            - generic [ref=e40]:
+              - spinbutton [ref=e41]
+              - text: 克
+          - generic [ref=e42]:
+            - generic [ref=e43]: 原料 面粉
+            - generic [ref=e44]:
+              - generic [ref=e45]:
+                - text: 当前
+                - strong [ref=e46]: "450"
+                - text: 克
+              - generic [ref=e47]:
+                - text: 安全
+                - strong [ref=e48]: "0"
+                - text: 克
+            - generic [ref=e49]:
+              - spinbutton [ref=e50]
+              - text: 克
+          - generic [ref=e51]:
+            - generic [ref=e52]: 工具 22
+            - generic [ref=e53]:
+              - generic [ref=e54]:
+                - text: 当前
+                - strong [ref=e55]: "98"
+                - text: 克
+              - generic [ref=e56]:
+                - text: 安全
+                - strong [ref=e57]: "1"
+                - text: 克
+            - generic [ref=e58]:
+              - spinbutton [ref=e59]
+              - text: 克

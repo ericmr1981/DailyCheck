@@ -1,0 +1,70 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: 中央仓 (wh_001)
+    - link "切换" [ref=e5] [cursor=pointer]:
+      - /url: /select-warehouse
+    - generic [ref=e6]: admin [平台管理员]
+    - link "注销" [ref=e7] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - heading "生产录入" [level=2] [ref=e10]
+      - link "← 返回落地页" [ref=e11] [cursor=pointer]:
+        - /url: /land
+    - paragraph [ref=e12]:
+      - text: 产品：
+      - strong [ref=e13]: 奶茶
+      - text: （产出单位 杯）·
+      - link "← 返回产品列表" [ref=e14] [cursor=pointer]:
+        - /url: /production
+    - generic [ref=e16]:
+      - complementary [ref=e17]:
+        - heading "配方" [level=3] [ref=e18]
+        - paragraph [ref=e19]: 每生产 1 单位产品所需
+        - list [ref=e20]:
+          - listitem [ref=e21]:
+            - generic [ref=e22]: 面粉
+            - generic [ref=e23]:
+              - strong [ref=e24]: "0.05"
+              - text: 克
+          - listitem [ref=e25]:
+            - generic [ref=e26]: 糖
+            - generic [ref=e27]:
+              - strong [ref=e28]: "0.2"
+              - text: 克
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]:
+            - generic [ref=e32]:
+              - generic [ref=e33]: 产出量（杯）
+              - group "产出量预设" [ref=e34]:
+                - button "1" [ref=e35] [cursor=pointer]
+                - button "2" [ref=e36] [cursor=pointer]
+                - button "3" [ref=e37] [cursor=pointer]
+            - generic [ref=e38]:
+              - text: 备注
+              - textbox "备注" [ref=e39]:
+                - /placeholder: 可选
+            - button "提交" [ref=e40]
+          - paragraph [ref=e41]: 原料不足将无法提交。
+        - list [ref=e42]:
+          - listitem [ref=e43]:
+            - generic [ref=e44]: 面粉
+            - generic "当前库存" [ref=e45]:
+              - generic [ref=e46]: 库存
+              - generic [ref=e47]: "450"
+              - generic [ref=e48]: 克
+            - generic "按当前产出量本批共需" [ref=e49]:
+              - generic [ref=e50]: 本批用量
+              - generic [ref=e51]: "0.05"
+              - generic [ref=e52]: 克
+          - listitem [ref=e53]:
+            - generic [ref=e54]: 糖
+            - generic "当前库存" [ref=e55]:
+              - generic [ref=e56]: 库存
+              - generic [ref=e57]: "180"
+              - generic [ref=e58]: 克
+            - generic "按当前产出量本批共需" [ref=e59]:
+              - generic [ref=e60]: 本批用量
+              - generic [ref=e61]: "0.20"
+              - generic [ref=e62]: 克

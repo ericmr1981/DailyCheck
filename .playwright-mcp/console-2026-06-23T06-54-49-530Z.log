@@ -1,0 +1,4 @@
+[      92ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:58116/production/products/3/edit:0
+[      94ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:58116/static/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:58116/production/products/3/edit:0
+[    7714ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:58116/production/products/3/edit:0
+[    7715ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:58116/static/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:58116/production/products/3/edit:0

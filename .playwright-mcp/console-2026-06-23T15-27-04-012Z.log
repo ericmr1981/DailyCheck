@@ -1,0 +1,2 @@
+[      74ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:57182/adjustment:0
+[      75ms] [WARNING] Error while trying to use the following icon from the Manifest: http://localhost:57182/static/icons/icon-192.png (Download error or resource isn't a valid image) @ http://localhost:57182/adjustment:0

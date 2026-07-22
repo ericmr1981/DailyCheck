@@ -1,0 +1,12 @@
+- main [ref=e2]:
+  - heading "登录" [level=1] [ref=e3]
+  - list [ref=e4]:
+    - listitem [ref=e5]: 账号或密码错误
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - text: 账号
+      - textbox "账号" [active] [ref=e8]: admin
+    - generic [ref=e9]:
+      - text: 密码
+      - textbox "密码" [ref=e10]: admin123
+    - button "登录" [ref=e11] [cursor=pointer]

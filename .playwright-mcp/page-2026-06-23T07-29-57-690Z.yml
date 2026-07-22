@@ -1,0 +1,192 @@
+- generic [ref=e1]:
+  - complementary [ref=e2]:
+    - heading "库存管理" [level=1] [ref=e3]
+    - link "账号管理" [ref=e4] [cursor=pointer]:
+      - /url: /users
+    - link "品类与品项" [ref=e5] [cursor=pointer]:
+      - /url: /items
+    - link "总览" [ref=e6] [cursor=pointer]:
+      - /url: /dashboard
+    - link "汇总" [ref=e7] [cursor=pointer]:
+      - /url: /summary
+    - link "库存查阅" [ref=e8] [cursor=pointer]:
+      - /url: /inventory
+    - link "库存盘点" [ref=e9] [cursor=pointer]:
+      - /url: /stocktake
+    - link "入库记录" [ref=e10] [cursor=pointer]:
+      - /url: /restock
+    - link "调整单" [ref=e11] [cursor=pointer]:
+      - /url: /adjustment
+    - link "出库记录" [ref=e12] [cursor=pointer]:
+      - /url: /outbound
+    - link "生产录入" [ref=e13] [cursor=pointer]:
+      - /url: /production
+  - generic [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]: 新世界店 (wh_002)
+      - link "切换" [ref=e17] [cursor=pointer]:
+        - /url: /select-warehouse
+      - generic [ref=e18]: admin [平台管理员]
+      - link "注销" [ref=e19] [cursor=pointer]:
+        - /url: /logout
+    - main [ref=e20]:
+      - generic [ref=e21]:
+        - textbox "按品项名/品类搜索" [active] [ref=e22]: 奶
+        - button "查询" [ref=e23]
+      - paragraph [ref=e24]: 卡片内的「日均消耗」分母为该品项 7 日窗口内实际有消耗的天数（不是固定 7 天）。
+      - tablist "按品类筛选" [ref=e25]:
+        - tab "全部" [selected] [ref=e26] [cursor=pointer]
+        - tab "调味酱" [ref=e27] [cursor=pointer]
+        - tab "调味酱 分" [ref=e28] [cursor=pointer]
+        - tab "风味奶浆" [ref=e29] [cursor=pointer]
+        - tab "乳制品" [ref=e30] [cursor=pointer]
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - generic [ref=e33]: 品项数
+          - generic [ref=e34]: "5"
+        - generic [ref=e35]:
+          - generic [ref=e36]: 库存总数量
+          - generic [ref=e37]: "56"
+        - generic [ref=e38]:
+          - generic [ref=e39]: 库存总金额
+          - generic [ref=e40]: ¥ 12,532.00
+        - generic [ref=e41]:
+          - generic [ref=e42]: 7日消耗
+          - generic [ref=e43]: "7"
+        - generic [ref=e44]:
+          - generic [ref=e45]: 7日日均
+          - generic [ref=e46]: "1"
+        - generic [ref=e47]:
+          - generic [ref=e48]: 7日消耗金额
+          - generic [ref=e49]: ¥ 980.00
+      - generic [ref=e50]:
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - generic [ref=e54]: 调味酱
+              - generic [ref=e55]: 希腊酸奶风味酱
+            - generic [ref=e57]: 0库存
+          - generic [ref=e58]:
+            - generic [ref=e59]:
+              - generic [ref=e60]: 库存
+              - generic [ref=e61]: 0桶
+            - generic [ref=e62]:
+              - generic [ref=e63]: 安全
+              - generic [ref=e64]: 0桶
+            - generic [ref=e65]:
+              - generic [ref=e66]: 单价
+              - generic [ref=e67]: ¥ 1,408.00
+            - generic [ref=e68]:
+              - generic [ref=e69]: 库存金额
+              - generic [ref=e70]: ¥ 0.00
+            - generic [ref=e71]:
+              - generic [ref=e72]: 7日消耗
+              - generic [ref=e73]: 0桶
+            - generic [ref=e74]:
+              - generic [ref=e75]: 日均消耗
+              - generic [ref=e76]: —
+          - generic [ref=e77]: 更新于 2026-06-20 13:49:07
+        - generic [ref=e78]:
+          - generic [ref=e79]:
+            - generic [ref=e80]:
+              - generic [ref=e81]: 调味酱 分
+              - generic [ref=e82]: 希腊酸奶风味酱 - 散
+            - generic [ref=e84]: 0库存
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - generic [ref=e87]: 库存
+              - generic [ref=e88]: 0罐
+            - generic [ref=e89]:
+              - generic [ref=e90]: 安全
+              - generic [ref=e91]: 0罐
+            - generic [ref=e92]:
+              - generic [ref=e93]: 单价
+              - generic [ref=e94]: ¥ 250.00
+            - generic [ref=e95]:
+              - generic [ref=e96]: 库存金额
+              - generic [ref=e97]: ¥ 0.00
+            - generic [ref=e98]:
+              - generic [ref=e99]: 7日消耗
+              - generic [ref=e100]: 0罐
+            - generic [ref=e101]:
+              - generic [ref=e102]: 日均消耗
+              - generic [ref=e103]: —
+          - generic [ref=e104]: 更新于 2026-06-20 13:49:07
+        - generic [ref=e105]:
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - generic [ref=e108]: 风味奶浆
+              - generic [ref=e109]: 原味奶浆JYX001
+            - generic [ref=e111]: 正常
+          - generic [ref=e112]:
+            - generic [ref=e113]:
+              - generic [ref=e114]: 库存
+              - generic [ref=e115]: 25袋
+            - generic [ref=e116]:
+              - generic [ref=e117]: 安全
+              - generic [ref=e118]: 0袋
+            - generic [ref=e119]:
+              - generic [ref=e120]: 单价
+              - generic [ref=e121]: ¥ 140.00
+            - generic [ref=e122]:
+              - generic [ref=e123]: 库存金额
+              - generic [ref=e124]: ¥ 3,500.00
+            - generic [ref=e125]:
+              - generic [ref=e126]: 7日消耗
+              - generic [ref=e127]: 7袋 / 2d
+            - generic [ref=e128]:
+              - generic [ref=e129]: 日均消耗
+              - generic [ref=e130]: 3.5袋/2d
+          - generic [ref=e131]: 更新于 2026-06-22 13:53:35
+        - generic [ref=e132]:
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - generic [ref=e135]: 乳制品
+              - generic [ref=e136]: 淡奶油
+            - generic [ref=e138]: 正常
+          - generic [ref=e139]:
+            - generic [ref=e140]:
+              - generic [ref=e141]: 库存
+              - generic [ref=e142]: 20箱
+            - generic [ref=e143]:
+              - generic [ref=e144]: 安全
+              - generic [ref=e145]: 0箱
+            - generic [ref=e146]:
+              - generic [ref=e147]: 单价
+              - generic [ref=e148]: ¥ 445.00
+            - generic [ref=e149]:
+              - generic [ref=e150]: 库存金额
+              - generic [ref=e151]: ¥ 8,900.00
+            - generic [ref=e152]:
+              - generic [ref=e153]: 7日消耗
+              - generic [ref=e154]: 0箱
+            - generic [ref=e155]:
+              - generic [ref=e156]: 日均消耗
+              - generic [ref=e157]: —
+          - generic [ref=e158]: 更新于 2026-06-22 13:53:24
+        - generic [ref=e159]:
+          - generic [ref=e160]:
+            - generic [ref=e161]:
+              - generic [ref=e162]: 乳制品
+              - generic [ref=e163]: 纯牛奶
+            - generic [ref=e165]: 正常
+          - generic [ref=e166]:
+            - generic [ref=e167]:
+              - generic [ref=e168]: 库存
+              - generic [ref=e169]: 11盒
+            - generic [ref=e170]:
+              - generic [ref=e171]: 安全
+              - generic [ref=e172]: 0盒
+            - generic [ref=e173]:
+              - generic [ref=e174]: 单价
+              - generic [ref=e175]: ¥ 12.00
+            - generic [ref=e176]:
+              - generic [ref=e177]: 库存金额
+              - generic [ref=e178]: ¥ 132.00
+            - generic [ref=e179]:
+              - generic [ref=e180]: 7日消耗
+              - generic [ref=e181]: 0盒
+            - generic [ref=e182]:
+              - generic [ref=e183]: 日均消耗
+              - generic [ref=e184]: —
+          - generic [ref=e185]: 更新于 2026-06-20 15:09:00

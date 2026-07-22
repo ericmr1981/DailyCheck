@@ -1,0 +1,137 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]: 中央仓 (wh_001)
+    - link "切换" [ref=e5] [cursor=pointer]:
+      - /url: /select-warehouse
+    - generic [ref=e6]: admin [平台管理员]
+    - link "注销" [ref=e7] [cursor=pointer]:
+      - /url: /logout
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - heading "生产记录" [level=2] [ref=e10]
+      - link "← 返回落地页" [ref=e11] [cursor=pointer]:
+        - /url: /land
+      - link "导出 CSV" [ref=e12] [cursor=pointer]:
+        - /url: /production/runs.csv
+    - generic [ref=e13]:
+      - generic [ref=e14] [cursor=pointer]:
+        - radio "当天" [ref=e15]
+        - text: 当天
+      - generic [ref=e16] [cursor=pointer]:
+        - radio "最近 7 天" [checked] [ref=e17]
+        - text: 最近 7 天
+      - generic [ref=e18] [cursor=pointer]:
+        - radio "单日" [ref=e19]
+        - text: 单日
+        - textbox [ref=e20]
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [ref=e24]: 2026-06-21 19:43:19
+          - generic [ref=e25]: 测试蛋糕 产出 1 个
+          - generic [ref=e26]:
+            - button "回退" [ref=e28] [cursor=pointer]
+            - button "删除" [ref=e30] [cursor=pointer]
+        - table [ref=e31]:
+          - rowgroup [ref=e32]:
+            - row "面粉 50 克" [ref=e33]:
+              - cell "面粉" [ref=e34]
+              - cell "50 克" [ref=e35]
+            - row "糖 20 克" [ref=e36]:
+              - cell "糖" [ref=e37]
+              - cell "20 克" [ref=e38]
+            - row "22 2 克" [ref=e39]:
+              - cell "22" [ref=e40]
+              - cell "2 克" [ref=e41]
+      - generic [ref=e42]:
+        - generic [ref=e43]:
+          - generic [ref=e44]: 2026-06-20 23:19:55
+          - generic [ref=e45]: 测试蛋糕 产出 1 个
+          - generic [ref=e46]:
+            - button "回退" [ref=e48] [cursor=pointer]
+            - button "删除" [ref=e50] [cursor=pointer]
+        - generic [ref=e51]: test2
+        - table [ref=e52]:
+          - rowgroup [ref=e53]:
+            - row "糖 20 克" [ref=e54]:
+              - cell "糖" [ref=e55]
+              - cell "20 克" [ref=e56]
+            - row "面粉 50 克" [ref=e57]:
+              - cell "面粉" [ref=e58]
+              - cell "50 克" [ref=e59]
+            - row "糖 20 克" [ref=e60]:
+              - cell "糖" [ref=e61]
+              - cell "20 克" [ref=e62]
+            - row "22 2 克" [ref=e63]:
+              - cell "22" [ref=e64]
+              - cell "2 克" [ref=e65]
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - generic [ref=e68]: 2026-06-20 23:16:55
+          - generic [ref=e69]: 测试蛋糕 产出 2 个
+          - generic [ref=e70]: 已回退
+          - button "删除" [ref=e73] [cursor=pointer]
+        - generic [ref=e74]: test_dblwrite
+        - table [ref=e75]:
+          - rowgroup [ref=e76]:
+            - row "面粉 100 克" [ref=e77]:
+              - cell "面粉" [ref=e78]
+              - cell "100 克" [ref=e79]
+            - row "糖 40 克" [ref=e80]:
+              - cell "糖" [ref=e81]
+              - cell "40 克" [ref=e82]
+            - row "22 4 克" [ref=e83]:
+              - cell "22" [ref=e84]
+              - cell "4 克" [ref=e85]
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - generic [ref=e88]: 2026-06-20 18:15:27
+          - generic [ref=e89]: 奶茶 产出 100 杯
+          - generic [ref=e90]: 已回退
+          - button "删除" [ref=e93] [cursor=pointer]
+        - generic [ref=e94]: smoke_100
+        - table [ref=e95]:
+          - rowgroup [ref=e96]:
+            - row "面粉 5 克" [ref=e97]:
+              - cell "面粉" [ref=e98]
+              - cell "5 克" [ref=e99]
+            - row "糖 20 克" [ref=e100]:
+              - cell "糖" [ref=e101]
+              - cell "20 克" [ref=e102]
+      - generic [ref=e103]:
+        - generic [ref=e104]:
+          - generic [ref=e105]: 2026-06-20 09:57:25
+          - generic [ref=e106]: 测试蛋糕 产出 1 个
+          - generic [ref=e107]:
+            - button "回退" [ref=e109] [cursor=pointer]
+            - button "删除" [ref=e111] [cursor=pointer]
+        - generic [ref=e112]: smoke_test_task7
+        - table [ref=e113]:
+          - rowgroup [ref=e114]:
+            - row "面粉 50 克" [ref=e115]:
+              - cell "面粉" [ref=e116]
+              - cell "50 克" [ref=e117]
+            - row "面粉 50 克" [ref=e118]:
+              - cell "面粉" [ref=e119]
+              - cell "50 克" [ref=e120]
+            - row "糖 20 克" [ref=e121]:
+              - cell "糖" [ref=e122]
+              - cell "20 克" [ref=e123]
+            - row "22 2 克" [ref=e124]:
+              - cell "22" [ref=e125]
+              - cell "2 克" [ref=e126]
+      - generic [ref=e127]:
+        - generic [ref=e128]:
+          - generic [ref=e129]: 2026-06-20 18:00:00
+          - generic [ref=e130]: 测试蛋糕 产出 1 个
+          - generic [ref=e131]: 已回退
+          - button "删除" [ref=e134] [cursor=pointer]
+        - generic [ref=e135]: rb guard test
+        - table [ref=e136]:
+          - rowgroup [ref=e137]:
+            - row "面粉 50 克" [ref=e138]:
+              - cell "面粉" [ref=e139]
+              - cell "50 克" [ref=e140]
+            - row "糖 20 克" [ref=e141]:
+              - cell "糖" [ref=e142]
+              - cell "20 克" [ref=e143]

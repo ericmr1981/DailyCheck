@@ -1,0 +1,3 @@
+[     141ms] [ERROR] Failed to load resource: net::ERR_TOO_MANY_REDIRECTS @ http://127.0.0.1:5001/select-warehouse:0
+[  102050ms] [ERROR] Failed to load resource: the server responded with a status of 500 (INTERNAL SERVER ERROR) @ http://127.0.0.1:5001/select-warehouse:0
+[  102073ms] [ERROR] Failed to load resource: the server responded with a status of 500 (INTERNAL SERVER ERROR) @ http://127.0.0.1:5001/select-warehouse:0

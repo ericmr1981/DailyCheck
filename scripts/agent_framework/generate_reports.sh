@@ -108,10 +108,12 @@ fi
 RUFF_BASELINE_LINES=0
 if [[ -n "${CHANGED_PY}" ]]; then
   ruff check "${CHANGED_PY}" > "${RUFF_OUTPUT}" 2>&1 || true
-  RUFF_LINES=$(wc -l < "${RUFF_OUTPUT}")
+  # ruff 输出形如 `path/file.py:11:5: E401 Module imported but unused`，
+  # wc -l 数的是行数（含空行/进度条），不是告警数。改用 grep -c 数真正告警。
+  RUFF_WARNINGS=$(grep -cE '^[^:]+:[0-9]+:[0-9]+: [A-Z][0-9]+ ' "${RUFF_OUTPUT}" 2>/dev/null || echo 0)
 else
   echo "no python files changed" > "${RUFF_OUTPUT}"
-  RUFF_LINES=0
+  RUFF_WARNINGS=0
 fi
 
 # 复杂度（radon，CD/CC > 10 视为警示）
@@ -153,7 +155,7 @@ cat > "${OUT_DIR}/03-code-quality.md" <<EOF
 
 | 工具 | 命令 | 当前告警 | 状态 |
 |------|------|---------|------|
-| ruff | ruff check 改动 .py 文件 | ${RUFF_LINES} | $(${RUFF_LINES} -eq 0 && echo "✅" || echo "⚠️") |
+| ruff | ruff check 改动 .py 文件 | ${RUFF_WARNINGS} | $(${RUFF_WARNINGS} -eq 0 && echo "✅" || echo "⚠️") |
 
 \`\`\`
 $(cat "${RUFF_OUTPUT}")
@@ -199,7 +201,7 @@ cat > "${OUT_DIR}/ci-summary.json" <<EOF
     "gate_exit": ${GATE_EXIT}
   },
   "ruff": {
-    "warnings": ${RUFF_LINES}
+    "warnings": ${RUFF_WARNINGS}
   },
   "radon": {
     "high_cc": "${HIGH_CC}"
@@ -215,7 +217,7 @@ echo "[generate_reports] reports written to ${OUT_DIR}/"
 echo "[generate_reports] pytest exit=${PYTEST_EXIT}, known_failures gate=${GATE_EXIT}"
 
 # 整体退出码：known_failures 门禁过了就 0；否则 1
-if [[ ${GATE_EXIT} -eq 0 && ${RUFF_LINES} -eq 0 ]]; then
+if [[ ${GATE_EXIT} -eq 0 && ${RUFF_WARNINGS} -eq 0 ]]; then
   exit 0
 else
   exit 1

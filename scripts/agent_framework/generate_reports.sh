@@ -124,7 +124,9 @@ fi
 RADON_OUTPUT="/tmp/radon-output-af.txt"
 if command -v radon >/dev/null 2>&1; then
   radon cc -s -n B "${REPO_ROOT}/blueprints" "${REPO_ROOT}/db" "${REPO_ROOT}/mcp_server" > "${RADON_OUTPUT}" 2>&1 || true
-  HIGH_CC=$(grep -E '^[^ ]+ *|.*[CD] [0-9]+' "${RADON_OUTPUT}" 2>/dev/null | grep -E '\b[C-D] [0-9]{2,}\b' | wc -l || echo 0)
+  HIGH_CC=$(grep -E '^[^ ]+ *|.*[CD] [0-9]+' "${RADON_OUTPUT}" 2>/dev/null | grep -E '\b[C-D] [0-9]{2,}\b' | wc -l || true)
+  HIGH_CC=${HIGH_CC:-0}
+  HIGH_CC=$(echo "${HIGH_CC}" | tr -d '\n' | head -c 16)
 else
   echo "radon not installed" > "${RADON_OUTPUT}"
   HIGH_CC="N/A"
@@ -133,7 +135,9 @@ fi
 # 安全扫描（bandit，CI -lll 高危）
 if command -v bandit >/dev/null 2>&1; then
   bandit -r "${REPO_ROOT}/blueprints" "${REPO_ROOT}/db" "${REPO_ROOT}/mcp_server" -lll > "${BANDIT_OUTPUT}" 2>&1 || true
-  HIGH_VULN=$(grep -E 'Severity: High' "${BANDIT_OUTPUT}" | wc -l || echo 0)
+  HIGH_VULN=$(grep -E 'Severity: High' "${BANDIT_OUTPUT}" | wc -l || true)
+  HIGH_VULN=${HIGH_VULN:-0}
+  HIGH_VULN=$(echo "${HIGH_VULN}" | tr -d '\n' | head -c 16)
 else
   echo "bandit not installed" > "${BANDIT_OUTPUT}"
   HIGH_VULN="N/A"

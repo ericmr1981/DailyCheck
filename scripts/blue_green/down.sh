@@ -3,12 +3,18 @@
 #
 # 用法: ./scripts/blue_green/down.sh [--keep-blue]
 #
-# 默认行为: 关绿容器 + 删绿容器 + 删绿网络 + 删镜像
-# --keep-blue: 蓝环境不动（PR 合入后保留 7 天 standby）
+# 状态: v0.2 骨架（systemd 路径，2026-10-13 修订）
 #
-# 触发:
+# 默认行为：停绿 + 删绿 DB + 删绿 unit
+# --keep-blue：仅停绿 systemd（PR 合入后蓝降 standby 7 天，保留绿取证）
+#
+# 触发：
 #   - 验证失败后清理（取证已导出）
-#   - PR 合入 + 7 天 standby 期到期
+#   - PR 合入 + 7 天 standby 期到期（需 cron 触发，见 §cron）
+#   - 人工取消（Eric 主动）
+#
+# cron 示例（7 天 standby 到期）：
+#   0 0 * * * /opt/dailycheck/scripts/blue_green/cron_standby_expire.sh  # 待补
 
 set -euo pipefail
 
@@ -20,15 +26,35 @@ for arg in "$@"; do
   esac
 done
 
-echo "[down] cleaning green environment ..."
-echo "[down] TODO: docker compose down + volume prune"
+GREEN_UNIT="dailycheck-green.service"
+GREEN_DB="/var/lib/dailycheck-green"
 
+# ============================================================
+# 骨架阶段：禁止执行
+# ============================================================
+echo "[down] NOT YET IMPLEMENTED — 手工 systemctl stop 仍可用" >&2
+echo "[down] 实际行为（实装后）：" >&2
+echo "[down]   1. systemctl stop ${GREEN_UNIT}" >&2
 if [[ "${KEEP_BLUE}" -eq 1 ]]; then
-  echo "[down] --keep-blue: blue environment untouched, 7d standby"
+  echo "[down]   2. 保留 ${GREEN_DB} 取证（7 天 standby 期到期才删）"
 else
-  echo "[down] blue will also be cleaned (manual confirmation recommended)"
+  echo "[down]   2. rm -rf ${GREEN_DB}"
 fi
-
-# 骨架阶段: 警告 + 退出
-echo "[down] NOT YET IMPLEMENTED — manual docker compose down required" >&2
+echo "[down] 详见 scripts/blue_green/README.md" >&2
 exit 78
+
+# ============================================================
+# 实现阶段（up.sh 实装后取消上面 exit 78）
+# ============================================================
+#
+# echo "[down] stopping ${GREEN_UNIT} ..."
+# systemctl stop "${GREEN_UNIT}" 2>&1 | head -10 || true
+#
+# if [[ "${KEEP_BLUE}" -eq 1 ]]; then
+#   echo "[down] --keep-blue: ${GREEN_DB} 保留 7 天 standby"
+# else
+#   echo "[down] removing ${GREEN_DB} ..."
+#   rm -rf "${GREEN_DB}"
+# fi
+#
+# echo "[down] ✅ done (keep_blue=${KEEP_BLUE})"

@@ -14,7 +14,11 @@
 #   - 人工取消（Eric 主动）
 #
 # cron 示例（7 天 standby 到期）：
-#   0 0 * * * /opt/dailycheck/scripts/blue_green/cron_standby_expire.sh  # 待补
+#   0 0 * * * /root/DailyCheck/scripts/blue_green/cron_standby_expire.sh  # 待补
+#
+# v0.3 修订（2026-10-13 Eric 拍板）：
+#   - 所有路径走 env 变量 + 默认值（GREEN_SERVICE_UNIT / GREEN_DB）
+#   - cron 路径 /opt → /root（实测 host 路径）
 
 set -euo pipefail
 
@@ -26,8 +30,9 @@ for arg in "$@"; do
   esac
 done
 
-GREEN_UNIT="dailycheck-green.service"
-GREEN_DB="/var/lib/dailycheck-green"
+# 配置（与 deploy_vps.sh 模板化约定对齐）
+GREEN_UNIT="${GREEN_SERVICE_UNIT:-dailycheck-green.service}"
+GREEN_DB="${GREEN_DB:-/var/lib/dailycheck-green}"
 
 # ============================================================
 # 骨架阶段：禁止执行

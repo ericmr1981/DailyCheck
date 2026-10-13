@@ -16,6 +16,12 @@
 #   - 蓝 :8090 不 kill（0 中断）
 #   - 绿 :8091 起 gunicorn 2 workers + DRY_RUN=true
 #   - 健康检查：/health 已存在（app.py:134）
+#
+# v0.3 修订（2026-10-13 Eric 拍板）：
+#   - SOURCE_DIR 错位修正：/opt/dailycheck → /root/DailyCheck（实测 host 路径）
+#   - 复用 deploy_vps.sh 的 DAILYCHECK_* env 变量约定
+#   - 加绿 MCP :5101（实测蓝 MCP :5100）
+#   - 所有路径/端口/单元走 env 变量 + 默认值，可覆盖
 
 set -euo pipefail
 
@@ -26,11 +32,17 @@ if [[ -z "$PR_NUM" || -z "$COMMIT_SHA" ]]; then
   exit 64
 fi
 
-GREEN_PORT=8091
-GREEN_DB="/var/lib/dailycheck-green"
-BLUE_DB="/var/lib/dailycheck"
-SOURCE_DIR="/opt/dailycheck"
-GREEN_UNIT="dailycheck-green.service"
+# 配置（与 scripts/deploy_vps.sh 模板化约定对齐：DAILYCHECK_* env 变量可覆盖）
+APP_DIR="${DAILYCHECK_APP_DIR:-/root/DailyCheck}"               # 实测 host 路径（不是 /opt）
+BLUE_DB="${DAILYCHECK_DB_ROOT:-/var/lib/dailycheck}"            # 蓝 DB 根目录
+GREEN_PORT="${GREEN_PORT:-8091}"                                # 绿 gunicorn 端口
+GREEN_MCP_PORT="${GREEN_MCP_PORT:-5101}"                        # 绿 MCP 端口（实测蓝 :5100）
+GREEN_DB="${GREEN_DB:-/var/lib/dailycheck-green}"               # 绿 DB 根目录
+SOURCE_DIR="${APP_DIR}"                                         # 复用 APP_DIR
+GREEN_UNIT="${GREEN_SERVICE_UNIT:-dailycheck-green.service}"
+GREEN_MCP_UNIT="${GREEN_MCP_SERVICE_UNIT:-dailycheck-green-mcp.service}"
+GREEN_ENV_FILE="${GREEN_ENV_FILE:-/etc/wdg/dailycheck-green.env}"
+GREEN_MCP_ENV_FILE="${GREEN_MCP_ENV_FILE:-/etc/wdg/dailycheck-green-mcp.env}"
 
 # ============================================================
 # 骨架阶段：禁止执行

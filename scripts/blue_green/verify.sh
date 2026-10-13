@@ -14,6 +14,9 @@
 #   （5 项检查全 ⚠️ TODO），形同空跑。v0.2 改为 exit 78 明确拒绝触发。
 #
 # 设计依据：v0.1.md §四.2 五项检查 + templates/05-production-verification.md
+#
+# v0.3 修订（2026-10-13 Eric 拍板）：
+#   - 所有路径/URL 走 env 变量 + 默认值（GREEN_URL / REPORT_DIR）
 
 set -euo pipefail
 
@@ -23,8 +26,11 @@ if [[ -z "$PR_NUM" ]]; then
   exit 64
 fi
 
-REPORT_PATH="backups/prod-verifications/$(date +%Y%m%d)-pr-${PR_NUM}.md"
-GREEN_URL="http://127.0.0.1:8091"
+# 配置（与 deploy_vps.sh 模板化约定对齐）
+REPORT_DIR="${REPORT_DIR:-backups/prod-verifications}"
+REPORT_PATH="${REPORT_DIR}/$(date +%Y%m%d)-pr-${PR_NUM}.md"
+GREEN_URL="${GREEN_URL:-http://127.0.0.1:${GREEN_PORT:-8091}}"
+BLUE_URL="${BLUE_URL:-http://127.0.0.1:${BLUE_PORT:-8090}}"
 
 # ============================================================
 # 骨架阶段：禁止执行

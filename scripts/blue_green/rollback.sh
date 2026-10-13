@@ -14,8 +14,15 @@
 #   - 仅切流量到 100% 蓝（绿色保留但不服务）
 #   - 取证快照：journalctl + DB 拷贝（如果 DB 写入了虽然 DRY_RUN 应该没写）
 #   - 告警 Eric
+#
+# v0.3 修订（2026-10-13 Eric 拍板）：
+#   - 所有路径走 env 变量 + 默认值（EVIDENCE_DIR / GREEN_SERVICE_UNIT）
 
 set -euo pipefail
+
+# 配置
+EVIDENCE_BASE="${EVIDENCE_BASE:-/var/log/dailycheck}"
+GREEN_SERVICE_UNIT="${GREEN_SERVICE_UNIT:-dailycheck-green.service}"
 
 # ============================================================
 # 骨架阶段：禁止执行

@@ -18,6 +18,9 @@
 #   2. weight 范围 0-100，初始蓝 100 / 绿 0
 #
 # 设计：每次切换 nginx reload（流式），不丢请求。
+#
+# v0.3 修订（2026-10-13 Eric 拍板）：
+#   - nginx 配置路径走 env 变量 + 默认值（NGINX_DAILYCHECK_CONF）
 
 set -euo pipefail
 
@@ -34,8 +37,9 @@ if ! [[ "${PERCENT}" =~ ^[0-9]+$ ]] || [[ "${PERCENT}" -lt 0 || "${PERCENT}" -gt
   exit 64
 fi
 
-NGINX_CONF="/etc/nginx/sites-enabled/dailycheck"
-NGINX_BACKUP="/etc/nginx/sites-enabled/dailycheck.bak.$(date +%Y%m%d-%H%M%S)"
+# 配置（与 deploy_vps.sh 模板化约定对齐）
+NGINX_CONF="${NGINX_DAILYCHECK_CONF:-/etc/nginx/sites-enabled/dailycheck}"
+NGINX_BACKUP="${NGINX_CONF}.bak.$(date +%Y%m%d-%H%M%S)"
 
 # ============================================================
 # 骨架阶段：禁止执行

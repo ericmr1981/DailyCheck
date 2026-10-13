@@ -110,7 +110,11 @@ if [[ -n "${CHANGED_PY}" ]]; then
   ruff check "${CHANGED_PY}" > "${RUFF_OUTPUT}" 2>&1 || true
   # ruff 输出形如 `path/file.py:11:5: E401 Module imported but unused`，
   # wc -l 数的是行数（含空行/进度条），不是告警数。改用 grep -c 数真正告警。
-  RUFF_WARNINGS=$(grep -cE '^[^:]+:[0-9]+:[0-9]+: [A-Z][0-9]+ ' "${RUFF_OUTPUT}" 2>/dev/null || echo 0)
+  # 注意：grep -c 找不到匹配时 exit 1 + 输出 "0"，不能用 `|| echo 0`（会双 0）。
+  RUFF_WARNINGS=$(grep -cE '^[^:]+:[0-9]+:[0-9]+: [A-Z][0-9]+ ' "${RUFF_OUTPUT}" 2>/dev/null || true)
+  RUFF_WARNINGS=${RUFF_WARNINGS:-0}
+  # 去掉末尾换行（grep -c 有时含 trailing newline）
+  RUFF_WARNINGS=$(echo "${RUFF_WARNINGS}" | tr -d '\n' | head -c 16)
 else
   echo "no python files changed" > "${RUFF_OUTPUT}"
   RUFF_WARNINGS=0
@@ -155,7 +159,7 @@ cat > "${OUT_DIR}/03-code-quality.md" <<EOF
 
 | 工具 | 命令 | 当前告警 | 状态 |
 |------|------|---------|------|
-| ruff | ruff check 改动 .py 文件 | ${RUFF_WARNINGS} | $(${RUFF_WARNINGS} -eq 0 && echo "✅" || echo "⚠️") |
+| ruff | ruff check 改动 .py 文件 | ${RUFF_WARNINGS} | $([ "${RUFF_WARNINGS}" -eq 0 ] && echo "✅" || echo "⚠️") |
 
 \`\`\`
 $(cat "${RUFF_OUTPUT}")

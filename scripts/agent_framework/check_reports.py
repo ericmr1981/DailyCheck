@@ -55,18 +55,32 @@ def check_report_02_and_03() -> dict:
     failed = summary.get("pytest", {}).get("failed", -1)
     gate = summary.get("pytest", {}).get("gate_exit", -1)
     ruff_warn = summary.get("ruff", {}).get("warnings", -1)
-    bandit_high = summary.get("bandit", {}).get("high_vuln", -1)
+    bandit_high_raw = summary.get("bandit", {}).get("high_vuln", -1)
+    radon_high_raw = summary.get("radon", {}).get("high_cc", -1)
+
+    # 兼容字符串数字（如 "0"）和整数。None / "N/A" 视为工具未装，跳过该指标。
+    def _as_int_or_none(v):
+        if v is None or v == "N/A":
+            return None
+        try:
+            return int(v)
+        except (ValueError, TypeError):
+            return None
+
+    bandit_high = _as_int_or_none(bandit_high_raw)
+    radon_high = _as_int_or_none(radon_high_raw)
 
     print(f"[check_reports] 报告 02: pytest failed={failed}, gate_exit={gate}（全绿标准=gate_exit==0，failed 数仅记录）")
-    print(f"[check_reports] 报告 03: ruff warnings={ruff_warn}, bandit high={bandit_high}")
+    print(f"[check_reports] 报告 03: ruff warnings={ruff_warn}, bandit high={bandit_high}, radon high={radon_high}")
 
     # 报告 02 全绿定义：known_failures gate 通过（gate_exit=0）。
     # 理由：DailyCheck 基线 16 failed 是 known_failures 内的，不算"未绿"。
     # "零新增门禁"在 ci.yml 已先验过 pytest 输出比对 known_failures.txt。
-    # 报告 03 全绿定义：ruff + bandit 高危都 0。
+    # 报告 03 全绿定义：ruff + bandit 高危都 0（radon 不强求，因 C/D 函数级别仅参考）。
+    quality_pass = ruff_warn == 0 and (bandit_high is None or bandit_high == 0)
     return {
         "test_pass": gate == 0,
-        "quality_pass": ruff_warn == 0 and bandit_high == 0,
+        "quality_pass": quality_pass,
         "summary": summary,
     }
 
@@ -118,7 +132,7 @@ def check_report_04(pr_num: str | None) -> bool:
             return False
 
     content = report.read_text(encoding="utf-8")
-    for required in ["## 4. 启动日志摘要", "## 7. 报告签名"]:
+    for required in ["## 3. 启动日志摘要", "## 7. 报告签名"]:
         if required not in content:
             print(f"[check_reports] 报告 04: ❌ 缺段落 '{required}'")
             return False

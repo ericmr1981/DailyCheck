@@ -129,7 +129,7 @@ if command -v radon >/dev/null 2>&1; then
   HIGH_CC=$(echo "${HIGH_CC}" | tr -d '\n' | head -c 16)
 else
   echo "radon not installed" > "${RADON_OUTPUT}"
-  HIGH_CC="N/A"
+  HIGH_CC=""  # 空 → JSON 模板用 ${HIGH_CC:-null} 渲染为 null
 fi
 
 # 安全扫描（bandit，CI -lll 高危）
@@ -140,7 +140,7 @@ if command -v bandit >/dev/null 2>&1; then
   HIGH_VULN=$(echo "${HIGH_VULN}" | tr -d '\n' | head -c 16)
 else
   echo "bandit not installed" > "${BANDIT_OUTPUT}"
-  HIGH_VULN="N/A"
+  HIGH_VULN=""  # 空 → JSON 模板用 ${HIGH_VULN:-null} 渲染为 null
 fi
 
 cat > "${OUT_DIR}/03-code-quality.md" <<EOF
@@ -212,10 +212,10 @@ cat > "${OUT_DIR}/ci-summary.json" <<EOF
     "warnings": ${RUFF_WARNINGS}
   },
   "radon": {
-    "high_cc": "${HIGH_CC}"
+    "high_cc": ${HIGH_CC:-null}
   },
   "bandit": {
-    "high_vuln": "${HIGH_VULN}"
+    "high_vuln": ${HIGH_VULN:-null}
   },
   "generated_at": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 }

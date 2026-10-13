@@ -127,7 +127,7 @@ def main() -> int:
     pr_num = os.environ.get("PR_NUM")
 
     if not REPORTS_DIR.exists():
-        fail(f"reports/ 不存在 — 请先跑 generate_reports.sh", code=1)
+        fail("reports/ 不存在 — 请先跑 generate_reports.sh", code=1)
 
     auto = check_report_02_and_03()
     rep01 = check_report_01_present()
